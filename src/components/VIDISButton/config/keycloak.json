@@ -1,0 +1,8 @@
+{
+  "realm": "vidis",
+  "auth-server-url": "https://demo.vidis.schule/auth/",
+  "ssl-required": "external",
+  "resource": "security-admin-console",
+  "public-client": true,
+  "confidential-port": 0
+}
