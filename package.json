@@ -2,6 +2,7 @@
   "name": "vidis-button-service",
   "version": "0.1.1",
   "private": false,
+  "homepage": "https://www.vidis.schule/",
   "babel": {
     "presets": [
       "@babel/preset-react"
