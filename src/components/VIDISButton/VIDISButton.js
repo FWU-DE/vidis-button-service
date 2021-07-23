@@ -43,7 +43,6 @@ function VIDISButton() {
     setIdpChoosed(true)
     localStorage.setItem('idpData', JSON.stringify(provider));
     setIdp(JSON.parse(localStorage.getItem('idpData')));
-    //setShowSearch(false);
   }
 
   return (
@@ -59,14 +58,6 @@ function VIDISButton() {
                   <Form.Control type="search" autoFocus={true} value={searchTerm} onChange={handleChange} placeholder="z.B SuBITI Bremen" />
                 </Form.Group>
               </Form>
-                {/*<label></label>
-                <Search
-                  type="text"
-                  placeholder="Search"
-                  autoFocus={true}
-                  value={searchTerm}
-                  onChange={handleChange}
-                />*/}
              </FormContainer>
              :<Button href="#" onClick={handleClick}>
                 <img src={logo} alt="Logo" />  
@@ -78,7 +69,6 @@ function VIDISButton() {
                 <ul>  
                   {searchResults.map(item => (
                     <li>
-                      {/*<Link onClick={() => handleChoose(item)}>{item.name}</Link>*/}
                       <Button href={item.link} onClick={() => handleChoose(item)}>
                         <img src={logo} alt="Logo" />  
                         <p>VIDIS Anmeldung {item.name}</p>
