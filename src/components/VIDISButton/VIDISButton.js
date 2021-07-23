@@ -6,7 +6,7 @@ import { Form } from 'react-bootstrap'
 
 function VIDISButton() {
 
-  // TODO: Data needs to be a fetched from Keycloack
+  // TODO: Data needs to be a fetched from an API
   const d = data;
   
   const [showSearch, setShowSearch] = useState(false);
@@ -22,14 +22,17 @@ function VIDISButton() {
     setSearchTerm(event.target.value);
   };
 
+  // Search Algorythm
+  const filterItems = (arr, query) => {
+    return arr.filter(el => el.searchterm.toString().toLowerCase().indexOf(query.toLowerCase()) > -1);
+  };
+
   useEffect(() => {
     // Check if it's the first visite
     setIdp(JSON.parse(localStorage.getItem('idpData')));
 
-    // Search Algorythm
-    const results = Object.values(d.idp).filter(identityProvider =>
-      identityProvider.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Search
+    const results = filterItems(d.idp, searchTerm)
     setSearchResults(results);
   }, 
   [searchTerm]);
