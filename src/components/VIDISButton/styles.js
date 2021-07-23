@@ -9,21 +9,20 @@ export const Root = styled.div`
     ul {
         margin: 5px 0;
         padding: 0;
-        display: flex;
         justify-content: center;
-        width: 400px;
+        width:380px;
     }
 
     li {
-        margin: 0 5px;
         list-style-type: none;
     }
 `;
 
 export const Button = styled.a`
-    min-width: 200px;
+    width:380px;  
+    text-align: center;              
     border-radius: 10px;
-    margin: 0.5rem 1rem;
+    margin: 0.5rem 0;
     padding: 5px 0;
     background: #213e58;
     color: white;
@@ -42,17 +41,20 @@ export const Button = styled.a`
     p {
         display: inline-block;
         padding: 0 10px;
+        margin: 0;
+        width: 100%;  
     }
+
+    &:hover {
+        color: white; 
+      }
 `;
 
-export const Search = styled.input` 
-    background: #eee;
-    padding:10px;
-    border-radius:10px;
-    border: 1px solid #213e58;
-    width:400px;
+export const Label = styled.label` 
+    font-size: 20px;
+    padding: 5px 0;
  `;
 
- export const Link = styled.button` 
-
+ export const FormContainer = styled.div` 
+    width:380px;
  `;

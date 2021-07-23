@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Root, Button, Search, Link } from './styles.js';
+import { Root, Button, Label, FormContainer } from './styles.js';
 import logo from './assets/logo.png';
 import data from './config/data.json';
+import { Form } from 'react-bootstrap'
 
 function VIDISButton() {
 
@@ -9,6 +10,7 @@ function VIDISButton() {
   const d = data;
   
   const [showSearch, setShowSearch] = useState(false);
+  const [idpChoosed, setIdpChoosed] = useState(false);
   const [idp, setIdp] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -32,15 +34,16 @@ function VIDISButton() {
   }, 
   [searchTerm]);
 
-  // Control function to show search if needed
+  // Control function to show search if needed 
   function handleClick() {
     setShowSearch(true);
   }
-  // Choose IDP and save it to localstorage
+  // Choose IDP and save it to localstorage 
   function handleChoose(provider) {
+    setIdpChoosed(true)
     localStorage.setItem('idpData', JSON.stringify(provider));
     setIdp(JSON.parse(localStorage.getItem('idpData')));
-    setShowSearch(false);
+    //setShowSearch(false);
   }
 
   return (
@@ -49,34 +52,56 @@ function VIDISButton() {
         ? <div>
             {showSearch
               ? 
-              <div>
-                <p>Suche dein Landesportal</p>
+              <FormContainer>
+                <Form>
+                <Form.Group>
+                  <Label>Suche dein Portal</Label>
+                  <Form.Control type="search" autoFocus={true} value={searchTerm} onChange={handleChange} placeholder="z.B SuBITI Bremen" />
+                </Form.Group>
+              </Form>
+                {/*<label></label>
                 <Search
                   type="text"
                   placeholder="Search"
+                  autoFocus={true}
                   value={searchTerm}
                   onChange={handleChange}
-                />
-             </div>
-            : <Button href="#" onClick={handleClick}>
+                />*/}
+             </FormContainer>
+             :<Button href="#" onClick={handleClick}>
                 <img src={logo} alt="Logo" />  
                 <p>VIDIS Anmeldung</p>
-              </Button>
+               </Button> 
             }
              {searchTerm
               ? 
                 <ul>  
                   {searchResults.map(item => (
-                    <li><Link onClick={() => handleChoose(item)}>{item.name}</Link></li>
+                    <li>
+                      {/*<Link onClick={() => handleChoose(item)}>{item.name}</Link>*/}
+                      <Button href={item.link} onClick={() => handleChoose(item)}>
+                        <img src={logo} alt="Logo" />  
+                        <p>VIDIS Anmeldung {item.name}</p>
+                      </Button>
+                    </li>
                   ))}
                 </ul>
                 : <span></span>
                 }
           </div>
-        : <Button href={idp.link}>
+        : 
+        <div>
+
+          {idpChoosed == false
+            ? 
+      
+          <Button href={idp.link}>
             <img src={logo} alt="Logo" />  
             <p>VIDIS Anmeldung {idp.name}</p>
           </Button>
+
+          : <span></span> }
+          </div>
       }
     </Root>
   );
