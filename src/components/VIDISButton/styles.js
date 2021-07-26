@@ -16,6 +16,12 @@ export const Root = styled.div`
     li {
         list-style-type: none;
     }
+
+    @media only screen and (max-width: 480px) {
+        a, div {
+            width: 300px;  
+        }
+    }
 `;
 
 export const Button = styled.a`
@@ -48,6 +54,7 @@ export const Button = styled.a`
     &:hover {
         color: white; 
       }
+
 `;
 
 export const Label = styled.label` 
@@ -57,4 +64,10 @@ export const Label = styled.label`
 
  export const FormContainer = styled.div` 
     width:380px;
+ `;
+
+ export const Link = styled.a` 
+    position: absolute;
+    bottom: 10px;
+    text-align: right;
  `;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Root, Button, Label, FormContainer } from './styles.js';
+import { Root, Button, Label, FormContainer, Link } from './styles.js';
 import logo from './assets/logo.png';
 import data from './config/data.json';
 import { Form } from 'react-bootstrap'
@@ -48,6 +48,12 @@ function VIDISButton() {
     setIdp(JSON.parse(localStorage.getItem('idpData')));
   }
 
+  function clearStorage() {
+    localStorage.clear();
+    // We need a reload after Storage is cleared
+    window.location.reload();
+  }
+
   return (
     <Root>
       {idp == null
@@ -87,14 +93,16 @@ function VIDISButton() {
 
           {idpChoosed == false
             ? 
-      
-          <Button href={idp.link}>
-            <img src={logo} alt="Logo" />  
-            <p>VIDIS Anmeldung {idp.name}</p>
-          </Button>
-
+            <Button href={idp.link}>
+              <img src={logo} alt="Logo" />  
+              <p>VIDIS Anmeldung {idp.name}</p>
+            </Button>
           : <span></span> }
           </div>
+      }
+      {JSON.parse(localStorage.getItem('idpData')) ?
+        <Link onClick={clearStorage}>localStorage zurücksetzen</Link>
+        : <span></span>
       }
     </Root>
   );
