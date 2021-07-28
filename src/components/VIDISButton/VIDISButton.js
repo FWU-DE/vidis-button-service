@@ -37,7 +37,7 @@ function VIDISButton() {
   }, 
   [searchTerm]);
 
-  // Control function to show search if needed 
+  // Control function to show search
   function handleClick() {
     setShowSearch(true);
   }
