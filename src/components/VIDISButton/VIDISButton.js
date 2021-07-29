@@ -28,7 +28,7 @@ function VIDISButton() {
   };
 
   useEffect(() => {
-    // Check if it's the first visite
+    // Check if localStorage item is there
     setIdp(JSON.parse(localStorage.getItem('idpData')));
 
     // Search
