@@ -64,7 +64,7 @@ function VIDISButton() {
                 <Form>
                 <Form.Group>
                   <Label>Suche dein Portal</Label>
-                  <Form.Control type="search" autoFocus={true} value={searchTerm} onChange={handleChange} placeholder="z.B SuBITI Bremen" />
+                  <Form.Control type="search" autoFocus={true} value={searchTerm} onChange={handleChange} placeholder="z.B Schullogin Sachsen" />
                 </Form.Group>
               </Form>
              </FormContainer>
