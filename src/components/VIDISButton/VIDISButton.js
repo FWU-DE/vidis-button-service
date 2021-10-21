@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Root, Button, Label, FormContainer, Link } from './styles.js';
 import logo from './assets/logo.png';
 import data from './config/data.json';
-import { Form } from 'react-bootstrap'
+import { Form } from 'react-bootstrap';
 
 function VIDISButton() {
 
