@@ -79,7 +79,7 @@ function VIDISButton() {
                   {searchResults.map(item => (
                     <li>
                       <Button href={item.link} onClick={() => handleChoose(item)}>
-                        <img src={logo} alt="Logo" />  
+                        <img src={item.logo} alt="Logo" />  
                         <p>VIDIS Anmeldung {item.name}</p>
                       </Button>
                     </li>
