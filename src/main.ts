@@ -11,4 +11,4 @@ const app = createApp(App).use(store);
 
 app.use(PrimeVue);
 
-app.mount("#app"); */
+app.mount("#app");
