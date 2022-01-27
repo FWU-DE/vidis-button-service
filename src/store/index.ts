@@ -1,9 +1,7 @@
 import { createStore } from "vuex";
+import { installedDB } from "./ORM-Stores/index";
 
 export default createStore({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
   modules: {},
+  plugins: [installedDB],
 });
