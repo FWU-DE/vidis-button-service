@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import { defineCustomElement } from "vue";
+import { defineComponent } from "vue";
 
-export default defineCustomElement({
+export default defineComponent({
   name: "vidis-login",
   props: {
     msg: String,
