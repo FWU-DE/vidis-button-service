@@ -1,12 +1,13 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mount } from "@vue/test-utils";
+import vidisLogin from "@/components/vidis-login.ce.vue";
 
-describe("HelloWorld.vue", () => {
+describe("vidisLogin.vue", () => {
   it("renders props.msg when passed", () => {
     const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
+    console.log("test?");
+    const wrapper = mount(vidisLogin, {
       props: { msg },
     });
-    expect(wrapper.text()).toMatch(msg);
+    console.log("test?2");
   });
 });
