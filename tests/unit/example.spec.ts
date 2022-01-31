@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import vidisLogin from "@/components/vidis-login.ce.vue";
+import vidisLogin from "@/components/vidisLogin.ce.vue";
 
 describe("vidisLogin.vue", () => {
   it("renders props.msg when passed", () => {

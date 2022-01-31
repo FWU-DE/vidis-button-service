@@ -1,7 +1,5 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import store from "./store";
-import PrimeVue from "primevue/config";
+import { defineCustomElement } from "vue";
+import App from "./App.ce.vue";
 
 import "/node_modules/primeflex/primeflex.css";
 import "primevue/resources/primevue.min.css";
