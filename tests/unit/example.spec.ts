@@ -1,11 +1,11 @@
 import { mount } from "@vue/test-utils";
-import vidisLogin from "@/components/vidis-login.ce.vue";
+import App from "@/App.ce.vue";
 
 describe("vidisLogin.vue", () => {
   it("renders props.msg when passed", () => {
     const msg = "new message";
     console.log("test?");
-    const wrapper = mount(vidisLogin, {
+    const wrapper = mount(App, {
       props: { msg },
     });
     console.log("test?2");
