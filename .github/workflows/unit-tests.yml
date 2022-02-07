@@ -42,8 +42,13 @@ jobs:
         echo "Running build job on branch is ${{ github.ref }}."
         npm run build
         echo "This job's status is ${{ job.status }}."
+    - name: Set and check outputs
+      id: vars
+      run: |
+        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+        echo ${{ steps.vars.outputs.sha_short }}
     - name: Archive build artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: build_artifacts
+        name: build_artifacts_${{ steps.vars.outputs.sha_short }}
         path: dist
