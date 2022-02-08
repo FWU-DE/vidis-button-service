@@ -1,0 +1,32 @@
+name: Button Service Test Page Pipelines
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  build_test_page:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Build
+      run: |
+        npm install -g npm@8
+        npm install
+        echo "Running build job on branch is ${{ github.ref }}."
+        npm run build
+        echo "This job's status is ${{ job.status }}."
+    - name: Archive build artifacts
+      id: vars
+      uses: actions/upload-artifact@v2
+      with:
+        name: test_page_artifacts_${{ steps.vars.outputs.sha_short }}
+        path: dist
