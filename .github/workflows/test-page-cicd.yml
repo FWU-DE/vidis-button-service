@@ -19,10 +19,11 @@ jobs:
         node-version: '14'
     - name: Build
       run: |
+        cd testApplications/vue-test-page
         npm install -g npm@8
         npm install
-        echo "Running build job on branch is ${{ github.ref }}."
-        npm run build --prefix ./testApplications/vue-test-page
+        echo "Running build job for test page on branch is ${{ github.ref }}."
+        npm run build
         echo "This job's status is ${{ job.status }}."
     - name: Archive build artifacts
       id: vars
