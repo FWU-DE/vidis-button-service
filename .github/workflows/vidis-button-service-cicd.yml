@@ -52,3 +52,18 @@ jobs:
       with:
         name: build_artifacts_${{ steps.vars.outputs.sha_short }}
         path: dist
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          #registry-url: 'https://fwu-nexus.intension.eu/repository/npm-vidis/'
+      - name: Publish
+        run: |
+          npm install -g npm@8
+          npm install
+          npm run compile
+          npm publish
