@@ -61,9 +61,11 @@ jobs:
         with:
           node-version: '14'
           #registry-url: 'https://fwu-nexus.intension.eu/repository/npm-vidis/'
-      - name: Publish
+      - name: Prepare publish
         run: |
           npm install -g npm@8
           npm install
-          npm run compile
-          npm publish
+      - name: Prepare publish
+        run: npm publish
+        #env:
+          #NODE_AUTH_TOKEN: ${{ secrets.NEXUS_TOKEN }}
