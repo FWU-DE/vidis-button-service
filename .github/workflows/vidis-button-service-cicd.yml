@@ -55,17 +55,19 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    #env:
+      #NODE_AUTH_TOKEN: ${{ secrets.NEXUS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
           #registry-url: 'https://fwu-nexus.intension.eu/repository/npm-vidis/'
-      - name: Prepare publish
+      - name: Publish
         run: |
           npm install -g npm@8
           npm install
-      - name: Prepare publish
-        run: npm publish
-        #env:
-          #NODE_AUTH_TOKEN: ${{ secrets.NEXUS_TOKEN }}
+          npm-cli-login -u vidis-button-uploader -p ${{ secrets.UPLOADER_TOKEN }} -e vidis-button@intension.de -r https://fwu-nexus.intension.eu/repository/npm-vidis/
+          touch .npmrc
+          echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
+          npm publish

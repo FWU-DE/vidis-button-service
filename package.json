@@ -5,7 +5,7 @@
   "homepage": "https://www.vidis.schule/",
   "publishConfig": {
     "registry": "https://fwu-nexus.intension.eu/repository/npm-vidis/"
-},
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vidisLogin src/main.ts --inline-vue",
@@ -17,6 +17,7 @@
     "@vuex-orm/core": "^0.36.4",
     "axios": "^0.25.0",
     "core-js": "^3.8.3",
+    "npm-cli-login": "^1.0.0",
     "primeflex": "^3.1.2",
     "primevue": "^3.11.0",
     "vue": "^3.2.13",
