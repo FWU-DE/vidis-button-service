@@ -54,16 +54,19 @@ jobs:
         path: dist
 
   publish:
+    needs: [ run-unit-tests, build ]
     runs-on: ubuntu-latest
-    #env:
-      #NODE_AUTH_TOKEN: ${{ secrets.NEXUS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-          #registry-url: 'https://fwu-nexus.intension.eu/repository/npm-vidis/'
       - name: Publish
         run: |
+          npm install -g npm@8
+          npm install
+          echo "Running build job on branch is ${{ github.ref }}."
+          npm run build
+          echo "Publishing..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
