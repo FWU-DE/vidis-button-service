@@ -65,9 +65,5 @@ jobs:
           #registry-url: 'https://fwu-nexus.intension.eu/repository/npm-vidis/'
       - name: Publish
         run: |
-          npm install -g npm@8
-          npm install
-          npm-cli-login -u vidis-button-uploader -p ${{ secrets.UPLOADER_TOKEN }} -e vidis-button@intension.de -r https://fwu-nexus.intension.eu/repository/npm-vidis/
-          touch .npmrc
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
