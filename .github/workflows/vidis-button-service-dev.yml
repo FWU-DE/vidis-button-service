@@ -1,7 +1,11 @@
 name: Vidis Button Service Pipelines
 on:
   push:
+    branches-ignore:
+      - main
   pull_request:
+    branches-ignore:
+      - main
 
 jobs:
   run-unit-tests:
@@ -69,4 +73,4 @@ jobs:
           npm run build
           echo "Publishing..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
-          npm publish
+          npm publish --tag ${{ github.ref }}
