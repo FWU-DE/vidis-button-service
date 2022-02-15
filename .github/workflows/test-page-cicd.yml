@@ -1,4 +1,4 @@
-name: Button Service Test Page Pipelines
+name: Test Page Pipeline
 on:
   push:
     branches-ignore:

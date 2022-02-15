@@ -1,4 +1,4 @@
-name: Vidis Button Service Pipelines
+name: Main Vidis Button Service Pipelines
 on:
   push:
     branches:
