@@ -38,12 +38,14 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Publish
+      - name: Publish npm and CDN
         run: |
           npm install -g npm@8
           npm install
           echo "Running build job on branch ${{ github.ref }}."
           npm run build
+          echo ${{ github.ref }} | sed 's/.*\///'
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/$(echo ${{ github.ref }} | sed 's/.*\///')/vidisLogin.umd.js
           echo "Publishing..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish

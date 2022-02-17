@@ -4,9 +4,6 @@
   "private": false,
   "files": [ "dist" ],
   "homepage": "https://www.vidis.schule/",
-  "publishConfig": {
-    "registry": "https://fwu-nexus.intension.eu/repository/npm-vidis/"
-  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vidisLogin src/main.ts --inline-vue",
