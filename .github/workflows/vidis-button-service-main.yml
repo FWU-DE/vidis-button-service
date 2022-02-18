@@ -1,7 +1,11 @@
-name: Vidis Button Service Pipelines
+name: Main Vidis Button Service Pipelines
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   run-unit-tests:
