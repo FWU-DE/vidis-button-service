@@ -32,7 +32,7 @@ export class VidisLoginApp extends HTMLElement {
       this.appendStyles();
     } catch (e) {
       //Handle Errors during Mount
-      console.warn("global try/catch", e);
+      console.error("global try/catch", e);
     }
   }
   /**
@@ -80,19 +80,19 @@ export class VidisLoginApp extends HTMLElement {
   attachErrorEventHandlers(): void {
     //Handle Errors on the Webcomponent Level
     this.addEventListener("error", (error: any) => {
-      console.warn("wc error", error);
+      console.error("wc error", error);
     });
 
     //Handle Promise Rejections on the Webcomponent Level
     this.addEventListener("unhandledrejection", (error: any) => {
-      console.warn("wc unhandledrejection", error);
+      console.error("wc unhandledrejection", error);
     });
 
     /* window.addEventListener("error", (error: any) => {
-      console.warn("window error", error);
+      console.error("window error", error);
     }); */
     /*  window.addEventListener("unhandledrejection", (error: any) => {
-      console.warn("window unhandledrejection", error);
+      console.error("window unhandledrejection", error);
     }); */
   }
 }
