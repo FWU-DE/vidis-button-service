@@ -1,4 +1,3 @@
-import { defineCustomElement } from "vue";
-import App from "./App.ce.vue";
+import { VidisLoginApp } from "@/Webcomponent";
 
-customElements.define("vidis-login", defineCustomElement(App));
+customElements.define("vidis-login", VidisLoginApp);

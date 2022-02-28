@@ -12,9 +12,7 @@ import idpSelector from "@/components/idpSelector/idpSelector.ce.vue";
 
 export default defineComponent({
   name: "entranceButton",
-  props: {
-    msg: String,
-  },
+  props: {},
   components: { Button, idpSelector },
   data() {
     return {
