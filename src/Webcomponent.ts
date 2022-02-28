@@ -87,12 +87,5 @@ export class VidisLoginApp extends HTMLElement {
     this.addEventListener("unhandledrejection", (error: any) => {
       console.error("wc unhandledrejection", error);
     });
-
-    /* window.addEventListener("error", (error: any) => {
-      console.error("window error", error);
-    }); */
-    /*  window.addEventListener("unhandledrejection", (error: any) => {
-      console.error("window unhandledrejection", error);
-    }); */
   }
 }
