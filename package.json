@@ -2,7 +2,9 @@
   "name": "vidis-button-service",
   "version": "0.3.0",
   "private": false,
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://www.vidis.schule/",
   "scripts": {
     "serve": "vue-cli-service serve",
