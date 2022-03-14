@@ -1,0 +1,37 @@
+.entrance-overLine {
+    height: 2px;
+    background-color: #0000c4;
+}
+
+.entrance-overlinetexts {
+    color: #0000c4;
+    font-size: 12px;
+}
+
+.entrance-space-below {
+    margin-bottom: 10px;
+}
+
+.entrance-button {
+    color: #0000c4;
+    background: #d2eeff;
+    background-color: #d2eeff;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-style: normal;
+    transition: none;
+    padding: 16px 24px;
+    fill: #0000c4 !important;
+}
+.entrance-button:enabled:hover {
+    background: #0000c4;
+    color: #d2eeff;
+    fill: #d2eeff !important;
+}
+
+.entrance-button-position {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

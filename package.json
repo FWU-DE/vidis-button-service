@@ -2,12 +2,15 @@
   "name": "vidis-button-service",
   "version": "0.1.2",
   "private": false,
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "homepage": "https://www.vidis.schule/",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name vidisLogin src/main.ts --inline-vue",
     "test:unit": "vue-cli-service test:unit",
+    "test:unit:coverage": "vue-cli-service test:unit --coverage --collectCoverageFrom='./src/**'",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
   },
@@ -17,8 +20,10 @@
     "core-js": "^3.8.3",
     "npm-cli-login": "^1.0.0",
     "primeflex": "^3.1.2",
+    "primeicons": "^5.0.0",
     "primevue": "^3.11.0",
     "vue": "^3.2.13",
+    "vue-i18n": "^9.1.9",
     "vuex": "^4.0.0"
   },
   "devDependencies": {

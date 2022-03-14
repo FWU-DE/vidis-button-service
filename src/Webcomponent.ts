@@ -1,18 +1,26 @@
-import { createApp } from "vue";
-import App from "./App.ce.vue";
+import { App, createApp, InjectionKey } from "vue";
+import Application from "./App.ce.vue";
 
+import i18n from "@/languages/i18nPlugin";
+import store from "@/store/index";
+import PrimeVue from "primevue/config";
 /**
  * This is the class definition of the Webcomponent for the Vidis-Login Button.
  * Notable is that a Vue App is mounted on top of it.
  * It also handles all internal Errors itself.
  */
 export class VidisLoginApp extends HTMLElement {
+  private app: App;
+  constructor() {
+    super();
+    this.app = createApp(Application);
+  }
   /**
    * Make WC Attributes observable. In order to make the WC aware of the change of its html attributes,
    * the attribute has to be listed here in string format
    */
   static get observedAttributes() {
-    return [];
+    return ["dark", "size"];
   }
 
   /**
@@ -21,14 +29,18 @@ export class VidisLoginApp extends HTMLElement {
   connectedCallback() {
     try {
       this.attachErrorEventHandlers();
-      const app = createApp(App);
-
-      app.config.errorHandler = function (err, vm, info) {
+      //this.app.config.performance = true;
+      this.app.config.unwrapInjectedRef = true;
+      this.app.config.errorHandler = function (err, vm, info) {
         //Handle Vue Errors
         console.error("app.config.errorHandler", err, vm, info);
       };
 
-      app.mount(this);
+      this.app.use(i18n);
+      this.app.use(store);
+      this.app.use(PrimeVue);
+
+      this.app.mount(this);
       this.appendStyles();
     } catch (e) {
       //Handle Errors during Mount
@@ -42,7 +54,12 @@ export class VidisLoginApp extends HTMLElement {
    * @param newVal   New Value of the attribute
    */
   attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-    //TODO: implement sending newVal to Vue App
+    if (attrName === "size") newVal = newVal.toUpperCase();
+    if (attrName === "dark") newVal = JSON.parse(newVal);
+    this.app.provide(
+      attrName,
+      newVal as unknown as InjectionKey<typeof newVal>
+    );
   }
 
   /**
@@ -56,6 +73,7 @@ export class VidisLoginApp extends HTMLElement {
       require("!!css-to-string-loader!css-loader!/node_modules/primeflex/primeflex.css"),
       require("!!css-to-string-loader!css-loader!primevue/resources/themes/tailwind-light/theme.css"),
       require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/globals.scss"),
+      require("!!css-to-string-loader!css-loader!sass-loader!primeicons/primeicons.css"),
     ];
     internalStyles.concat(styles);
     for (const style of internalStyles) {

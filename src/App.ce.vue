@@ -1,14 +1,26 @@
 <template>
-  <vidisLogin />
+  <component :is="entranceComponent" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import vidisLogin from "@/components/entranceButton/entranceButton.ce.vue";
+import entrance from "@/components/entrance/entrance.ce.vue";
+import smallEntrance from "@/components/entrance/smallEntrance.ce.vue";
 export default defineComponent({
   name: "vidis-login",
-  components: { vidisLogin },
-  props: {},
+  components: { entrance, smallEntrance },
+  inject: {
+    size: {
+      default: "L",
+    },
+  },
+  computed: {
+    entranceComponent(): string {
+      if (this.size === "L" || this.size === "M") return "entrance";
+      else if (this.size === "S") return "smallEntrance";
+      else return "entrance";
+    },
+  },
 });
 </script>

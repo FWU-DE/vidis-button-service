@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "noImplicitThis": false
   },
   "include": [
     "src/**/*.js",
@@ -25,7 +26,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "tests/unit/components/App.spec.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,8 @@
 /* Global Styles:  */
 
 /* Component Style should be imported here till https://github.com/vuejs/core/issues/4662 is resolved */
+html * {
+    font-family: "Barlow";
+}
 
-@import "@/components/entranceButton/entranceBotton.scss";
+@import "@/components/entrance/entranceStyles.scss";
