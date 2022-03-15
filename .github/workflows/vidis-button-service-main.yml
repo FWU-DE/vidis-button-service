@@ -1,11 +1,11 @@
 name: Main Vidis Button Service Pipelines
 on:
   push:
-    branches:
+    branches-ignore:
       - main
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   run-unit-tests:
@@ -30,29 +30,45 @@ jobs:
           name: code-coverage-report
           path: coverage/lcov-report/index.html
 
-  build:
+  create-rc-tag:
+    needs: run-unit-tests
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Setup Node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    - name: Build
-      run: |
-        npm install -g npm@8
-        npm install
-        echo "Running build job on branch is ${{ github.ref }}."
-        npm run build
-        echo "This job's status is ${{ job.status }}."
-    - name: Set and check outputs
-      id: vars
-      run: |
-        echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-        echo ${{ steps.vars.outputs.sha_short }}
-    - name: Archive build artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: build_artifacts_${{ steps.vars.outputs.sha_short }}
-        path: dist
+      - name: Create RC Tag
+        uses: actions/checkout@v2
+        uses: Klemensas/action-autotag@stable
+        with:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          tag_suffix: "-rc"
+      - name: Check Tag
+        run: |
+          echo "Created tag "${{ steps.previous_step.outputs.version }}""
+          echo "This job's status is ${{ job.status }}."
+
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
+  #   - name: Setup Node
+  #     uses: actions/setup-node@v2
+  #     with:
+  #       node-version: '14'
+  #   - name: Build
+  #     run: |
+  #       npm install -g npm@8
+  #       npm install
+  #       echo "Running build job on branch is ${{ github.ref }}."
+  #       npm run build
+  #       echo "This job's status is ${{ job.status }}."
+  #   - name: Set and check outputs
+  #     id: vars
+  #     run: |
+  #       echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+  #       echo ${{ steps.vars.outputs.sha_short }}
+  #   - name: Archive build artifacts
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: build_artifacts_${{ steps.vars.outputs.sha_short }}
+  #       path: dist
