@@ -1,11 +1,8 @@
 name: Main Vidis Button Service Pipelines
 on:
   push:
-  #   branches:
-  #     - main
-  # pull_request:
-  #   branches:
-  #     - main
+    branches:
+      - main
 
 jobs:
   run-unit-tests:
@@ -34,17 +31,13 @@ jobs:
     needs: run-unit-tests
     runs-on: ubuntu-latest
     steps:
-      - name: Create RC Tag
+      - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Create RC Tag
         uses: Klemensas/action-autotag@stable
         with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
           tag_suffix: "-rc"
-      - name: Check Tag
-        run: |
-          echo "Created tag "${{ steps.previous_step.outputs.version }}""
-          echo "This job's status is ${{ job.status }}."
-
 
   # build:
   #   runs-on: ubuntu-latest
