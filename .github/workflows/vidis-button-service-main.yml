@@ -1,8 +1,8 @@
 name: Main Vidis Button Service Pipelines
 on:
   push:
-    branches-ignore:
-      - main
+  #   branches:
+  #     - main
   # pull_request:
   #   branches:
   #     - main
