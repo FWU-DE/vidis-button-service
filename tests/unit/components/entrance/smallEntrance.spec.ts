@@ -3,7 +3,7 @@ import smallEntrance from "@/components/entrance/smallEntrance.ce.vue";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("smallEntrance", () => {
-  let smallEntranceWrapper;
+  let smallEntranceWrapper: any;
   beforeEach(() => {
     smallEntranceWrapper = shallowMount(smallEntrance, {
       global: {
@@ -12,7 +12,7 @@ describe("smallEntrance", () => {
           dark: false,
         },
         mocks: {
-          $t: (key) => messages["de"][key],
+          $t: (key: string) => messages["de"][key],
         },
       },
     });

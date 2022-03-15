@@ -3,7 +3,7 @@ import Entrance from "@/components/entrance/entrance.ce.vue";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("Entrance", () => {
-  let entranceWrapper;
+  let entranceWrapper: any;
   beforeEach(() => {
     entranceWrapper = shallowMount(Entrance, {
       global: {
@@ -12,7 +12,7 @@ describe("Entrance", () => {
           dark: false,
         },
         mocks: {
-          $t: (key) => messages["de"][key],
+          $t: (key: string) => messages["de"][key],
         },
       },
     });

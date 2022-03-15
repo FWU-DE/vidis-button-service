@@ -3,7 +3,7 @@ import IdpDialog from "@/components/idpSelection/idpDialog.ce.vue";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("idpDialog", () => {
-  let idpDialogWrapper;
+  let idpDialogWrapper: any;
   beforeEach(() => {
     idpDialogWrapper = shallowMount(IdpDialog, {
       global: {
@@ -12,7 +12,7 @@ describe("idpDialog", () => {
           dark: false,
         },
         mocks: {
-          $t: (key) => messages["de"][key],
+          $t: (key: string) => messages["de"][key],
         },
       },
     });
