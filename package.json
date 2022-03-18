@@ -1,6 +1,6 @@
 {
   "name": "vidis-button-service",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": false,
   "files": [ "dist" ],
   "homepage": "https://www.vidis.schule/",

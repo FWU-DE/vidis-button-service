@@ -39,29 +39,25 @@ jobs:
           GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
           tag_suffix: "-rc"
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout repository
-  #     uses: actions/checkout@v2
-  #   - name: Setup Node
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: '14'
-  #   - name: Build
-  #     run: |
-  #       npm install -g npm@8
-  #       npm install
-  #       echo "Running build job on branch is ${{ github.ref }}."
-  #       npm run build
-  #       echo "This job's status is ${{ job.status }}."
-  #   - name: Set and check outputs
-  #     id: vars
-  #     run: |
-  #       echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-  #       echo ${{ steps.vars.outputs.sha_short }}
-  #   - name: Archive build artifacts
-  #     uses: actions/upload-artifact@v2
-  #     with:
-  #       name: build_artifacts_${{ steps.vars.outputs.sha_short }}
-  #       path: dist
+  build-and-publish-rc:
+    needs: create-rc-tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Publish npm and CDN
+        run: |
+          npm install -g npm@8
+          npm install
+          echo "Running build job on branch ${{ github.ref }}."
+          npm run build
+          echo "Publishing CDN..."
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-rc/vidisLogin.umd.js
+          echo "Publishing npm..."
+          echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
+          npm publish
