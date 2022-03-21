@@ -1,0 +1,18 @@
+name: Release Pipeline
+on:
+  release:
+    types: created
+
+jobs:
+  build-and-publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get git tag
+        id: tag
+        uses: dawidd6/action-get-tag@v1
+      - name: Publish Release
+        run: |
+          echo "Version ${{ steps.tag.outputs.tag }}"
+          echo "Getting corresponding release candidate..."
+          curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.js
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn/${{ steps.tag.outputs.tag }}/vidisLogin.umd.js
