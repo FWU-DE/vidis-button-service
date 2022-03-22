@@ -50,7 +50,7 @@ jobs:
           echo ${{ github.ref }} | sed 's/.*\///'
           curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.js
           echo "Uploading images..."
-          curl -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} -X PUT "https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/" -T dist/img
+          curl -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} -X PUT "https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/img" -T dist/img
           echo "Publishing..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
