@@ -47,6 +47,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
       - name: Replace CDN_UPLOAD_USER
         uses: jwsi/secret-parser@v1
         with:
@@ -59,21 +62,18 @@ jobs:
           filename: .github/workflows/scripts/uploadImages.sh
           secret-name: "CDN_UPLOAD_SECRET"
           secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
-      - name: Find and Replace
+      - name: Find and Replace current version
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "current-version"
           replace: ${{ steps.package-version.outputs.current-version}}
           include: "**uploadImages.sh"
-      - name: Find and Replace
+      - name: Find and Replace suffix
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "suffix"
           replace: "rc"
           include: "**uploadImages.sh"
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
       - name: Publish npm and CDN
         run: |
           npm install -g npm@8
