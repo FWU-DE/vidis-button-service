@@ -1,11 +1,9 @@
 #!/bin/bash
-echo "Downloading images..."
-mkdir img
-cd img
-wget -4 --user ${{ secrets.CDN_UPLOAD_USER }} --password ${{ secrets.CDN_UPLOAD_SECRET }} -r -np -nH "https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-rc/img/"
+mkdir dist
+cd dist
+curl -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} -O https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-rc/assets.list
 
-echo "Downloading fonts..."
-cd ..
-mkdir fonts
-cd fonts
-wget -4 --user ${{ secrets.CDN_UPLOAD_USER }} --password ${{ secrets.CDN_UPLOAD_SECRET }} -r -np -nH "https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-rc/fonts/"
+while IFS="" read -r file || [ -n "$file" ]
+do
+    curl -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --create-dirs -o $file https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-rc/$file;
+done < assets.list

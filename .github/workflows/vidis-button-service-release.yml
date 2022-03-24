@@ -54,24 +54,13 @@ jobs:
           find: "vidis-cdn-snapshots"
           replace: "vidis-cdn"
           include: "**uploadImages.sh"
-      - name: Find and Replace target img
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          find: "dist/img/*"
-          replace: "img/*"
-          include: "**uploadImages.sh"
-      - name: Find and Replace target fonts
-        uses: jacobtomlinson/gha-find-replace@v2
-        with:
-          find: "dist/fonts/*"
-          replace: "fonts/*"
-          include: "**uploadImages.sh"
       - name: Publish Release
         run: |
           echo "Version ${{ steps.tag.outputs.tag }}"
           echo "Getting corresponding release candidate..."
           curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.js
           curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn/${{ steps.tag.outputs.tag }}/vidisLogin.umd.js
+          rm -rf dist
           echo "Testing downloading images and fonts..."
           sh .github/workflows/scripts/downloadImagesAndFonts.sh
           echo "Uploading images and fonts for release ..."

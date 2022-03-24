@@ -1,89 +1,89 @@
-# name: Main Vidis Button Service Pipelines
-# on:
-#   push:
-#     branches-ignore:
-#       - main
+name: Main Vidis Button Service Pipelines
+on:
+  push:
+    branches-ignore:
+      - main
 
-# jobs:
-#   run-unit-tests:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-#       - name: Setup Node
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: "14"
-#       - name: Run Tests
-#         run: |
-#           npm install -g npm@8
-#           npm install
-#           echo "Running unit tests. The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-#           npm run test:unit -- --coverage
-#           echo "This job's status is ${{ job.status }}."
-#       - name: Archive code coverage results
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: code-coverage-report
-#           path: coverage/lcov-report/index.html
+jobs:
+  # run-unit-tests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v2
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14"
+  #     - name: Run Tests
+  #       run: |
+  #         npm install -g npm@8
+  #         npm install
+  #         echo "Running unit tests. The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  #         npm run test:unit -- --coverage
+  #         echo "This job's status is ${{ job.status }}."
+  #     - name: Archive code coverage results
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: code-coverage-report
+  #         path: coverage/lcov-report/index.html
 
-#   create-rc-tag:
-#     needs: run-unit-tests
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-#       - name: Create RC Tag
-#         uses: Klemensas/action-autotag@stable
-#         with:
-#           GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
-#           tag_suffix: "-rc"
+  create-rc-tag:
+    # needs: run-unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Create RC Tag
+        uses: Klemensas/action-autotag@stable
+        with:
+          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+          tag_suffix: "-rc"
 
-#   build-and-publish-rc:
-#     needs: create-rc-tag
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - uses: actions/setup-node@v2
-#         with:
-#           node-version: '14'
-#       - name: get-npm-version
-#         id: package-version
-#         uses: martinbeentjes/npm-get-version-action@master
-#       - name: Replace CDN_UPLOAD_USER
-#         uses: jwsi/secret-parser@v1
-#         with:
-#           filename: .github/workflows/scripts/uploadImages.sh
-#           secret-name: "CDN_UPLOAD_USER"
-#           secret-value: ${{ secrets.CDN_UPLOAD_USER }}
-#       - name: Replace CDN_UPLOAD_SECRET
-#         uses: jwsi/secret-parser@v1
-#         with:
-#           filename: .github/workflows/scripts/uploadImages.sh
-#           secret-name: "CDN_UPLOAD_SECRET"
-#           secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
-#       - name: Find and Replace current version
-#         uses: jacobtomlinson/gha-find-replace@v2
-#         with:
-#           find: "current-version"
-#           replace: ${{ steps.package-version.outputs.current-version}}
-#           include: "**uploadImages.sh"
-#       - name: Find and Replace suffix
-#         uses: jacobtomlinson/gha-find-replace@v2
-#         with:
-#           find: "-suffix"
-#           replace: "-rc"
-#           include: "**uploadImages.sh"
-#       - name: Publish npm and CDN
-#         run: |
-#           npm install -g npm@8
-#           npm install
-#           echo "Running build job on branch ${{ github.ref }}."
-#           npm run build
-#           echo "Publishing CDN..."
-#           curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-rc/vidisLogin.umd.js
-#           echo "Uploading images and fonts..."
-#           sh .github/workflows/scripts/uploadImages.sh
-#           echo "Publishing npm..."
-#           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
-#           npm publish
+  build-and-publish-rc:
+    needs: create-rc-tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Replace CDN_UPLOAD_USER
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadImages.sh
+          secret-name: "CDN_UPLOAD_USER"
+          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
+      - name: Replace CDN_UPLOAD_SECRET
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadImages.sh
+          secret-name: "CDN_UPLOAD_SECRET"
+          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
+      - name: Find and Replace current version
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "current-version"
+          replace: ${{ steps.package-version.outputs.current-version}}
+          include: "**uploadImages.sh"
+      - name: Find and Replace suffix
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "-suffix"
+          replace: "-rc"
+          include: "**uploadImages.sh"
+      - name: Publish npm and CDN
+        run: |
+          npm install -g npm@8
+          npm install
+          echo "Running build job on branch ${{ github.ref }}."
+          npm run build
+          echo "Publishing CDN..."
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-rc/vidisLogin.umd.js
+          echo "Uploading images and fonts..."
+          sh .github/workflows/scripts/uploadImages.sh
+          echo "Publishing npm..."
+          echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
+          npm publish

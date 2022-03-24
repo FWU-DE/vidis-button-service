@@ -1,12 +1,11 @@
 #!/bin/bash
-echo "Uploading images..."
-for file in dist/img/*
-do
-    curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file $file https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-suffix/img/;
-done;
+echo "Uploading images and fonts..."
+rm dist/demo.html dist/*.min.js dist/*.map dist/*.common.js
+cd dist
+find * -type f > assets.list
 
-echo "Uploading fonts..."
-for file in dist/fonts/*
+while IFS="" read -r file || [ -n "$file" ]
 do
-    curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file $file https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-suffix/fonts/;
-done;
+    curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file $file https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-suffix/$file;
+    curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file assets.list https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/current-version-suffix/
+done < assets.list
