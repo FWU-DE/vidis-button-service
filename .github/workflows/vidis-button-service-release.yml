@@ -33,13 +33,13 @@ jobs:
       - name: Replace CDN_UPLOAD_USER for assets upload
         uses: jwsi/secret-parser@v1
         with:
-          filename: .github/workflows/scripts/uploadImages.sh
+          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
           secret-name: "CDN_UPLOAD_USER"
           secret-value: ${{ secrets.CDN_UPLOAD_USER }}
       - name: Replace CDN_UPLOAD_SECRET for assets upload
         uses: jwsi/secret-parser@v1
         with:
-          filename: .github/workflows/scripts/uploadImages.sh
+          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
           secret-name: "CDN_UPLOAD_SECRET"
           secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
       - name: Find and Replace current version
@@ -47,13 +47,13 @@ jobs:
         with:
           find: "current-version-suffix"
           replace: ${{ steps.tag.outputs.tag }}
-          include: "**uploadImages.sh"
+          include: "**uploadImagesAndFonts.sh"
       - name: Find and Replace current version
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "vidis-cdn-snapshots"
           replace: "vidis-cdn"
-          include: "**uploadImages.sh"
+          include: "**uploadImagesAndFonts.sh"
       - name: Publish Release
         run: |
           echo "Version ${{ steps.tag.outputs.tag }}"
@@ -64,4 +64,4 @@ jobs:
           echo "Testing downloading images and fonts..."
           sh .github/workflows/scripts/downloadImagesAndFonts.sh
           echo "Uploading images and fonts for release ..."
-          sh .github/workflows/scripts/uploadImages.sh
+          sh .github/workflows/scripts/uploadImagesAndFonts.sh
