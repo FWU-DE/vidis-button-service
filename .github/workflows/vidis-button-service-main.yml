@@ -50,6 +50,30 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+      - name: Replace CDN_UPLOAD_USER
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
+          secret-name: "CDN_UPLOAD_USER"
+          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
+      - name: Replace CDN_UPLOAD_SECRET
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
+          secret-name: "CDN_UPLOAD_SECRET"
+          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
+      - name: Find and Replace current version
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "current-version"
+          replace: ${{ steps.package-version.outputs.current-version}}
+          include: "**uploadImagesAndFonts.sh"
+      - name: Find and Replace suffix
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "-suffix"
+          replace: "-rc"
+          include: "**uploadImagesAndFonts.sh"
       - name: Publish npm and CDN
         run: |
           npm install -g npm@8
@@ -58,6 +82,8 @@ jobs:
           npm run build
           echo "Publishing CDN..."
           curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-rc/vidisLogin.umd.js
+          echo "Uploading images and fonts..."
+          sh .github/workflows/scripts/uploadImagesAndFonts.sh
           echo "Publishing npm..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
