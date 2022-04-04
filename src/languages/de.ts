@@ -5,4 +5,7 @@ export default {
     branding_accessibility: "", //If a user is blind, this text replaces the big branding logo
     button: "Anmelden mit deinem Schulaccount", //Text displayed on the button that opens the dialog and start the base user journey
   },
+  idp: {
+    button: "Secure Login in Schulname",
+  },
 };

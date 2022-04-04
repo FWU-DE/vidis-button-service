@@ -1,0 +1,38 @@
+.p-autocomplete-input {
+    background-image: url("../../assets/svgs/search.svg");
+    background-size: 1.5em;
+    background-position: left 20px top 20px;
+    background-repeat: no-repeat;
+    text-indent: 40px;
+    padding: 20px;
+}
+.p-fluid .p-autocomplete-dd .p-autocomplete-input {
+    color: #0000C4;
+}
+
+.autocomplete-main-item {
+    font-size: 18px;
+    color: #0000C4;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 20px;
+}
+
+.autocomplete-small-item {
+    font-size: 12px;
+    color: #0000C4;
+    display: block;
+}
+
+.container {
+    display: inline-block;
+}
+
+.school-image {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.center {
+    position: relative;
+}
