@@ -47,8 +47,8 @@ export default defineComponent({
       schoolSvg,
     };
   },
-  created() {
-    this.loadIdps();
+  async created() {
+    await this.loadIdps();
   },
 
   computed: {
@@ -62,18 +62,17 @@ export default defineComponent({
   methods: {
     async loadIdps() {
       try {
-        await axios
-          .get(
-            "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps_test3.json"
-          )
-          .then((res) => {
-            this.availableIdps = res.data.idp;
-            IdP.insert({
-              data: this.availableIdps,
-            });
-          });
+        let res = await axios.get(
+          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps_test3.json"
+        );
+        this.availableIdps = res.data.idp;
+        console.log("!!!!!!!!!!");
+        console.log(this.availableIdps);
+        IdP.insert({
+          data: this.availableIdps,
+        });
       } catch (e) {
-        throw new Error("Couldn't load IdPs" + e);
+        throw new Error("Couldn't load IdPs " + e);
       }
     },
     emitToParent(event: any) {
