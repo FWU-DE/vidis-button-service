@@ -22,6 +22,7 @@
     font-size: 12px;
     color: #0000C4;
     display: block;
+    font-weight: normal;
 }
 
 .container {
@@ -35,4 +36,11 @@
 
 .center {
     position: relative;
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    font-size: 18px;
+    color: #0000C4;
+    text-indent: 40px;
+    padding-left: 20px;
 }
