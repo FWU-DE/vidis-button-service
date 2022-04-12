@@ -7,5 +7,7 @@ export default {
   },
   idp: {
     button: "Secure Login in Schulname",
+    placeholder: "z. B. Bundesland, Stadt, Email, Schule, ...",
+    other: "Sonstige",
   },
 };

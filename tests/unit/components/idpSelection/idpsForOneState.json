@@ -1,0 +1,38 @@
+[
+    {
+        "$id": "1",
+        "additionalInformation": "",
+        "address": {
+            "city": "Bremen",
+            "state": "Bremen"
+        },
+        "alternativeSearchTags": "",
+        "emailDomain": "",
+        "forgotLink": "",
+        "id": "1",
+        "img": null,
+        "loginLink": "https://demo.vidis.schule/auth/realms/vidis/protocol/openid-connect/auth?client_id=account-console&redirect_uri=https%3A%2F%2Fdemo.vidis.schule%2Fauth%2Frealms%2Fvidis%2Faccount%2F%3Ferror%3Dinvalid_request%26error_description%3DMissing%2Bparameter%253A%2Bresponse_type%23%2F&state=19749827-f5b5-41f4-bff8-c43cfbf38b7c&response_mode=fragment&response_type=code&scope=openid&nonce=aae879ea-1e64-4bdf-a764-5ef37f687491&code_challenge=0YHkcZNJe0A_-N5W0-BR8mo1kxiNUiY_RzxTixmdSHs&code_challenge_method=S256&kc_idp_hint=ucs-sso.schule.bremen.de",
+        "name": "SuBITI Bremen",
+        "redirectLink": "",
+        "shortName": "",
+        "type": "LandesPortal"
+    },
+    {
+        "$id": "6",
+        "additionalInformation": "",
+        "address": {
+            "city": "Bremen",
+            "state": "Bremen"
+        },
+        "alternativeSearchTags": "",
+        "emailDomain": "",
+        "forgotLink": "",
+        "id": "6",
+        "img": null,
+        "loginLink": "https://demo.vidis.schule/auth/realms/vidis/protocol/openid-connect/auth?client_id=account-console&redirect_uri=https%3A%2F%2Fdemo.vidis.schule%2Fauth%2Frealms%2Fvidis%2Faccount%2F%3Ferror%3Dinvalid_request%26error_description%3DMissing%2Bparameter%253A%2Bresponse_type%23%2F&state=19749827-f5b5-41f4-bff8-c43cfbf38b7c&response_mode=fragment&response_type=code&scope=openid&nonce=aae879ea-1e64-4bdf-a764-5ef37f687491&code_challenge=0YHkcZNJe0A_-N5W0-BR8mo1kxiNUiY_RzxTixmdSHs&code_challenge_method=S256&kc_idp_hint=ucs-sso.schule.bremen.de",
+        "name": "SuBITI Bremen2",
+        "redirectLink": "",
+        "shortName": "",
+        "type": "LandesPortal"
+    }
+]

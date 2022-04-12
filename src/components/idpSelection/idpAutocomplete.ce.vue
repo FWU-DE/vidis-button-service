@@ -1,42 +1,23 @@
 <template>
   <span class="p-fluid">
     <AutoComplete
-      dropdown
+      type="search"
       forceSelection
       v-model="selectedIdP"
       :suggestions="filteredIdps"
-      @complete="searchIdps($event)"
-      @item-select="emitToParent"
-      field="name"
-      placeholder="z. B. Bundesland, Stadt, Email, Schule, ..."
-    >
-      <template #item="slotProps">
-        <div class="container">
-          <div class="center">
-            <img class="school-image" :src="schoolLogo" />
-            <div class="autocomplete-main-item">
-              {{ slotProps.item.name }}
-              <span class="autocomplete-small-item">{{
-                slotProps.item.address.city
-              }}</span>
-            </div>
-          </div>
-        </div>
-      </template>
-    </AutoComplete>
-
-    <AutoComplete
-      dropdown
-      forceSelection
-      v-model="selectedCity"
-      :suggestions="filteredCities"
       @item-select="emitToParent"
       @complete="searchGroupedIdps($event)"
       field="name"
       optionGroupLabel="label"
       optionGroupChildren="items"
-      placeholder="z. B. Bundesland, Stadt, Email, Schule, ..."
+      :placeholder="$t('idp.placeholder')"
     >
+      <template #item="slotProps">
+        <div>{{ slotProps.item.name }}</div>
+        <div class="autocomplete-small-item">
+          {{ slotProps.item.address.city }}
+        </div>
+      </template>
       <template #optiongroup="slotProps">
         <div class="autocomplete-small-item">
           <div>{{ slotProps.item.label }}</div>
@@ -52,29 +33,28 @@ import AutoComplete from "primevue/autocomplete";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
 import schoolSvg from "@/assets/svgs/school_icon.svg";
+import cross from "@/assets/svgs/cross.svg";
 import _ from "lodash";
 import { FilterService, FilterMatchMode } from "primevue/api";
 
 export default defineComponent({
-  name: "idp-dialog",
+  name: "idp-autocomplete",
   props: {},
   components: { AutoComplete },
   data() {
     return {
       idps: null,
-      filteredIdps: [],
-      selectedIdP: "",
       suggestions: [],
       availableIdps: [],
       schoolSvg,
-      selectedCity: null,
-      filteredCities: null,
+      cross,
+      selectedIdP: null,
+      filteredIdps: null,
       notGroupedIdps: null,
     };
   },
   async created() {
     await this.loadIdps();
-    this.getListOfStates();
     this.groupIdps();
   },
 
@@ -82,18 +62,18 @@ export default defineComponent({
     idpsInStore() {
       return IdP.all();
     },
-    listOfStates() {
-      return this.getListOfStates();
-    },
     schoolLogo() {
       return schoolSvg;
+    },
+    crossSvg() {
+      return cross;
     },
   },
   methods: {
     async loadIdps() {
       try {
         let res = await axios.get(
-          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps_test4.json"
+          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps.json"
         );
         this.availableIdps = res.data.idp;
         IdP.insert({
@@ -106,20 +86,9 @@ export default defineComponent({
     emitToParent(event: any) {
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
-    searchIdps(event: any) {
-      if (!event.query.trim().length) {
-        this.filteredIdps = [...this.idpsInStore];
-      } else {
-        this.filteredIdps = this.idpsInStore.filter((idp: { name: string }) => {
-          return idp.name.toLowerCase().includes(event.query.toLowerCase());
-        });
-      }
-    },
-
     searchGroupedIdps(event: any) {
       let query = event.query;
-      let filteredCities = [];
-
+      let filteredIdps = [];
       for (let state of this.finalGroupedIdps) {
         let filteredItems = FilterService.filter(
           state.items,
@@ -128,10 +97,10 @@ export default defineComponent({
           FilterMatchMode.CONTAINS
         );
         if (filteredItems && filteredItems.length) {
-          filteredCities.push({ ...state, ...{ items: filteredItems } });
+          filteredIdps.push({ ...state, ...{ items: filteredItems } });
         }
       }
-      this.filteredCities = filteredCities;
+      this.filteredIdps = filteredIdps;
     },
     getIdpsForState(state: string) {
       let idpsForParticularState = _.filter(
@@ -142,19 +111,37 @@ export default defineComponent({
       );
       return idpsForParticularState;
     },
+    getIdpsWithoutState() {
+      const hasNoState = _.filter(this.idpsInStore, function (el: any) {
+        return !el.address.state;
+      });
+      return hasNoState;
+    },
     getListOfStates() {
       let statesList = this.idpsInStore.map(
         (value: any) => value.address.state
       );
-      return _.uniq(statesList);
+      statesList.push("Sonstige");
+      return _(statesList).uniq().compact();
     },
     groupIdps() {
       let finalGroupedIdps = [];
       for (let state of this.getListOfStates()) {
-        finalGroupedIdps.push({
-          ...{ label: state },
-          ...{ items: this.getIdpsForState(state) },
-        });
+        if (state !== "Sonstige") {
+          finalGroupedIdps.push({
+            ...{ label: state },
+            ...{
+              items: this.getIdpsForState(state),
+            },
+          });
+        } else {
+          finalGroupedIdps.push({
+            ...{ label: "Sonstige" },
+            ...{
+              items: this.getIdpsWithoutState(),
+            },
+          });
+        }
       }
       this.finalGroupedIdps = finalGroupedIdps;
       return finalGroupedIdps;
