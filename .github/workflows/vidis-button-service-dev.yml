@@ -20,7 +20,7 @@ jobs:
       - name: Run Tests
         run: |
           npm install -g npm@8
-          npm install
+          npm ci
           echo "Running unit tests. The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
           npm run test:unit -- --coverage
           echo "This job's status is ${{ job.status }}."
@@ -68,7 +68,7 @@ jobs:
       - name: Publish npm and CDN
         run: |
           npm install -g npm@8
-          npm install
+          npm ci
           echo "Running build job on branch ${{ github.ref }}."
           npm run build
           echo ${{ github.ref }} | sed 's/.*\///'
