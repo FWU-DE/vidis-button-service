@@ -20,9 +20,14 @@
       <entryButton @clicked="toggleDialog(true)" />
     </div>
   </div>
-  <idpDialog :visible="showDialog" class="p-dialog-maximized" header="Header"
-  footer="Footer" @closed="showDialog = false" <<<<<<< HEAD :style="{
-  background: d2eeff }" ======= >>>>>>> VBTN-45 add entrance section (#11) />
+  <idpDialog
+    :visible="showDialog"
+    class="p-dialog-maximized"
+    header="Header"
+    footer="Footer"
+    @closed="showDialog = false"
+    :style="{ background: d2eeff }"
+  />
 </template>
 
 <script lang="ts">
