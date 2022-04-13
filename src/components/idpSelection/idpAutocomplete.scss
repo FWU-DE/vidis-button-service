@@ -1,0 +1,71 @@
+.p-autocomplete-input {
+    background-image: url("../../assets/svgs/search.svg");
+    background-size: 1.5em;
+    background-position: left 22px top 20px;
+    background-repeat: no-repeat;
+    text-indent: 40px;
+    padding: 20px;
+    color: #0000C4;
+}
+
+.p-autocomplete-input:enabled:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+
+.autocomplete-main-item {
+    font-size: 18px;
+    color: #0000C4;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 20px;
+}
+
+.autocomplete-small-item {
+    font-size: 12px;
+    color: #0000C4;
+    display: block;
+    font-weight: normal;
+}
+
+.p-autocomplete-panel {
+    border-radius: 0px 0px 8px 8px;
+    margin-top: -10px
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    margin-left: 16px;
+    font-size: 18px;
+    color: #0000C4;
+    text-indent: 40px;
+    padding-left: 20px;
+    background-image: url("../../assets/svgs/school_icon.svg");
+    background-size: 1.5em;
+    background-position: left 20px top 20px;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item:hover{
+    color: #0000C4;
+    background-image: url("../../assets/svgs/school_icon.svg");
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    background-position: left 20px top 20px;
+    background-repeat: no-repeat;
+}
+
+.p-inputtext:enabled:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 1px transparent;
+}
+
+::placeholder { 
+    color: #6666ff;
+    opacity: 1; /* Firefox */
+  }
+
+input:hover::placeholder {
+    color: #0000c4;
+    opacity: 1; /* Firefox */
+  }

@@ -4,22 +4,45 @@
     class="p-dialog-maximized"
     header="Header"
     footer="Footer"
-  />
+  >
+    <div>
+      <div class="center-row">
+        <AutoComplete
+          class="idp-autocomplete"
+          v-on:emitSelectedIdp="onIdpSelected"
+        />
+      </div>
+      <div class="center-row" v-if="showButton">
+        <Button
+          class="idp-choice-button"
+          :label="$t('idp.button')"
+          :alt="$t('idp.button')"
+        >
+          <span class="idp-button-label font-semibold">{{
+            $t("idp.button")
+          }}</span>
+        </Button>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Dialog from "primevue/dialog";
+import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 
 export default defineComponent({
   name: "idp-dialog",
   props: {
     visible: { type: Boolean, default: false },
   },
-  components: { Dialog },
+  components: { Dialog, AutoComplete },
   data() {
     return {
       showDialog: false,
+      receivedIdp: "",
+      showButton: false,
     };
   },
   watch: {
@@ -28,6 +51,12 @@ export default defineComponent({
     },
     visible(newVal: boolean) {
       this.showDialog = newVal;
+    },
+  },
+  methods: {
+    onIdpSelected(value: string) {
+      this.receivedIdp = value;
+      if (this.receivedIdp) this.showButton = true;
     },
   },
 });

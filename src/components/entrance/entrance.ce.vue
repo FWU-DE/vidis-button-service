@@ -26,6 +26,7 @@
     header="Header"
     footer="Footer"
     @closed="showDialog = false"
+    :style="{ background: d2eeff }"
   />
 </template>
 
