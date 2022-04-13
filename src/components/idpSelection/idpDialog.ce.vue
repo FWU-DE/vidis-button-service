@@ -34,7 +34,6 @@
       </div>
     </div>
   </Dialog>
-  ======= /> >>>>>>> VBTN-45 add entrance section (#11)
 </template>
 
 <script lang="ts">
