@@ -1,7 +1,7 @@
 name: Main Vidis Button Service Pipelines
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 
 jobs:
