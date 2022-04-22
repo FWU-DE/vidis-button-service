@@ -48,7 +48,7 @@ describe("IdPAutocomplete", () => {
      */
     test("idps are being loaded", async () => {
       await IdPAutocompleteWrapper.vm.loadIdps();
-      expect(IdPAutocompleteWrapper.vm.idpsInStore).toHaveLength(9);
+      expect(IdPAutocompleteWrapper.vm.idpsInStore).toHaveLength(10);
     });
 
     /**
@@ -78,6 +78,7 @@ describe("IdPAutocomplete", () => {
           "Rheinland-Pfalz",
           "Sachsen",
           "Brandenburg",
+          "Nordrhein-Westfalen",
           "Sonstige",
         ])
       );
@@ -122,6 +123,7 @@ describe("IdPAutocomplete", () => {
           "Rheinland-Pfalz",
           "Sachsen",
           "Brandenburg",
+          "Nordrhein-Westfalen",
           "Sonstige",
         ]);
       IdPAutocompleteWrapper.vm.groupIdps();
@@ -136,6 +138,7 @@ describe("IdPAutocomplete", () => {
           "Rheinland-Pfalz",
           "Sachsen",
           "Brandenburg",
+          "Nordrhein-Westfalen",
           "Sonstige",
         ]);
       IdPAutocompleteWrapper.vm.groupIdps();

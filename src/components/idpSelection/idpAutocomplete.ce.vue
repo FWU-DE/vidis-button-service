@@ -73,7 +73,7 @@ export default defineComponent({
     async loadIdps() {
       try {
         let res = await axios.get(
-          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps.json"
+          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps2.json"
         );
         this.availableIdps = res.data.idp;
         IdP.insert({

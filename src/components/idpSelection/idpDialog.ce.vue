@@ -17,6 +17,7 @@
           class="idp-choice-button"
           :label="$t('idp.button')"
           :alt="$t('idp.button')"
+          @click="redirectToIdpLogin()"
         >
           <span class="idp-button-label font-semibold">{{
             $t("idp.button")
@@ -34,6 +35,11 @@ import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 
 export default defineComponent({
   name: "idp-dialog",
+  inject: {
+    loginurl: {
+      default: "",
+    },
+  },
   props: {
     visible: { type: Boolean, default: false },
   },
@@ -54,6 +60,10 @@ export default defineComponent({
     },
   },
   methods: {
+    redirectToIdpLogin() {
+      let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
+      window.location.href = url;
+    },
     onIdpSelected(value: string) {
       this.receivedIdp = value;
       if (this.receivedIdp) this.showButton = true;

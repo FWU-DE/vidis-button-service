@@ -48,6 +48,7 @@ export default defineComponent({
     size: {
       default: "L",
     },
+    loginurl: "",
   },
   components: { idpDialog, entryButton },
   data() {
