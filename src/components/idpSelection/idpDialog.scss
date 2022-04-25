@@ -2,11 +2,11 @@
     background: #d2eeff;
 }
 
-.p-dialog .p-dialog-header{
+.p-dialog .p-dialog-header {
     background: #d2eeff;
 }
 
-.p-dialog .p-dialog-footer{
+.p-dialog .p-dialog-footer {
     background: #d2eeff;
 }
 
@@ -25,6 +25,23 @@
     fill: #0000c4 !important;
 }
 
+.idp-choice-button-loading {
+    width: 50%;
+    margin-top: 20px;
+    color: #7D7D7D;
+    opacity: 50%;
+    background: #f7f7f7;
+    background-color: #f7f7f7;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-style: normal;
+    transition: none;
+    padding: 16px 24px;
+    fill: #f7f7f7 !important;
+    z-index: 10;
+}
+
 .idp-autocomplete {
     width: 50%;
 }
@@ -36,11 +53,47 @@
 }
 
 .idp-button-label {
-    display: flex; 
+    display: flex;
     justify-content: center;
 }
 
-.center-row{
-    display: flex; 
+.center-row {
+    display: flex;
     justify-content: center;
+}
+
+
+.p-progress-circle {
+    stroke: #0032c4;
+}
+
+.p-progress-spinner {
+    width: 32px;
+    height: 32px;
+    z-index: 100;
+}
+
+@keyframes p-progress-spinner-color {
+
+    100%,
+    0% {
+        stroke: #0032c4;
+    }
+
+    40% {
+        stroke: #0032c4;
+    }
+
+    66% {
+        stroke: #0032c4;
+    }
+
+    80%,
+    90% {
+        stroke: #0032c4;
+    }
+}
+
+.overlay {
+    margin-bottom: -30px;
 }

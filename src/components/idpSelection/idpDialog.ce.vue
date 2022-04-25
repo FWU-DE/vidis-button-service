@@ -12,16 +12,24 @@
           v-on:emitSelectedIdp="onIdpSelected"
         />
       </div>
-      <div class="center-row" v-if="showButton">
+      <div class="center-row" v-if="showButton && !loading">
         <Button
           class="idp-choice-button"
           :label="$t('idp.button')"
           :alt="$t('idp.button')"
           @click="redirectToIdpLogin()"
         >
-          <span class="idp-button-label font-semibold">{{
-            $t("idp.button")
-          }}</span>
+          <span class="idp-button-label font-semibold"
+            >{{ $t("idp.button") }} {{ this.receivedIdp.name }}</span
+          >
+        </Button>
+      </div>
+      <div class="center-row" v-if="showButton && loading">
+        <Button class="idp-choice-button-loading" :alt="$t('idp.button')">
+          <ProgressSpinner class="center-row overlay"></ProgressSpinner>
+          <span class="idp-button-label font-semibold"
+            >{{ $t("idp.button") }} {{ this.receivedIdp.name }}</span
+          >
         </Button>
       </div>
     </div>
@@ -32,6 +40,7 @@
 import { defineComponent } from "vue";
 import Dialog from "primevue/dialog";
 import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
+import ProgressSpinner from "primevue/progressspinner";
 
 export default defineComponent({
   name: "idp-dialog",
@@ -43,12 +52,13 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, default: false },
   },
-  components: { Dialog, AutoComplete },
+  components: { Dialog, AutoComplete, ProgressSpinner },
   data() {
     return {
       showDialog: false,
       receivedIdp: "",
       showButton: false,
+      loading: false,
     };
   },
   watch: {
@@ -61,8 +71,14 @@ export default defineComponent({
   },
   methods: {
     redirectToIdpLogin() {
-      let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
-      window.location.href = url;
+      this.loading = true;
+      try {
+        let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
+        window.location.href = url;
+      } catch (e) {
+        console.log("Couldn't redirect to selected IdP ");
+        this.loading = false;
+      }
     },
     onIdpSelected(value: string) {
       this.receivedIdp = value;

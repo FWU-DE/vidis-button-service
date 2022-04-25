@@ -6,7 +6,7 @@ export default {
     button: "Anmelden mit deinem Schulaccount", //Text displayed on the button that opens the dialog and start the base user journey
   },
   idp: {
-    button: "Secure Login in Schulname",
+    button: "Secure Login in ",
     placeholder: "z. B. Bundesland, Stadt, Email, Schule, ...",
     other: "Sonstige",
   },
