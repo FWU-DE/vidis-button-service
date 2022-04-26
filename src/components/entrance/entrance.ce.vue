@@ -13,7 +13,7 @@
     <img
       style="height: 55px"
       :src="logo"
-      :alt="$t('entrance.branding_accessibility')"
+      :alt="$t('general.branding_accessibility')"
     />
     <div class="col" />
     <div class="entrance-button-position">
@@ -23,8 +23,6 @@
   <idpDialog
     :visible="showDialog"
     class="p-dialog-maximized"
-    header="Header"
-    footer="Footer"
     @closed="showDialog = false"
     :style="{ background: d2eeff }"
   />

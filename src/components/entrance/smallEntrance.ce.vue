@@ -3,8 +3,6 @@
   <idpDialog
     :visible="showDialog"
     class="p-dialog-maximized"
-    header="Header"
-    footer="Footer"
     @closed="showDialog = false"
   />
 </template>
