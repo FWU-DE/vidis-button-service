@@ -3,6 +3,7 @@
     class="col-12 entrance-button"
     :label="$t('entrance.button')"
     :alt="$t('entrance.button')"
+    :class="{ 'small-entrance-button': this.size === 'S' }"
     @click="clicked"
     @mouseover="buttonHovered = true"
     @mouseleave="buttonHovered = false"
@@ -18,8 +19,8 @@ import { defineComponent } from "vue";
 import Button from "primevue/button";
 
 import logo from "@/assets/svgs/Logo.svg";
-import lockIcon from "@/assets/svgs/lockIcon.svg";
-import lockIconInverted from "@/assets/svgs/lockIcon_inverted.svg";
+import lockIcon from "@/assets/svgs/vidis_schield.svg";
+import lockIconInverted from "@/assets/svgs/vidis_schield_inverted.svg";
 import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 export default defineComponent({

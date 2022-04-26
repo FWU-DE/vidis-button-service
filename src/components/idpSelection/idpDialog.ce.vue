@@ -2,11 +2,14 @@
   <Dialog
     v-model:visible="showDialog"
     class="p-dialog-maximized"
-    header="Header"
-    footer="Footer"
+    @keydown.esc="showDialog = false"
+    :closable="false"
   >
-    <div>
-      <div class="center-row">
+    <template #header="">
+      <vbtnHeader @closeDialog="showDialog = false" />
+    </template>
+    <div class="grid-nogutter flex justify-content-center">
+      <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
         <AutoComplete
           class="idp-autocomplete"
           v-on:emitSelectedIdp="onIdpSelected"
@@ -14,6 +17,7 @@
       </div>
       <div class="center-row" v-if="showButton && !loading">
         <Button
+          v-if="showButton"
           class="idp-choice-button"
           :label="$t('idp.button')"
           :alt="$t('idp.button')"
@@ -33,14 +37,18 @@
         </Button>
       </div>
     </div>
+    <template #footer=""><vbtnFooter /></template>
   </Dialog>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Dialog from "primevue/dialog";
+import Button from "primevue/button";
 import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 import ProgressSpinner from "primevue/progressspinner";
+import vbtnHeader from "@/components/layoutElements/header.ce.vue";
+import vbtnFooter from "@/components/layoutElements/footer.ce.vue";
 
 export default defineComponent({
   name: "idp-dialog",
@@ -52,7 +60,14 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, default: false },
   },
-  components: { Dialog, AutoComplete, ProgressSpinner },
+  components: {
+    Dialog,
+    AutoComplete,
+    ProgressSpinner,
+    Button,
+    vbtnHeader,
+    vbtnFooter,
+  },
   data() {
     return {
       showDialog: false,

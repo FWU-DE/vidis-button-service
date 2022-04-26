@@ -1,0 +1,21 @@
+.secureLoginLabel {
+    margin-right: 11px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #0000c4;
+    opacity: 0.7;
+}
+
+.backButton {
+    font-weight: 400;
+    font-size: 12px;
+    margin-bottom: 16px;
+    color: #0000c4;
+    height: 18px;
+    padding-bottom: 9px;
+    padding-top: 9px;
+    padding-left: 0;
+}
+.backButton:focus {
+    box-shadow: none !important;
+}
