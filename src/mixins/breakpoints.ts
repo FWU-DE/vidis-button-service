@@ -12,12 +12,11 @@ export default {
   },
   computed: {
     breakpoint() {
-      const width = this.windowWidth;
       let bp = "xs";
-      if (width >= 576) bp = "sm";
-      if (width >= 768) bp = "md";
-      if (width >= 992) bp = "lg";
-      if (width >= 1200) bp = "xl";
+      if (this.windowWidth >= 576) bp = "sm";
+      if (this.windowWidth >= 768) bp = "md";
+      if (this.windowWidth >= 992) bp = "lg";
+      if (this.windowWidth >= 1200) bp = "xl";
       return bp;
     },
   },

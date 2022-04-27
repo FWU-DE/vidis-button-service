@@ -1,9 +1,7 @@
 <template>
   <div
     style="width: 100%; margin-bottom: 32px"
-    :style="{
-      'margin-top': pushdown,
-    }"
+    :style="{ 'margin-top': pushdown }"
     class="grid-nogutter flex justify-content-center"
   >
     <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
@@ -43,7 +41,7 @@ import logo from "@/assets/svgs/Logo.svg";
 import shield from "@/assets/svgs/vidis_schield.svg";
 
 export default defineComponent({
-  name: "vbtn-header",
+  name: "vbtnHeader",
   props: {},
   mixins: [breakpoints],
   components: { Button },

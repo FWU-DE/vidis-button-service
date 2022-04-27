@@ -3,7 +3,7 @@ export default {
     back: "zurück",
     branding_accessibility: "VIDIS-Logo", //If a user is blind, this text replaces the big branding logo
     secureLoginLabel: "Sicherer Login",
-    help: "Wie funktioniet es?",
+    help: "Wie funktioniert es?",
     dataprivacy: "Datenschutz",
     terms: "Nutzungsbedingungen",
     languages: "Sprache",
