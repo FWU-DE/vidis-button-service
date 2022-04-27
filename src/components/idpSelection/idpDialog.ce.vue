@@ -15,25 +15,25 @@
           v-on:emitSelectedIdp="onIdpSelected"
         />
       </div>
-      <div class="center-row" v-if="showButton && !loading">
+    </div>
+    <div class="grid-nogutter flex justify-content-center">
+      <div
+        class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6"
+        v-if="showButton"
+      >
         <Button
           v-if="showButton"
           class="idp-choice-button"
+          :class="{ 'idp-choice-button-loading': loading }"
           :label="$t('idp.button')"
           :alt="$t('idp.button')"
+          :disabled="loading"
           @click="redirectToIdpLogin()"
         >
-          <span class="idp-button-label font-semibold"
-            >{{ $t("idp.button") }} {{ this.receivedIdp.name }}</span
-          >
-        </Button>
-      </div>
-      <div class="center-row" v-if="showButton && loading">
-        <Button class="idp-choice-button-loading" :alt="$t('idp.button')">
-          <ProgressSpinner class="center-row overlay"></ProgressSpinner>
-          <span class="idp-button-label font-semibold"
-            >{{ $t("idp.button") }} {{ this.receivedIdp.name }}</span
-          >
+          <ProgressSpinner v-if="loading" class="idp-button-spinner" />
+          <div class="idp-button-label font-semibold">
+            {{ $t("idp.button") }} {{ this.receivedIdp.name }}
+          </div>
         </Button>
       </div>
     </div>
@@ -47,8 +47,8 @@ import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 import ProgressSpinner from "primevue/progressspinner";
-import vbtnHeader from "@/components/layoutElements/header.ce.vue";
-import vbtnFooter from "@/components/layoutElements/footer.ce.vue";
+import vbtnHeader from "@/components/layoutElements/vbtnHeader.ce.vue";
+import vbtnFooter from "@/components/layoutElements/vbtnFooter.ce.vue";
 
 export default defineComponent({
   name: "idp-dialog",

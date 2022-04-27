@@ -27,7 +27,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "tests/unit/components/layoutElements/vbtnHeader.spec.js",
+    "tests/unit/mixins/breakpoints.spec.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -11,7 +11,9 @@
 }
 
 .idp-choice-button {
-    width: 50%;
+    position: relative;
+    width: 100%;
+    height: 56px;
     margin-top: 20px;
     color: white;
     background: #0000c4;
@@ -26,17 +28,10 @@
 }
 
 .idp-choice-button-loading {
-    margin-top: 20px;
     color: #7d7d7d;
     opacity: 50%;
     background: #f7f7f7;
     background-color: #f7f7f7;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-style: normal;
-    transition: none;
-    padding: 16px 24px;
     fill: #f7f7f7 !important;
     z-index: 10;
 }
@@ -45,22 +40,21 @@
     width: 50%;
 }
 
-.entrance-button:enabled:hover {
-    background: #0032c4;
-    color: white;
-    fill: #0032c4 !important;
+.idp-button-spinner {
+    width: 100%;
+    z-index: 10;
+    height: 32px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .idp-button-label {
-    display: flex;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.center-row {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .p-progress-circle {
@@ -91,8 +85,4 @@
     90% {
         stroke: #0032c4;
     }
-}
-
-.overlay {
-    margin-bottom: -30px;
 }
