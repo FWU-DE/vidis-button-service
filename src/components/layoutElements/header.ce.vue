@@ -53,7 +53,7 @@ export default defineComponent({
     },
   },
   data() {
-    return { logo, shield, windowWidth: window.innerWidth };
+    return { logo, shield };
   },
 
   computed: {
