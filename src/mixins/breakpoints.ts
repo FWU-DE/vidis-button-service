@@ -3,15 +3,15 @@ export default {
     return { windowWidth: window.innerWidth };
   },
   mounted() {
-    this.$nextTick(() => {
+    this.$nextTick((): void => {
       window.addEventListener("resize", this.onResize);
     });
   },
-  beforeUnmount() {
+  beforeUnmount(): void {
     window.removeEventListener("resize", this.onResize);
   },
   computed: {
-    breakpoint() {
+    breakpoint(): string {
       let bp = "xs";
       if (this.windowWidth >= 576) bp = "sm";
       if (this.windowWidth >= 768) bp = "md";
@@ -21,7 +21,7 @@ export default {
     },
   },
   methods: {
-    onResize() {
+    onResize(): void {
       this.windowWidth = window.innerWidth;
     },
   },

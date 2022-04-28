@@ -3,6 +3,7 @@
     <AutoComplete
       type="search"
       forceSelection
+      :modelValue="selectedIdP"
       v-model="selectedIdP"
       :suggestions="filteredIdps"
       @item-select="emitToParent"
@@ -29,6 +30,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import cookie from "@/mixins/cookie";
 import AutoComplete from "primevue/autocomplete";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
@@ -40,6 +42,7 @@ import { FilterService, FilterMatchMode } from "primevue/api";
 export default defineComponent({
   name: "idp-autocomplete",
   props: {},
+  mixins: [cookie],
   components: { AutoComplete },
   data() {
     return {
@@ -51,13 +54,13 @@ export default defineComponent({
       selectedIdP: null,
       filteredIdps: null,
       notGroupedIdps: null,
+      loadingIdps: false,
     };
   },
   async created() {
     await this.loadIdps();
     this.groupIdps();
   },
-
   computed: {
     idpsInStore() {
       return IdP.all();
@@ -71,19 +74,27 @@ export default defineComponent({
   },
   methods: {
     async loadIdps() {
-      try {
-        let res = await axios.get(
-          "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps2.json"
-        );
-        this.availableIdps = res.data.idp;
-        IdP.insert({
-          data: this.availableIdps,
-        });
-      } catch (e) {
-        throw new Error("Couldn't load IdPs " + e);
+      console.log(IdP.all().length);
+      if (IdP.all().length === 0) {
+        try {
+          this.loadingIdps = true;
+          let res = await axios.get(
+            "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps2.json"
+          );
+          this.availableIdps = res.data.idp;
+          IdP.insert({
+            data: this.availableIdps,
+          });
+          this.selectedIdP = IdP.find(this.cookieIdp);
+          if (this.selectedIdP) this.emitToParent();
+          this.loadingIdps = false;
+        } catch (e) {
+          this.loadingIdps = false;
+          throw new Error("Couldn't load IdPs " + e);
+        }
       }
     },
-    emitToParent(event: any) {
+    emitToParent() {
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
     searchGroupedIdps(event: any) {
