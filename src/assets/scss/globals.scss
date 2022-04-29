@@ -30,6 +30,8 @@ html * {
     text-align: left;
 }
 
+@import "@/components/layoutElements/vbtnHeader.scss";
+@import "@/components/layoutElements/vbtnFooter.scss";
 @import "@/components/entrance/entranceStyles.scss";
 @import "@/components/idpSelection/idpDialog.scss";
 @import "@/components/idpSelection/idpAutocomplete.scss";
