@@ -1,5 +1,4 @@
 import breakpoints from "@/mixins/breakpoints.ts";
-
 describe("EntryButton", () => {
   describe("computed", () => {
     describe("breakpoint", () => {

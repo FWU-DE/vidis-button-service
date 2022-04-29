@@ -11,7 +11,7 @@ export default {
     this.cookieIdp = this.getCookie();
   },
   methods: {
-    addToCookie(idp: string): void {
+    setCookie(idp: string): void {
       if (this.cookie)
         document.cookie = `vbtn=${encodeURIComponent(idp)};path=/`;
     },

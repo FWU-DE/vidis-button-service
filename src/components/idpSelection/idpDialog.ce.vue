@@ -95,8 +95,9 @@ export default defineComponent({
       this.loading = true;
       try {
         let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
+        this.setCookie(this.receivedIdp.id);
         window.location.href = url;
-        this.addToCookie(this.receivedIdp.id);
+        this.loading = false;
       } catch (e) {
         console.log("Couldn't redirect to selected IdP ", e); //TODO show Error Toastnotification
         this.loading = false;

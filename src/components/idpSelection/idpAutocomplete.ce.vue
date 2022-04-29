@@ -79,12 +79,14 @@ export default defineComponent({
           let res = await axios.get(
             "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps2.json"
           );
+          console.log("??", res);
           this.availableIdps = res.data.idp;
           IdP.insert({
             data: this.availableIdps,
           });
           this.loadingIdps = false;
         } catch (e) {
+          console.log("??", e);
           this.loadingIdps = false;
           throw new Error("Couldn't load IdPs " + e);
         }
