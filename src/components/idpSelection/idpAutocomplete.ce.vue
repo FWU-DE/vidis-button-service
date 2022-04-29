@@ -14,9 +14,14 @@
       :placeholder="$t('idp.placeholder')"
     >
       <template #item="slotProps">
-        <div>{{ slotProps.item.name }}</div>
-        <div class="autocomplete-small-item">
-          {{ slotProps.item.address.city }}
+        <div class="grid-nogutter flex align-items-center">
+          <img :src="schoolIcon" class="idp-item-icon" />
+          <div>
+            <div class="idp-item-label">{{ slotProps.item.name }}</div>
+            <div class="autocomplete-small-item">
+              {{ slotProps.item.address.city }}
+            </div>
+          </div>
         </div>
       </template>
       <template #optiongroup="slotProps">
@@ -30,11 +35,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import schoolIcon from "@/assets/svgs/school_icon.svg";
 import cookie from "@/mixins/cookie";
 import AutoComplete from "primevue/autocomplete";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
-import schoolSvg from "@/assets/svgs/school_icon.svg";
 import cross from "@/assets/svgs/cross.svg";
 import _ from "lodash";
 import { FilterService, FilterMatchMode } from "primevue/api";
@@ -46,11 +51,11 @@ export default defineComponent({
   components: { AutoComplete },
   data() {
     return {
+      schoolIcon,
+      cross,
       idps: null,
       suggestions: [],
       availableIdps: [],
-      schoolSvg,
-      cross,
       selectedIdP: null,
       filteredIdps: null,
       notGroupedIdps: null,
@@ -65,16 +70,9 @@ export default defineComponent({
     idpsInStore() {
       return IdP.all();
     },
-    schoolLogo() {
-      return schoolSvg;
-    },
-    crossSvg() {
-      return cross;
-    },
   },
   methods: {
-    async loadIdps() {
-      console.log(IdP.all().length);
+    async loadIdps(): Promise<void> {
       if (IdP.all().length === 0) {
         try {
           this.loadingIdps = true;
@@ -85,19 +83,19 @@ export default defineComponent({
           IdP.insert({
             data: this.availableIdps,
           });
-          this.selectedIdP = IdP.find(this.cookieIdp);
-          if (this.selectedIdP) this.emitToParent();
           this.loadingIdps = false;
         } catch (e) {
           this.loadingIdps = false;
           throw new Error("Couldn't load IdPs " + e);
         }
       }
+      this.selectedIdP = IdP.find(this.cookieIdp);
+      if (this.selectedIdP) this.emitToParent();
     },
-    emitToParent() {
+    emitToParent(): void {
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
-    searchGroupedIdps(event: any) {
+    searchGroupedIdps(event: any): void {
       let query = event.query;
       let filteredIdps = [];
       for (let state of this.finalGroupedIdps) {
@@ -113,7 +111,7 @@ export default defineComponent({
       }
       this.filteredIdps = filteredIdps;
     },
-    getIdpsForState(state: string) {
+    getIdpsForState(state: string): any[] {
       let idpsForParticularState = _.filter(
         this.idpsInStore,
         function (el: any) {
@@ -122,20 +120,20 @@ export default defineComponent({
       );
       return idpsForParticularState;
     },
-    getIdpsWithoutState() {
+    getIdpsWithoutState(): any[] {
       const hasNoState = _.filter(this.idpsInStore, function (el: any) {
         return !el.address.state;
       });
       return hasNoState;
     },
-    getListOfStates() {
+    getListOfStates(): _.Collection<any> {
       let statesList = this.idpsInStore.map(
         (value: any) => value.address.state
       );
       statesList.push("Sonstige");
       return _(statesList).uniq().compact();
     },
-    groupIdps() {
+    groupIdps(): any[] {
       let finalGroupedIdps = [];
       for (let state of this.getListOfStates()) {
         if (state !== "Sonstige") {
