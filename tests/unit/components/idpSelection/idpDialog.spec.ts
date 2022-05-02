@@ -41,4 +41,27 @@ describe("idpDialog", () => {
       });
     });
   });
+  describe("methods", () => {
+    describe("redirectToIdpLogin", () => {
+      test("that setCookie has been called and its not loading anymore", () => {
+        const setCookieSpy = jest.spyOn(idpDialogWrapper.vm, "setCookie");
+        idpDialogWrapper.vm.receivedIdp = { id: "1" };
+        idpDialogWrapper.vm.redirectToIdpLogin();
+
+        expect(idpDialogWrapper.vm.loading).toBe(false);
+        expect(setCookieSpy).toHaveBeenCalledWith("1");
+      });
+    });
+    describe("onIdpSelected", () => {
+      test("that setCookie has been called and its not loading anymore", () => {
+        idpDialogWrapper.vm.onIdpSelected();
+        expect(idpDialogWrapper.vm.receivedIdp).toBe(undefined);
+        expect(idpDialogWrapper.vm.showButton).toBe(false);
+        idpDialogWrapper.vm.onIdpSelected("test");
+
+        expect(idpDialogWrapper.vm.receivedIdp).toBe("test");
+        expect(idpDialogWrapper.vm.showButton).toBe(true);
+      });
+    });
+  });
 });

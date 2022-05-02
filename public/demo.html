@@ -1,16 +1,34 @@
 <!DOCTYPE html><meta charset="utf-8" /> <title>vidisLogin demo</title>
 <script src="./vidisLogin.umd.js"></script>
-<h1>Default</h1>
-<vidis-login></vidis-login>
+<h1>Default (size = L, cookie = false)</h1>
+<vidis-login loginurl="https://www.taskcards.de/auth/openid"></vidis-login>
 <br /><br />
 <br /><br />
-<h1>Large (size = L)</h1>
-<vidis-login size="L" dark="false"> </vidis-login>
+<h1>Large (size = L, cookie = true)</h1>
+<vidis-login
+  size="L"
+  dark="false"
+  cookie="true"
+  loginurl="https://www.taskcards.de/auth/openid"
+>
+</vidis-login>
 <br /><br />
 <br /><br />
-<h1>Medium (size = M)</h1>
-<vidis-login size="M" dark="false"> </vidis-login>
+<h1>Medium (size = M,cookie = true)</h1>
+<vidis-login
+  size="M"
+  dark="false"
+  cookie="true"
+  loginurl="https://www.taskcards.de/auth/openid"
+>
+</vidis-login>
 <br /><br />
 <br /><br />
-<h1>Small (size = S)</h1>
-<vidis-login size="S" dark="false"> </vidis-login>
+<h1>Small (size = S, cookie = false)</h1>
+<vidis-login
+  size="S"
+  dark="false"
+  cookie="false"
+  loginurl="https://www.taskcards.de/auth/openid"
+>
+</vidis-login>

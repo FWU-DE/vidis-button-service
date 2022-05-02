@@ -4,7 +4,6 @@ import { VidisLoginApp } from "@/Webcomponent";
 describe("Webcomponent", () => {
   beforeAll(() => {
     customElements.define("vidis-login", VidisLoginApp);
-    console.log(VidisLoginApp);
   });
   describe("Initialization", () => {
     test("that all necessary methods are called", () => {

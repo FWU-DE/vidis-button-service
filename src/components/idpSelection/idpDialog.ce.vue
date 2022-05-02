@@ -10,9 +10,9 @@
     </template>
     <div class="grid-nogutter flex justify-content-center">
       <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
-        <AutoComplete
+        <IdpAutoComplete
           class="idp-autocomplete"
-          v-on:emitSelectedIdp="onIdpSelected"
+          @emitSelectedIdp="onIdpSelected"
         />
       </div>
     </div>
@@ -43,9 +43,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Cookie from "@/mixins/cookie";
+
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
-import AutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
+import IdpAutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 import ProgressSpinner from "primevue/progressspinner";
 import vbtnHeader from "@/components/layoutElements/vbtnHeader.ce.vue";
 import vbtnFooter from "@/components/layoutElements/vbtnFooter.ce.vue";
@@ -56,13 +58,17 @@ export default defineComponent({
     loginurl: {
       default: "",
     },
+    cookie: {
+      default: false,
+    },
   },
   props: {
     visible: { type: Boolean, default: false },
   },
+  mixins: [Cookie],
   components: {
     Dialog,
-    AutoComplete,
+    IdpAutoComplete,
     ProgressSpinner,
     Button,
     vbtnHeader,
@@ -77,25 +83,27 @@ export default defineComponent({
     };
   },
   watch: {
-    showDialog(newVal: boolean) {
+    showDialog(newVal: boolean): void {
       if (!newVal) this.$emit("closed");
     },
-    visible(newVal: boolean) {
+    visible(newVal: boolean): void {
       this.showDialog = newVal;
     },
   },
   methods: {
-    redirectToIdpLogin() {
+    redirectToIdpLogin(): void {
       this.loading = true;
       try {
         let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
+        this.setCookie(this.receivedIdp.id);
         window.location.href = url;
+        this.loading = false;
       } catch (e) {
-        console.log("Couldn't redirect to selected IdP ");
+        console.log("Couldn't redirect to selected IdP ", e); //TODO show Error Toastnotification
         this.loading = false;
       }
     },
-    onIdpSelected(value: string) {
+    onIdpSelected(value: string): void {
       this.receivedIdp = value;
       if (this.receivedIdp) this.showButton = true;
     },
