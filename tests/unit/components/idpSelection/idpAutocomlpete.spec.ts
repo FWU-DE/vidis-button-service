@@ -6,12 +6,15 @@ import IdpsWithoutState from "./idpsWithoutState.json";
 import groupedIdps from "./groupedIdps.json";
 import idpsInStore from "./idpsInStore.json";
 import searchResults from "./searchResults.json";
+import getResults from "./getResults.json";
 
 import { messages } from "@/languages/i18nPlugin";
+import axios from "axios";
 
 describe("IdPAutocomplete", () => {
   let IdPAutocompleteWrapper: any;
-  beforeEach(() => {
+  beforeEach(async () => {
+    axios.get = jest.fn().mockResolvedValue({ data: getResults });
     IdPAutocompleteWrapper = shallowMount(IdPAutocomplete, {
       store,
       global: {
@@ -24,6 +27,9 @@ describe("IdPAutocomplete", () => {
         },
       },
     });
+    await IdPAutocompleteWrapper.vm.$nextTick();
+
+    // await IdPAutocompleteWrapper.vm.loadIdps();
   });
 
   /**
@@ -37,27 +43,29 @@ describe("IdPAutocomplete", () => {
   });
 
   describe("methods", () => {
-    beforeEach(async () => {
-      await IdPAutocompleteWrapper.vm.loadIdps();
+    describe("loadIdps", () => {
+      /**
+       * GIVEN: A mocked Nexus
+       * WHEN: loading IDPs
+       * THEN: IdPs are Loaded
+       */
+      test("idps are being loaded", async () => {
+        const emitToParentSpy = jest.spyOn(
+          IdPAutocompleteWrapper.vm,
+          "emitToParent"
+        );
+        IdPAutocompleteWrapper.vm.cookieIdp = 1;
+        await IdPAutocompleteWrapper.vm.loadIdps();
+        expect(IdPAutocompleteWrapper.vm.idpsInStore).toEqual(idpsInStore);
+        expect(emitToParentSpy).toHaveBeenCalled();
+      });
     });
-    afterEach(() => {});
-    /**
-     * GIVEN: Component
-     * WHEN: Component is created
-     * THEN: created was called and idps were loaded
-     */
-    test("idps are being loaded", async () => {
-      await IdPAutocompleteWrapper.vm.loadIdps();
-      expect(IdPAutocompleteWrapper.vm.idpsInStore).toHaveLength(10);
-    });
-
     /**
      * GIVEN: Component
      * WHEN: setting a value of idpAutocomplete
      * THEN: selectedIdP value is being emitted to parent
      */
     test("emitToParent", async () => {
-      await IdPAutocompleteWrapper.vm.loadIdps();
       IdPAutocompleteWrapper.vm.selectedIdP = IdpsForBremen[0];
       IdPAutocompleteWrapper.vm.emitToParent();
       expect(IdPAutocompleteWrapper.emitted().emitSelectedIdp[0]).toEqual([
@@ -152,7 +160,6 @@ describe("IdPAutocomplete", () => {
 
   describe("computed", () => {
     test("that all idps in store are being returned", async () => {
-      await IdPAutocompleteWrapper.vm.loadIdps();
       expect(IdPAutocompleteWrapper.vm.idpsInStore).toEqual(idpsInStore);
     });
   });

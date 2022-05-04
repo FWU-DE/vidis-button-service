@@ -24,7 +24,7 @@
     :visible="showDialog"
     class="p-dialog-maximized"
     @closed="showDialog = false"
-    :style="{ background: d2eeff }"
+    style="background: d2eeff"
   />
 </template>
 
@@ -46,7 +46,6 @@ export default defineComponent({
     size: {
       default: "L",
     },
-    loginurl: "",
   },
   components: { idpDialog, entryButton },
   data() {

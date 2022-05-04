@@ -55,7 +55,7 @@ export default defineComponent({
   },
 
   computed: {
-    pushdown() {
+    pushdown(): string {
       return this.breakpoint === "xs" ||
         this.breakpoint === "sm" ||
         this.breakpoint === "md"
@@ -64,7 +64,7 @@ export default defineComponent({
     },
   },
   methods: {
-    closeDialog() {
+    closeDialog(): void {
       this.$emit("closeDialog");
     },
   },
