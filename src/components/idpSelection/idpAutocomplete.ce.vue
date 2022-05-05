@@ -19,7 +19,7 @@
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
-        @focus="switchToMobile"
+        @click="switchToMobile"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
@@ -103,7 +103,12 @@ export default defineComponent({
       return IdP.all();
     },
     allowTeleportToMobile(): boolean {
-      return this.breakpoint === "xs" || this.breakpoint === "sm";
+      return this.breakpoint === "xs";
+    },
+  },
+  watch: {
+    showMobile(newShowMobile) {
+      this.disableTeleport = !newShowMobile;
     },
   },
   methods: {
@@ -114,13 +119,11 @@ export default defineComponent({
         setTimeout(() => {
           this.disableTeleport = false;
           this.ready = true;
-          console.log("teleported");
         }, 1);
       }
     },
     switchToNormal() {
       this.showMobile = false;
-      this.disableTeleport = true;
     },
     async loadIdps(): Promise<void> {
       if (IdP.all().length === 0) {
@@ -152,12 +155,11 @@ export default defineComponent({
         let filteredItems = state.items.filter((item: any) => {
           let found =
             this.contains(item.name, query) ||
-            this.contains(item.emailDomain, query) ||
+            this.contains(this.emailToDomain(item.emailDomain), query) ||
             this.contains(item.additionalInformation, query) ||
             this.contains(item.address.city, query) ||
             this.contains(item.address.state, query) ||
             this.contains(item.address.zip, query) ||
-            this.contains(item.address.street, query) ||
             (item.alternativeSearchTags || []).some((tag: string) =>
               this.contains(tag, query)
             );
@@ -178,16 +180,13 @@ export default defineComponent({
       return `@${email.split("@").pop()}`;
     },
     getIdpsForState(state: string): any[] {
-      let idpsForParticularState = _.filter(
-        this.idpsInStore,
-        function (el: any) {
-          return el.address.state === state;
-        }
-      );
+      let idpsForParticularState = _.filter(this.idpsInStore, (el: any) => {
+        return el.address.state === state;
+      });
       return idpsForParticularState;
     },
     getIdpsWithoutState(): any[] {
-      const hasNoState = _.filter(this.idpsInStore, function (el: any) {
+      const hasNoState = _.filter(this.idpsInStore, (el: any) => {
         return !el.address.state;
       });
       return hasNoState;

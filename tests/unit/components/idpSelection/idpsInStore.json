@@ -4,12 +4,12 @@
     "id": "1",
     "name": "SuBITI Bremen",
     "type": "LandesPortal",
-    "emailDomain": "",
+    "emailDomain": "subiti.de",
     "address": {
       "state": "Bremen",
       "city": "Bremen"
     },
-    "alternativeSearchTags": [],
+    "alternativeSearchTags": ["SuBITI"],
     "additionalInformation": "",
     "img": null
   },

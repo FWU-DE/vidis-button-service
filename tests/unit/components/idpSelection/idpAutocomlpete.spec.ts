@@ -43,6 +43,26 @@ describe("IdPAutocomplete", () => {
   });
 
   describe("methods", () => {
+    describe("switchToMobile", () => {
+      test("that disableTeleport == false and ready == true", () => {
+        Object.defineProperty(window, "innerWidth", {
+          writable: true,
+          value: 500,
+        });
+        IdPAutocompleteWrapper.vm.showMobile = true;
+        IdPAutocompleteWrapper.vm.switchToMobile();
+        setTimeout(() => {
+          expect(IdPAutocompleteWrapper.vm.disableTeleport).toBe(false);
+          expect(IdPAutocompleteWrapper.vm.ready).toBe(true);
+        }, 10);
+      }, 15);
+    });
+    describe("switchToNormal", () => {
+      test("that showMobile == false", () => {
+        IdPAutocompleteWrapper.vm.switchToNormal();
+        expect(IdPAutocompleteWrapper.vm.showMobile).toBe(false);
+      });
+    });
     describe("loadIdps", () => {
       /**
        * GIVEN: A mocked Nexus
@@ -66,8 +86,13 @@ describe("IdPAutocomplete", () => {
      * THEN: selectedIdP value is being emitted to parent
      */
     test("emitToParent", async () => {
+      const switchToNormalSpy = jest.spyOn(
+        IdPAutocompleteWrapper.vm,
+        "switchToNormal"
+      );
       IdPAutocompleteWrapper.vm.selectedIdP = IdpsForBremen[0];
       IdPAutocompleteWrapper.vm.emitToParent();
+      expect(switchToNormalSpy).toHaveBeenCalled();
       expect(IdPAutocompleteWrapper.emitted().emitSelectedIdp[0]).toEqual([
         IdpsForBremen[0],
       ]);

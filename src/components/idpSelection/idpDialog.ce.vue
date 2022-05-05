@@ -95,7 +95,7 @@ export default defineComponent({
     redirectToIdpLogin(): void {
       this.loading = true;
       try {
-        let url = this.loginurl + "?idp_hint=" + this.receivedIdp.id;
+        let url = this.loginurl + "?kc_idp_hint=" + this.receivedIdp.id;
         this.setCookie(this.receivedIdp.id);
         window.location.href = url;
         this.loading = false;
