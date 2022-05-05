@@ -6,6 +6,7 @@
     text-indent: 40px;
     padding: 20px;
     color: #0000c4;
+    width: 100%;
 }
 
 .p-autocomplete-input:enabled:focus {
@@ -55,4 +56,18 @@
 input:hover::placeholder {
     color: #0000c4;
     opacity: 1; /* Firefox */
+}
+
+.p-sidebar-header {
+    padding: 0 !important;
+}
+
+.p-sidebar-content {
+    padding: 0 !important;
+}
+
+.mobile-input {
+    border: 0px;
+    width: 100%;
+    z-index: 1200;
 }

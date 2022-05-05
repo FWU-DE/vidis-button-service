@@ -137,24 +137,25 @@ describe("IdPAutocomplete", () => {
       IdPAutocompleteWrapper.vm.groupIdps();
       expect(IdPAutocompleteWrapper.vm.finalGroupedIdps).toEqual(groupedIdps);
     });
-
-    test("searchGroupedIdps", () => {
-      IdPAutocompleteWrapper.vm.getListOfStates = jest
-        .fn()
-        .mockReturnValue([
-          "Bremen",
-          "Rheinland-Pfalz",
-          "Sachsen",
-          "Brandenburg",
-          "Nordrhein-Westfalen",
-          "Sonstige",
-        ]);
-      IdPAutocompleteWrapper.vm.groupIdps();
-      const event = {
-        query: "Bre",
-      };
-      IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
-      expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual(searchResults);
+    describe("searchGroupedIdps", () => {
+      test("searchGroupedIdps", () => {
+        IdPAutocompleteWrapper.vm.getListOfStates = jest
+          .fn()
+          .mockReturnValue([
+            "Bremen",
+            "Rheinland-Pfalz",
+            "Sachsen",
+            "Brandenburg",
+            "Nordrhein-Westfalen",
+            "Sonstige",
+          ]);
+        IdPAutocompleteWrapper.vm.groupIdps();
+        const event = {
+          query: "Bre",
+        };
+        IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
+        expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual(searchResults);
+      });
     });
   });
 
