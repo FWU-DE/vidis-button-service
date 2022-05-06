@@ -18,6 +18,8 @@ export default {
     button: "Secure Login in ",
     placeholder: "z. B. Bundesland, Stadt, Email, Schule, ...",
     other: "Sonstige",
+    noResult: "Leider haben wir zu Ihren Suchkriterien",
+    noResult2: "keine passenden Ergebnisse gefunden.",
   },
   crests: {
     BW: "Baden-Württemberg Wappen",

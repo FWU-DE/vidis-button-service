@@ -44,18 +44,16 @@ describe("IdPAutocomplete", () => {
 
   describe("methods", () => {
     describe("switchToMobile", () => {
-      test("that disableTeleport == false and ready == true", () => {
+      test("that disableTeleport == false and ready == true", async () => {
         Object.defineProperty(window, "innerWidth", {
           writable: true,
           value: 500,
         });
         IdPAutocompleteWrapper.vm.showMobile = true;
-        IdPAutocompleteWrapper.vm.switchToMobile();
-        setTimeout(() => {
-          expect(IdPAutocompleteWrapper.vm.disableTeleport).toBe(false);
-          expect(IdPAutocompleteWrapper.vm.ready).toBe(true);
-        }, 10);
-      }, 15);
+        await IdPAutocompleteWrapper.vm.switchToMobile();
+        expect(IdPAutocompleteWrapper.vm.disableTeleport).toBe(false);
+        expect(IdPAutocompleteWrapper.vm.ready).toBe(true);
+      });
     });
     describe("switchToNormal", () => {
       test("that showMobile == false", () => {
@@ -163,7 +161,7 @@ describe("IdPAutocomplete", () => {
       expect(IdPAutocompleteWrapper.vm.finalGroupedIdps).toEqual(groupedIdps);
     });
     describe("searchGroupedIdps", () => {
-      test("searchGroupedIdps", () => {
+      test("normal search", () => {
         IdPAutocompleteWrapper.vm.getListOfStates = jest
           .fn()
           .mockReturnValue([
@@ -180,6 +178,29 @@ describe("IdPAutocomplete", () => {
         };
         IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
         expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual(searchResults);
+      });
+      test("search with no Results", () => {
+        IdPAutocompleteWrapper.vm.getListOfStates = jest
+          .fn()
+          .mockReturnValue([
+            "Bremen",
+            "Rheinland-Pfalz",
+            "Sachsen",
+            "Brandenburg",
+            "Nordrhein-Westfalen",
+            "Sonstige",
+          ]);
+        IdPAutocompleteWrapper.vm.groupIdps();
+        const event = {
+          query: "öerorjffsss",
+        };
+        IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
+        expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual([
+          {
+            label: "",
+            items: [{ noResult: true }],
+          },
+        ]);
       });
     });
   });

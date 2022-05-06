@@ -1,7 +1,11 @@
 <template>
   <span class="p-fluid">
-    <!-- <div id="mobileAutocompletePlace"></div> -->
-    <Sidebar v-model:visible="showMobile" position="top" :showCloseIcon="false">
+    <Sidebar
+      v-model:visible="showMobile"
+      position="top"
+      :showCloseIcon="false"
+      @hide="switchToNormal"
+    >
       <div id="mobileAutocompletePlace"></div>
     </Sidebar>
     <teleport
@@ -11,10 +15,10 @@
     >
       <AutoComplete
         v-model="selectedIdP"
+        ref="idpAutocomplete"
         :modelValue="selectedIdP"
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
-        :class="{}"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         style="width: 100%"
         @item-select="emitToParent"
@@ -27,12 +31,16 @@
         forceSelection
       >
         <template #item="{ item }">
-          <div class="flex align-items-center justify-content-between">
+          <div
+            v-if="!item.noResult"
+            class="flex align-items-center justify-content-between"
+            style="padding: 0.75rem 1rem"
+          >
             <div class="flex align-items-center">
               <img :src="schoolIcon" class="idp-item-icon" />
               <div>
                 <div class="idp-item-label">{{ item.name }}</div>
-                <div class="autocomplete-small-item">
+                <div class="autocomplete-small-item" style="padding: 0">
                   {{ item.address?.city }}
                 </div>
               </div>
@@ -47,8 +55,28 @@
           </div>
         </template>
         <template #optiongroup="{ item }">
-          <div class="autocomplete-small-item">
+          <div v-if="item.label" class="autocomplete-small-item">
             <div>{{ item.label }}</div>
+          </div>
+          <div
+            v-else
+            class="flex align-items-center grid-nogutter idp-noResult"
+            @click.prevent=""
+          >
+            <img
+              :src="WarningIcon"
+              class="idp-item-icon"
+              style="height: 20px"
+            />
+            <div class="">
+              <div class="idp-item-label idp-noResult-label">
+                {{ $t("idp.noResult") }}
+              </div>
+              <br />
+              <div class="idp-item-label idp-noResult-label">
+                {{ $t("idp.noResult2") }}
+              </div>
+            </div>
           </div>
         </template>
       </AutoComplete>
@@ -68,6 +96,7 @@ import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
 import schoolIcon from "@/assets/svgs/school_icon.svg";
+import WarningIcon from "@/assets/svgs/Warning.svg";
 
 export default defineComponent({
   name: "idp-autocomplete",
@@ -78,6 +107,7 @@ export default defineComponent({
     return {
       schoolIcon,
       cross,
+      WarningIcon,
       idps: null,
       suggestions: [],
       availableIdps: [],
@@ -88,6 +118,7 @@ export default defineComponent({
       showMobile: true,
       ready: false,
       disableTeleport: true,
+      autocompleteRef: {},
     };
   },
   async created() {
@@ -112,14 +143,15 @@ export default defineComponent({
     },
   },
   methods: {
-    switchToMobile() {
+    async switchToMobile() {
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
         this.ready = false;
-        setTimeout(() => {
-          this.disableTeleport = false;
-          this.ready = true;
-        }, 1);
+        await this.$nextTick();
+        this.disableTeleport = false;
+        this.ready = true;
+        await this.$nextTick();
+        this.$refs.idpAutocomplete.focus();
       }
     },
     switchToNormal() {
@@ -168,6 +200,12 @@ export default defineComponent({
         if (filteredItems && filteredItems.length) {
           filteredIdps.push({ ...state, ...{ items: filteredItems } });
         }
+      }
+      if (filteredIdps.length === 0) {
+        filteredIdps.push({
+          label: "",
+          items: [{ noResult: true }],
+        });
       }
       this.filteredIdps = filteredIdps;
     },
