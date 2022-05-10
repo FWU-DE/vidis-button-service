@@ -43,6 +43,24 @@ describe("IdPAutocomplete", () => {
   });
 
   describe("methods", () => {
+    describe("switchToMobile", () => {
+      test("that disableTeleport == false and ready == true", async () => {
+        Object.defineProperty(window, "innerWidth", {
+          writable: true,
+          value: 500,
+        });
+        IdPAutocompleteWrapper.vm.showMobile = true;
+        await IdPAutocompleteWrapper.vm.switchToMobile();
+        expect(IdPAutocompleteWrapper.vm.disableTeleport).toBe(false);
+        expect(IdPAutocompleteWrapper.vm.ready).toBe(true);
+      });
+    });
+    describe("switchToNormal", () => {
+      test("that showMobile == false", () => {
+        IdPAutocompleteWrapper.vm.switchToNormal();
+        expect(IdPAutocompleteWrapper.vm.showMobile).toBe(false);
+      });
+    });
     describe("loadIdps", () => {
       /**
        * GIVEN: A mocked Nexus
@@ -66,8 +84,13 @@ describe("IdPAutocomplete", () => {
      * THEN: selectedIdP value is being emitted to parent
      */
     test("emitToParent", async () => {
+      const switchToNormalSpy = jest.spyOn(
+        IdPAutocompleteWrapper.vm,
+        "switchToNormal"
+      );
       IdPAutocompleteWrapper.vm.selectedIdP = IdpsForBremen[0];
       IdPAutocompleteWrapper.vm.emitToParent();
+      expect(switchToNormalSpy).toHaveBeenCalled();
       expect(IdPAutocompleteWrapper.emitted().emitSelectedIdp[0]).toEqual([
         IdpsForBremen[0],
       ]);
@@ -137,24 +160,48 @@ describe("IdPAutocomplete", () => {
       IdPAutocompleteWrapper.vm.groupIdps();
       expect(IdPAutocompleteWrapper.vm.finalGroupedIdps).toEqual(groupedIdps);
     });
-
-    test("searchGroupedIdps", () => {
-      IdPAutocompleteWrapper.vm.getListOfStates = jest
-        .fn()
-        .mockReturnValue([
-          "Bremen",
-          "Rheinland-Pfalz",
-          "Sachsen",
-          "Brandenburg",
-          "Nordrhein-Westfalen",
-          "Sonstige",
+    describe("searchGroupedIdps", () => {
+      test("normal search", () => {
+        IdPAutocompleteWrapper.vm.getListOfStates = jest
+          .fn()
+          .mockReturnValue([
+            "Bremen",
+            "Rheinland-Pfalz",
+            "Sachsen",
+            "Brandenburg",
+            "Nordrhein-Westfalen",
+            "Sonstige",
+          ]);
+        IdPAutocompleteWrapper.vm.groupIdps();
+        const event = {
+          query: "Bre",
+        };
+        IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
+        expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual(searchResults);
+      });
+      test("search with no Results", () => {
+        IdPAutocompleteWrapper.vm.getListOfStates = jest
+          .fn()
+          .mockReturnValue([
+            "Bremen",
+            "Rheinland-Pfalz",
+            "Sachsen",
+            "Brandenburg",
+            "Nordrhein-Westfalen",
+            "Sonstige",
+          ]);
+        IdPAutocompleteWrapper.vm.groupIdps();
+        const event = {
+          query: "öerorjffsss",
+        };
+        IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
+        expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual([
+          {
+            label: "",
+            items: [{ noResult: true }],
+          },
         ]);
-      IdPAutocompleteWrapper.vm.groupIdps();
-      const event = {
-        query: "Bre",
-      };
-      IdPAutocompleteWrapper.vm.searchGroupedIdps(event);
-      expect(IdPAutocompleteWrapper.vm.filteredIdps).toEqual(searchResults);
+      });
     });
   });
 
