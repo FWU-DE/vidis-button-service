@@ -8,7 +8,6 @@
     <template #header="">
       <vbtnHeader @closeDialog="showDialog = false" />
     </template>
-    <!--  <div id="mobileAutocompletePlace"></div> -->
     <div class="grid-nogutter flex justify-content-center">
       <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
         <IdpAutoComplete
