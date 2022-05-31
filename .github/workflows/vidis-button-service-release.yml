@@ -54,6 +54,30 @@ jobs:
           find: "vidis-cdn-snapshots"
           replace: "vidis-cdn"
           include: "**uploadImagesAndFonts.sh"
+      - name: Replace CDN_UPLOAD_USER for latest
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadLatest.sh
+          secret-name: "CDN_UPLOAD_USER"
+          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
+      - name: Replace CDN_UPLOAD_SECRET for latest
+        uses: jwsi/secret-parser@v1
+        with:
+          filename: .github/workflows/scripts/uploadLatest.sh
+          secret-name: "CDN_UPLOAD_SECRET"
+          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
+      - name: Find and Replace current version with latest
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "current-version-suffix"
+          replace: "latest"
+          include: "**uploadLatest.sh"
+      - name: Find and Replace repository
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "vidis-cdn-snapshots"
+          replace: "vidis-cdn"
+          include: "**uploadLatest.sh"
       - name: Publish Release
         run: |
           echo "Version ${{ steps.tag.outputs.tag }}"
@@ -65,3 +89,5 @@ jobs:
           sh .github/workflows/scripts/downloadImagesAndFonts.sh
           echo "Uploading images and fonts for release ..."
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
+          echo "Uploading latest ..."
+          sh .github/workflows/scripts/uploadLatest.sh
