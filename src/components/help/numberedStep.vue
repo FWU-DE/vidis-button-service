@@ -1,14 +1,18 @@
 <template>
   <div
-    style="height: 612px"
-    :style="{ 'border-top': overline ? '2px solid #0000c4' : '' }"
+    :style="{
+      'border-top': overline ? '2px solid #0000c4' : '',
+      height: buttonLabel ? '713px' : '612px',
+    }"
     class="flex align-items-center"
   >
     <div class="grid grid-nogutter flex" style="width: 100%">
       <div
         class="col-12 xl:col-6 lg:col-6 mb:col-6 sm:col-6"
         :class="{ 'flex-order-1': invert }"
-        :style="{ 'padding-right': !invert ? '72px' : '' }"
+        :style="{
+          'padding-right': !invert && breakpoint !== 'xs' ? '72px' : '',
+        }"
       >
         <h2 class="helpStepNumber">{{ `0${number}` }}</h2>
         <h3 class="helpStepTitle">{{ $t(title) }}</h3>
@@ -17,7 +21,10 @@
       <div
         class="col-12 xl:col-6 lg:col-6 mb:col-6 sm:col-6"
         :class="{ 'flex-order-0': invert }"
-        :style="{ 'padding-right': invert ? '72px' : '' }"
+        :style="{
+          'padding-right': invert && breakpoint !== 'xs' ? '72px' : '',
+          'padding-top': breakpoint === 'xs' ? '32px' : '',
+        }"
       >
         <img
           style="max-height: 490px"
@@ -69,7 +76,8 @@ export default defineComponent({
 
   computed: {
     visiualizationHeight(): string {
-      if (this.breakpoint === "sm" || this.breakpoint === "xs") return "250px";
+      if (this.breakpoint === "sm") return "250px";
+      else if (this.breakpoint === "xs") return "200px";
       else if (this.breakpoint === "md") return "300px";
       else return "";
     },
