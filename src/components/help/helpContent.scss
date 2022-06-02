@@ -1,8 +1,8 @@
 .helpContent {
     z-index: 2000;
     position: fixed;
-    height: 87vh;
-    overflow: scroll;
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .headingsLabel {

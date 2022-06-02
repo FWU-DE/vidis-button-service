@@ -26,6 +26,11 @@ export default {
     initiativeFrom: "Eine Initiative von",
     heading1: "Wie funktioniert’s?",
     heading2: "Sicherer und einfacher Login über VIDIS",
+    footerTitle: "Was macht VIDIS",
+    footerText:
+      "VIDIS bietet zukünftig einen einzigen Login für Online-Dienste in Schule und Ausbildung. Mit VIDIS wird der Zugang zu Online-Diensten in Schule und Unterricht für Schülerinnen und Schüler sowie Lehrkräfte deutlich vereinfacht. Es wird einen Login für eine Vielzahl von Bildungsangeboten geben, damit die vielen unterschiedlichen Accounts und das häufige „Passwort zurücksetzen“ für alle ein Ende haben. Darüber hinaus schützt es die digitalen Identitäten und gewährleistet einen abgesicherten Zugang (rechts- & datenschutzkonform) zu Online-Diensten.",
+    footerPortals: "Teilnehmende Länder, Schulträger und Schulen",
+    footerPortalRedirect: "Jetzt mehr erfahren",
     steps: {
       title1: "Login über VIDIS",
       explanation1: "Klicke auf “Anmelden am Schulportal”",

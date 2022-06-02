@@ -9,7 +9,6 @@
       <helpHeader @closeDialog="showDialog = false" />
     </template>
     <helpContent />
-    <template #footer=""></template>
   </Dialog>
 </template>
 

@@ -1,24 +1,27 @@
 <template>
-  <div
-    style="margin-bottom: 32px"
-    class="grid-nogutter helpContent"
-    :style="{
-      'margin-left': hasCrestArea ? '536px' : '',
-      'margin-top': hasCrestArea ? '-350px' : '',
-      'padding-left': hasCrestArea ? '' : '24px',
-      'padding-right': hasCrestArea ? '72px' : '24px',
-      width: hasCrestArea ? 'calc(100% - 536px)' : '100%',
-    }"
-  >
-    <h1 class="headingsLabel">{{ $t("help.heading1") }}</h1>
-    <h1 class="headingsLabel" style="margin-top: 12px">
-      {{ $t("help.heading2") }}
-    </h1>
-    <div class="help-overLine" />
-    <numberedStep v-bind="number1Step" />
-    <numberedStep v-bind="number2Step" />
-    <numberedStep v-bind="number3Step" />
-    <numberedStep v-bind="number4Step" />
+  <div style="height: 87vh">
+    <div
+      style="margin-bottom: 32px"
+      class="grid-nogutter helpContent"
+      :style="{
+        'margin-left': hasCrestArea ? '536px' : '',
+        'margin-top': hasCrestArea ? '-350px' : '',
+        'padding-left': hasCrestArea ? '24px' : '24px',
+        'padding-right': '24px',
+        width: hasCrestArea ? 'calc(100% - 536px)' : '100%',
+      }"
+    >
+      <h1 class="headingsLabel">{{ $t("help.heading1") }}</h1>
+      <h1 class="headingsLabel" style="margin-top: 12px">
+        {{ $t("help.heading2") }}
+      </h1>
+      <div class="help-overLine" />
+      <numberedStep v-bind="number1Step" />
+      <numberedStep v-bind="number2Step" />
+      <numberedStep v-bind="number3Step" />
+      <numberedStep v-bind="number4Step" />
+      <helpFooter />
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,7 @@
 import { defineComponent } from "vue";
 import breakpoints from "@/mixins/breakpoints";
 import numberedStep from "@/components/help/numberedStep.vue";
+import helpFooter from "@/components/help/helpFooter.vue";
 
 import logo from "@/assets/svgs/Logo.svg";
 import shield from "@/assets/svgs/vidis_schield.svg";
@@ -39,7 +43,7 @@ import vidisPortalSelectionVisu from "@/assets/svgs/help/vidisPortalSelectionVis
 export default defineComponent({
   name: "vbtnHeader",
   props: {},
-  components: { numberedStep },
+  components: { numberedStep, helpFooter },
   mixins: [breakpoints],
   data() {
     return {
@@ -57,6 +61,7 @@ export default defineComponent({
     hasCrestArea(): boolean {
       return this.breakpoint === "xl";
     },
+
     invert() {
       return (
         this.breakpoint === "xl" ||

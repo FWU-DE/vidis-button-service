@@ -7,7 +7,13 @@
   >
     <h2 class="entrance-overlinetexts">{{ $t("entrance.banner") }}</h2>
     <div class="col" />
-    <h2 class="entrance-overlinetexts">{{ $t("entrance.help") }}</h2>
+    <Button
+      class="p-button-link linkButton flex align-content-center"
+      @click="toggleHelp(true)"
+    >
+      <span class="linkButtonLabel">{{ $t("general.help") }}</span>
+      <img class="openArrow" :src="openArrow" />
+    </Button>
   </div>
   <div class="grid-nogutter flex">
     <img
@@ -26,6 +32,7 @@
     @closed="showDialog = false"
     style="background: d2eeff"
   />
+  <helpDialog :visible="showHelp" @closed="toggleHelp(false)" />
 </template>
 
 <script lang="ts">
@@ -33,7 +40,10 @@ import { defineComponent } from "vue";
 
 import idpDialog from "@/components/idpSelection/idpDialog.ce.vue";
 import entryButton from "@/components/entrance/entryButton.ce.vue";
+import Button from "primevue/button";
+import helpDialog from "@/components/help/helpDialog.ce.vue";
 
+import openArrow from "@/assets/svgs/openArrow.svg";
 import logo from "@/assets/svgs/Logo.svg";
 import lockIcon from "@/assets/svgs/lockIcon.svg";
 import lockIconInverted from "@/assets/svgs/lockIcon_inverted.svg";
@@ -47,7 +57,7 @@ export default defineComponent({
       default: "L",
     },
   },
-  components: { idpDialog, entryButton },
+  components: { idpDialog, entryButton, Button, helpDialog },
   data() {
     return {
       showDialog: false,
@@ -57,11 +67,16 @@ export default defineComponent({
       logoNoText,
       logoNoText_inverted,
       buttonHovered: false,
+      showHelp: false,
+      openArrow,
     };
   },
   methods: {
     toggleDialog(mode?: boolean) {
       this.showDialog = mode ?? false;
+    },
+    toggleHelp(show: boolean): void {
+      this.showHelp = show;
     },
   },
 });
