@@ -30,8 +30,23 @@ html * {
     text-align: left;
 }
 
+.blue-background {
+    background: #d2eeff;
+}
+
+.white-background {
+    background: white;
+}
+.standard-padding {
+    padding: 1.5rem;
+}
+
 @import "@/components/layoutElements/vbtnHeader.scss";
 @import "@/components/layoutElements/vbtnFooter.scss";
 @import "@/components/entrance/entranceStyles.scss";
 @import "@/components/idpSelection/idpDialog.scss";
 @import "@/components/idpSelection/idpAutocomplete.scss";
+@import "@/components/layoutElements/crests.scss";
+@import "@/components/help/helpHeader.scss";
+@import "@/components/help/helpContent.scss";
+@import "@/components/help/numberedStep.scss";

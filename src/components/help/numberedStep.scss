@@ -1,0 +1,41 @@
+.helpStepNumber {
+    color: #0000c4;
+    font-weight: 600;
+    font-size: 80px;
+    line-height: normal;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+.helpStepTitle {
+    color: #0000c4;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 16px;
+}
+
+.helpStepExplanation {
+    color: #0000c4;
+    font-weight: 400;
+    font-size: 18px;
+    margin: 0;
+}
+
+.helpStepButton {
+    width: 100%;
+    padding: 24px;
+    background: rgba(210, 238, 255, 0.2) !important;
+    border-radius: 8px;
+}
+
+.helpStepButtonLabel {
+    color: #0000c4;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.helpOpenArrow {
+    padding-left: 5px;
+    width: 20px;
+}

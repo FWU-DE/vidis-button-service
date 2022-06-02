@@ -1,0 +1,19 @@
+.helpContent {
+    z-index: 2000;
+    position: fixed;
+    height: 87vh;
+    overflow: scroll;
+}
+
+.headingsLabel {
+    color: #0000c4;
+    font-weight: 500;
+    font-size: 24px;
+    margin: 0;
+}
+
+.help-overLine {
+    height: 2px;
+    background-color: #0000c4;
+    margin-top: 40px;
+}
