@@ -1,8 +1,8 @@
 <template>
   <div
-    style="width: 100%; margin-bottom: 32px"
-    :style="{ 'margin-top': pushdown }"
-    class="grid-nogutter flex justify-content-center"
+    style="width: 100%; padding-bottom: 32px"
+    :style="{ 'padding-top': pushdown }"
+    class="grid-nogutter flex justify-content-center blue-background standard-padding"
   >
     <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
       <Button class="p-button-link backButton" @click="closeDialog">

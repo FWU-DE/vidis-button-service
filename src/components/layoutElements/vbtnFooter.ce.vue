@@ -1,11 +1,17 @@
 <template>
-  <div style="width: 100%" class="grid-nogutter">
+  <div
+    style="width: 100%"
+    class="grid-nogutter blue-background standard-padding"
+  >
     <div class="col-12 flex justify-content-center grid-nogutter">
       <div
         class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6 sm:flex md:flex lg:flex xl:flex justify-content-between grid-nogutter align-items-center"
       >
         <div class="col-12 sm:col-4 md:col-4 lg:col-5 xl:col-5">
-          <Button class="p-button-link linkButton flex align-content-center">
+          <Button
+            class="p-button-link linkButton flex align-content-center"
+            @click="toggleHelp(true)"
+          >
             <span class="linkButtonLabel">{{ $t("general.help") }}</span>
             <img class="openArrow" :src="openArrow" />
           </Button>
@@ -17,8 +23,11 @@
             style="margin-left: 0"
             >{{ $t("general.dataprivacy") }}</a
           >
-          <a class="footer-links">{{ $t("general.terms") }}</a>
-          <a class="footer-links">{{ $t("general.languages") }}</a>
+          <a
+            class="footer-links"
+            href="https://www.vidis.schule/datenschutzerklaerung/"
+            >{{ $t("general.terms") }}</a
+          >
         </div>
       </div>
     </div>
@@ -56,6 +65,7 @@
     >
       <img :src="digitalPakt" :alt="$t('general.digitalPaktAlt')" />
     </div>
+    <helpDialog :visible="showHelp" @closed="toggleHelp(false)" />
   </div>
 </template>
 
@@ -63,6 +73,7 @@
 import { defineComponent } from "vue";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
+import helpDialog from "@/components/help/helpDialog.ce.vue";
 
 import digitalPakt from "@/assets/img/digitalPakt.png";
 import openArrow from "@/assets/svgs/openArrow.svg";
@@ -86,7 +97,7 @@ export default defineComponent({
   name: "vbtn-footer",
   props: {},
   mixins: [breakpoints],
-  components: { Button },
+  components: { Button, helpDialog },
   data() {
     return {
       digitalPakt,
@@ -109,9 +120,14 @@ export default defineComponent({
         { img: SH, alt: this.$t("crests.SH") },
         { img: Thuringia, alt: this.$t("crests.Thuringia") },
       ],
+      showHelp: false,
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    toggleHelp(show: boolean): void {
+      this.showHelp = show;
+    },
+  },
 });
 </script>
