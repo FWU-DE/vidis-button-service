@@ -162,7 +162,7 @@ export default defineComponent({
         try {
           this.loadingIdps = true;
           let res = await axios.get(
-            "https://fwu-nexus.intension.eu/repository/vidis-cdn/data/idps.json"
+            "https://repo.vidis.schule/repository/vidis-cdn/data/idps.json"
           );
           this.availableIdps = res.data.idp;
           IdP.insert({
