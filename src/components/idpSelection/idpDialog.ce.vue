@@ -66,6 +66,9 @@ export default defineComponent({
     cookie: {
       default: false,
     },
+    idphintname: {
+      default: "kc_idp_hint",
+    },
   },
   props: {
     visible: { type: Boolean, default: false },
@@ -99,7 +102,7 @@ export default defineComponent({
     redirectToIdpLogin(): void {
       this.loading = true;
       try {
-        let url = this.loginurl + "?kc_idp_hint=" + this.receivedIdp.id;
+        let url = this.loginurl + `?${this.idphintname}=${this.receivedIdp.id}`;
         this.setCookie(this.receivedIdp.id);
         window.location.href = url;
         this.loading = false;
