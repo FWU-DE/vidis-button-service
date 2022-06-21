@@ -164,7 +164,7 @@ export default defineComponent({
           let res = await axios.get(
             "https://repo.vidis.schule/repository/vidis-cdn/data/idps.json"
           );
-          this.availableIdps = res.data.idp;
+          this.availableIdps = res.data;
           IdP.insert({
             data: this.availableIdps,
           });
