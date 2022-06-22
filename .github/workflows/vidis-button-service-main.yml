@@ -26,9 +26,23 @@ jobs:
         with:
           name: code-coverage-report
           path: coverage/lcov-report/index.html
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Run Audit Level critical
+        run: |
+          npm install -g npm@8
+          npm audit --audit-level=critical
+          echo "This job's status is ${{ job.status }}."
 
   create-rc-tag:
-    needs: run-unit-tests
+    needs: audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
