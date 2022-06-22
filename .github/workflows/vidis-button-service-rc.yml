@@ -1,4 +1,4 @@
-name: Main Vidis Button Service Pipelines
+name: Release Candidate Manual Tagging
 on:
   workflow_dispatch:
     # branches:
