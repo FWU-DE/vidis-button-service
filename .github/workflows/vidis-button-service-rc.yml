@@ -1,37 +1,20 @@
-name: Dev Vidis Button Service Pipelines
-on:
-  push:
-    branches-ignore:
-      - main
-  pull_request:
-    branches-ignore:
-      - main
+name: Release Candidate Manual Tagging
+on: workflow_dispatch
 
 jobs:
-  run-unit-tests:
+  create-rc-tag:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - name: Create RC Tag
+        uses: Klemensas/action-autotag@stable
         with:
-          node-version: "14"
-      - name: Run Tests
-        run: |
-          npm install -g npm@8
-          npm ci
-          echo "Running unit tests. The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          npm run test:unit -- --coverage
-          echo "This job's status is ${{ job.status }}."
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: coverage/lcov-report/index.html
+          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+          tag_suffix: "-rc"
 
-  build-and-publish:
-    needs: run-unit-tests
+  build-and-publish-rc:
+    needs: create-rc-tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -53,17 +36,17 @@ jobs:
           filename: .github/workflows/scripts/uploadImagesAndFonts.sh
           secret-name: "CDN_UPLOAD_SECRET"
           secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
-      - name: Find and Replace
+      - name: Find and Replace current version
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "current-version"
           replace: ${{ steps.package-version.outputs.current-version}}
           include: "**uploadImagesAndFonts.sh"
-      - name: Find and Replace
+      - name: Find and Replace suffix
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "-suffix"
-          replace: "-snapshot"
+          replace: "-rc"
           include: "**uploadImagesAndFonts.sh"
       - name: Publish npm and CDN
         run: |
@@ -71,10 +54,10 @@ jobs:
           npm ci
           echo "Running build job on branch ${{ github.ref }}."
           npm run build
-          echo ${{ github.ref }} | sed 's/.*\///'
-          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.js
+          echo "Publishing CDN..."
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-rc/vidisLogin.umd.js
           echo "Uploading images and fonts..."
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
-          echo "Publishing..."
+          echo "Publishing npm..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
