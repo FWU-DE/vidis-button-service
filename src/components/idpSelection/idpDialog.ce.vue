@@ -49,7 +49,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Cookie from "@/mixins/cookie";
-import breakpoints from "@/mixins/breakpoints";
 
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
@@ -74,7 +73,7 @@ export default defineComponent({
   props: {
     visible: { type: Boolean, default: false },
   },
-  mixins: [Cookie, breakpoints],
+  mixins: [Cookie],
   components: {
     Dialog,
     IdpAutoComplete,
