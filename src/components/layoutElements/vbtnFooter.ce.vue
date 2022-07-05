@@ -21,11 +21,13 @@
             class="footer-links"
             href="https://www.vidis.schule/datenschutzerklaerung/"
             style="margin-left: 0"
+            :target="this.opentab ? '_blank' : '_self'"
             >{{ $t("general.dataprivacy") }}</a
           >
           <a
             class="footer-links"
             href="https://www.vidis.schule/datenschutzerklaerung/"
+            :target="this.opentab ? '_blank' : '_self'"
             >{{ $t("general.terms") }}</a
           >
         </div>
@@ -132,6 +134,11 @@ export default defineComponent({
   props: {},
   mixins: [breakpoints],
   components: { Button, helpDialog },
+  inject: {
+    opentab: {
+      default: true,
+    },
+  },
   data() {
     return {
       digitalPakt,
