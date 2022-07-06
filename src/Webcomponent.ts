@@ -74,8 +74,8 @@ export class VidisLoginApp extends HTMLElement {
       require("!!css-to-string-loader!css-loader!primevue/resources/primevue.min.css"),
       require("!!css-to-string-loader!css-loader!/node_modules/primeflex/primeflex.css"),
       require("!!css-to-string-loader!css-loader!primevue/resources/themes/tailwind-light/theme.css"),
-      require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/globals.scss"),
       require("!!css-to-string-loader!css-loader!sass-loader!primeicons/primeicons.css"),
+      require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/globals.scss"),
     ];
     internalStyles.concat(styles);
     for (const style of internalStyles) {
