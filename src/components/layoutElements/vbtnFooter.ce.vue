@@ -21,17 +21,19 @@
             class="footer-links"
             href="https://www.vidis.schule/datenschutzerklaerung/"
             style="margin-left: 0"
+            :target="this.opentab ? '_blank' : '_self'"
             >{{ $t("general.dataprivacy") }}</a
           >
           <a
             class="footer-links"
             href="https://www.vidis.schule/datenschutzerklaerung/"
+            :target="this.opentab ? '_blank' : '_self'"
             >{{ $t("general.terms") }}</a
           >
         </div>
       </div>
     </div>
-    <div v-if="breakpoint !== 'xs'" class="col-12">
+    <div class="col-12">
       <div class="footer-overLine" style="margin-bottom: 32px" />
     </div>
     <div class="col-12 flex justify-content-center grid-nogutter">
@@ -65,6 +67,40 @@
     >
       <img :src="digitalPakt" :alt="$t('general.digitalPaktAlt')" />
     </div>
+    <div
+      v-if="breakpoint === 'xs'"
+      class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6 flex justify-content-around"
+      style="margin-left: -10px; margin-top: 30px"
+    >
+      <img
+        v-for="(crest, index) of crests.slice(0, Math.ceil(crests.length / 2))"
+        :key="index"
+        :src="crest.img"
+        :alt="crest.alt"
+        class="crest"
+      />
+    </div>
+    <div
+      v-if="breakpoint === 'xs'"
+      class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6 flex justify-content-around"
+      style="margin-left: -10px"
+    >
+      <img
+        v-for="(crest, index) of crests.slice(-Math.ceil(crests.length / 2))"
+        :key="index"
+        :src="crest.img"
+        :alt="crest.alt"
+        class="crest"
+      />
+    </div>
+    <div
+      v-if="breakpoint === 'xs'"
+      class="col-12 flex"
+      style="margin-top: 40px"
+    >
+      <img :src="digitalPakt" :alt="$t('general.digitalPaktAlt')" />
+    </div>
+
     <helpDialog :visible="showHelp" @closed="toggleHelp(false)" />
   </div>
 </template>
@@ -98,6 +134,11 @@ export default defineComponent({
   props: {},
   mixins: [breakpoints],
   components: { Button, helpDialog },
+  inject: {
+    opentab: {
+      default: true,
+    },
+  },
   data() {
     return {
       digitalPakt,

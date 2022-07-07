@@ -20,7 +20,7 @@ export class VidisLoginApp extends HTMLElement {
    * the attribute has to be listed here in string format
    */
   static get observedAttributes() {
-    return ["dark", "size", "loginurl", "cookie", "idphintname"];
+    return ["dark", "size", "loginurl", "cookie", "idphintname", "opentab"];
   }
 
   /**
@@ -56,6 +56,7 @@ export class VidisLoginApp extends HTMLElement {
   attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
     if (attrName === "size") newVal = newVal.toUpperCase();
     if (attrName === "dark") newVal = JSON.parse(newVal);
+    if (attrName === "opentab") newVal = JSON.parse(newVal);
     if (attrName === "cookie") newVal = JSON.parse(newVal);
     this.app.provide(
       attrName,
