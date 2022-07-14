@@ -33,7 +33,8 @@
       <br /><br />
       <br /><br />
       <h1>
-        Medium (size = M,cookie = true, openTab = true, idphintname = idpHint, idpdatafile = idps (für prod, idps-dev für dev,idps-test für test))
+        Medium (size = M,cookie = true, openTab = true, idphintname = idpHint,
+        idpdatafile = idps default für prod)
       </h1>
       <vidis-login
         size="M"
@@ -42,9 +43,16 @@
         loginurl="https://www.taskcards.de/auth/openid"
         cookie="true"
         opentab="false"
-        idpdatafile = "idps"
       >
       </vidis-login>
+      <br /><br />
+      <br /><br />
+      <h1>Medium (idpdatafile = idps-dev für dev)</h1>
+      <vidis-login idpdatafile="idps-dev"></vidis-login>
+      <br /><br />
+      <br /><br />
+      <h1>Medium (idpdatafile = idps-test für test)</h1>
+      <vidis-login idpdatafile="idps-test"></vidis-login>
       <br /><br />
       <br /><br />
       <h1>Small (size = S, cookie = false)</h1>
