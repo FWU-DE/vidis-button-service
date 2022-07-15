@@ -20,7 +20,15 @@ export class VidisLoginApp extends HTMLElement {
    * the attribute has to be listed here in string format
    */
   static get observedAttributes() {
-    return ["dark", "size", "loginurl", "cookie", "idphintname", "opentab"];
+    return [
+      "dark",
+      "size",
+      "loginurl",
+      "cookie",
+      "idphintname",
+      "opentab",
+      "idpdatafile",
+    ];
   }
 
   /**

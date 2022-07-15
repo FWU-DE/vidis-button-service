@@ -103,6 +103,11 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar },
+  inject: {
+    idpdatafile: {
+      default: "idps",
+    },
+  },
   data() {
     return {
       schoolIcon,
@@ -161,9 +166,8 @@ export default defineComponent({
       if (IdP.all().length === 0) {
         try {
           this.loadingIdps = true;
-          let res = await axios.get(
-            "https://repo.vidis.schule/repository/vidis-cdn/data/idps.json"
-          );
+          let url = `https://repo.vidis.schule/repository/vidis-cdn/data/${this.idpdatafile}.json`;
+          let res = await axios.get(url);
           this.availableIdps = res.data;
           IdP.insert({
             data: this.availableIdps,
