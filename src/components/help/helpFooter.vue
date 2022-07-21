@@ -26,7 +26,12 @@
       </Button>
     </div>
   </div>
-  <div style="width: 100%; overflow: hidden">
+  <div
+    class="grid grid-nogutter flex justify-content-center"
+    :style="{
+      'padding-bottom': visiualizationPadding,
+    }"
+  >
     <img
       :src="helpFooterPicture"
       style="float: right; width: 100%; height: 100%"
@@ -62,6 +67,18 @@ export default defineComponent({
       };
 
       return styles;
+    },
+    visiualizationPadding(): string {
+      switch (this.breakpoint) {
+        case "xs":
+          return "20%";
+        case "sm":
+          return "15%";
+        case "md":
+          return "10%";
+        default:
+          return "5%";
+      }
     },
   },
   methods: {
