@@ -1,5 +1,17 @@
 # Changelog Vidis-Button
 
+## Version 1.0.10
+
+### Fixed
+
+- VBTN-73: Fixed a visual Bug, which prevented to user to completely scroll down in the help view.
+
+### Added
+
+- VBTN-89: Now it can be controlled which idps.json should be used, by using idpdatafile="idps-test" oder idpdatafile="idps-dev"
+- VBTN-22: Now if the cookie has stored the last used idp, the button will lead the user to the login page of the stored idp,
+  whithout going through the trouble of selecting a specific idp.
+
 ## Version 1.0.7
 
 ### Fixed
