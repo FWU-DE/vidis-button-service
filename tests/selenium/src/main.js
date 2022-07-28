@@ -13,7 +13,7 @@ async function VIDIS(){
 
 //select the browser
 let driver = await new Builder()
-                        .forBrowser("chrome")
+                        .forBrowser("firefox")
                         .setChromeOptions(new chrome.Options().headless().windowSize(screen))
                         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
                         .build();
@@ -25,19 +25,6 @@ await driver.get("https://tp.fwu.intension.eu/?version=latest")
 
 await driver.findElement(By.css("vidis-login:not([size]) button.entrance-button")).click();
 
- //verify "datenschutz" button
- await driver.findElement(By.css("a.footer-links:nth-child(1)")).click(); 
-    
-
- //scroll at the bottom of the page
- await driver.executeScript("window.scrollTo(0,7594.98)");
-
- //wait to load
- await driver.wait(until.elementLocated(By.className('whole-layout')), 90000);
- 
- //scroll up
- await driver.executeScript("window.scrollTo(7594.98,0)");
-
  //return to main page
 await driver.navigate().back();
     console.log("Pass - Back button has functionality")
@@ -45,6 +32,8 @@ await driver.navigate().back();
 //back to main page
 await driver.navigate().refresh();
     console.log("Pass - Page can be successfully refreshed")
+
+await driver.manage().setTimeouts( { implicit: 10000 } );
 
 //click on first VIDIS button
 
@@ -700,15 +689,13 @@ await driver.navigate().back();
 //click on first VIDIS button
 await driver.findElement(By.css("vidis-login:not([size]) button.entrance-button")).click();
     
-//verify "datenschutz" button
+//verify "Nutzungsbedingungen" button
 await driver.findElement(By.css("a.footer-links:nth-child(1)")).click(); 
-
 
 //scroll at the bottom of the page
 await driver.executeScript("window.scrollTo(0,7594.98)");
 
-//wait to load
-await driver.wait(until.elementLocated(By.className('whole-layout')), 90000);
+(await driver.getPageSource()).includes("Datenschutz");
 
 //scroll up
 await driver.executeScript("window.scrollTo(7594.98,0)");
@@ -716,31 +703,27 @@ await driver.executeScript("window.scrollTo(7594.98,0)");
 console.log("Pass - Nutzungsbedingungen page verified")
 
 //return to main page
-await driver.navigate().back();
+let tabs = driver.getWindowHandle;
+   if (tabs > 1)
+   {
+       driver.switchTo().window(tabs[2]);
+       driver.close();
+       driver.switchTo().window(tabs[1]);
+       driver.close();
+   }
 
-//click on first VIDIS button
-await driver.findElement(By.css("vidis-login:not([size]) button.entrance-button")).click();
-
-//verify "datenschutz" button
+//verify "Datenschutz" button
 await driver.findElement(By.css("a.footer-links:nth-child(1)")).click(); 
-
 
 //scroll at the bottom of the page
 await driver.executeScript("window.scrollTo(0,7594.98)");
 
-//wait to load
-await driver.wait(until.elementLocated(By.className('whole-layout')), 90000);
+(await driver.getPageSource()).includes("Datenschutz");
 
 //scroll up
 await driver.executeScript("window.scrollTo(7594.98,0)");
 
 console.log("Pass - Datenschutz page verified")
-
-//return to main page
-await driver.navigate().back();
-
-//click on first VIDIS button
-await driver.findElement(By.css("vidis-login:not([size]) button.entrance-button")).click();
 
 //verify "zuruck" button
 await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
