@@ -1,6 +1,16 @@
 # Changelog Vidis-Button
 
+## Version 1.0.13
+
+### Fixed
+
+- VBTN-80: fixed hover color of the idp-redirect button
+
 ## Version 1.0.12
+
+### Added
+
+- VBTN-86: Changed the browserlist Config to support more browsers
 
 ### Fixed
 
