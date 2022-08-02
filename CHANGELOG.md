@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.0.12
+
+### Fixed
+
+- VBTN-75: Fix Image Quality of "DigitalPakt Schule"
+
 ## Version 1.0.11
 
 ### Added
