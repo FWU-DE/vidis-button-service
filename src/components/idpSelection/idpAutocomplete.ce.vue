@@ -133,6 +133,9 @@ export default defineComponent({
   mounted() {
     this.ready = true;
     this.showMobile = false;
+    if (!this.allowTeleportToMobile)
+      this.$nextTick(() => this.$refs.idpAutocomplete.focus());
+    this.switchToMobile();
   },
   computed: {
     idpsInStore() {
