@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.0.11
+
+### Added
+
+- VBTN-91: Automatically Focus on the idp-seletion when it comes into view
+
 ## Version 1.0.10
 
 ### Fixed
