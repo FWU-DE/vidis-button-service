@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.0.14
+
+### Added
+
+- VBTN-85: User now can change their idp-selection after they saved it in the cookie
+
 ## Version 1.0.13
 
 ### Fixed

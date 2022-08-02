@@ -14,6 +14,7 @@ export default {
     banner: "Sicher & einfach über", //displayed text on the top left corner
     button: "Anmelden mit deinem Schulaccount", //Text displayed on the button that opens the dialog and start the base user journey
     buttonSelectedIdp: "Weiter mit ",
+    cookieSelectIdp: "Mit anderem Nutzer / Schulportal einloggen",
   },
   idp: {
     button: "Secure Login in ",
