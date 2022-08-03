@@ -14,6 +14,8 @@ const tests = [
     async () => loginWithOtherIdp()
 ]
 
+            //verify "zuruck" button
+            await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
 
 const parallelTests = async function() {
     Promise.all(tests.map(async (test) => { test() }));
