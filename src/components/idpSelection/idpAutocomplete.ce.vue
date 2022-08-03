@@ -107,6 +107,9 @@ export default defineComponent({
     idpdatafile: {
       default: "idps",
     },
+    idp: {
+      default: "",
+    },
   },
   data() {
     return {
@@ -181,7 +184,7 @@ export default defineComponent({
           throw new Error("Couldn't load IdPs " + e);
         }
       }
-      this.selectedIdP = IdP.find(this.cookieIdp);
+      this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
     emitToParent(): void {

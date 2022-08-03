@@ -28,6 +28,7 @@ export class VidisLoginApp extends HTMLElement {
       "idphintname",
       "opentab",
       "idpdatafile",
+      "idp",
     ];
   }
 
@@ -66,6 +67,7 @@ export class VidisLoginApp extends HTMLElement {
     if (attrName === "dark") newVal = JSON.parse(newVal);
     if (attrName === "opentab") newVal = JSON.parse(newVal);
     if (attrName === "cookie") newVal = JSON.parse(newVal);
+    console.log("attributeChangedCallback", attrName, newVal);
     this.app.provide(
       attrName,
       newVal as unknown as InjectionKey<typeof newVal>

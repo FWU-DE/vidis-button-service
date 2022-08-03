@@ -17,6 +17,7 @@ export default defineComponent({
   },
   computed: {
     entranceComponent(): string {
+      console.log("entranceComponent size", this.size);
       if (this.size === "L" || this.size === "M") return "entrance";
       else if (this.size === "S") return "smallEntrance";
       else return "entrance";

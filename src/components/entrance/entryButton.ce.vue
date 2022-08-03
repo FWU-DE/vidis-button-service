@@ -14,7 +14,7 @@
     <span class="ml-2 font-semibold">{{ this.buttonLabel }}</span>
   </Button>
   <Button
-    v-if="cookieIdp.length > 0"
+    v-if="idpPreselected"
     class="col-12 p-button-link changeIdpButton flex align-content-center"
     @click="openIdpSelection"
   >
@@ -50,6 +50,9 @@ export default defineComponent({
     loginurl: {
       default: "",
     },
+    idp: {
+      default: "",
+    },
   },
   props: {},
   mixins: [Cookie],
@@ -78,13 +81,16 @@ export default defineComponent({
         return this.buttonHovered ? this.logoNoText_inverted : this.logoNoText;
       else return this.buttonHovered ? this.lockIconInverted : this.lockIcon;
     },
+    idpPreselected() {
+      return !!this.idp || this.cookieIdp.length > 0;
+    },
   },
   methods: {
     openIdpSelection() {
       this.$emit("clicked");
     },
     clicked() {
-      if (this.cookieIdp.length > 0) {
+      if (this.idpPreselected) {
         this.loading = true;
         try {
           let url =
@@ -100,7 +106,7 @@ export default defineComponent({
       }
     },
     async loadIdpsSelection(): Promise<void> {
-      if (this.cookieIdp.length > 0) {
+      if (this.idpPreselected) {
         if (IdP.all().length === 0) {
           try {
             this.loadingIdps = true;
@@ -116,7 +122,7 @@ export default defineComponent({
             throw new Error("Couldn't load IdPs " + e);
           }
         }
-        this.selectedIdP = IdP.find(this.cookieIdp);
+        this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
         this.buttonLabel =
           this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
       } else {
