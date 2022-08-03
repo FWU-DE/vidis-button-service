@@ -9,12 +9,15 @@ const screen = {
     height: 480
 };
 
-    
 async function VIDIS(){
 
 //select the browser
-let driver = await new Builder().forBrowser("firefox").build();
-    
+let driver = await new Builder()
+                        .forBrowser("chrome")
+                        .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+                        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+                        .build();
+
 //navigate to website
 await driver.get("https://tp.fwu.intension.eu/?version=latest")
 
@@ -49,7 +52,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/u|U/,'Fail')
-                assert.ok(/u|U/.test(text),'Fail - u is not inside the dropbox')
+                assert.ok(/u|U/.test(text),'Fail')
         });
     });
 });
@@ -72,7 +75,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/a|A/,'Fail')
-                assert.ok(/a|A/.test(text),'Fail - a is not inside the dropbox')
+                assert.ok(/a|A/.test(text),'Fail')
         });
     });
 });
@@ -95,7 +98,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/@/,'Fail')
-                assert.ok(/@/.test(text),'Fail - @ is not inside the dropbox')
+                assert.ok(/@/.test(text),'Fail')
         });
     });
 });
@@ -118,7 +121,7 @@ driver.findElements(By.css("li.p-autocomplete-item")).then(function(elements){
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/1/,'Fail')
-                assert.ok(/1/.test(text),'Fail - 1 is not inside the dropbox')
+                assert.ok(/1/.test(text),'Fail')
         });
     });
 });
@@ -141,7 +144,7 @@ driver.findElements(By.css("li.p-autocomplete-item")).then(function(elements){
         element.getText().then(function(text){
             console.log("Pass - Should return pass if the input - SuBITI Bremen - text match");
                 //assert.match(text,/SuBITI Bremen/,'Fail')
-                assert.ok(/SuBITI Bremen/.test(text),'Fail - SuBITI Bremen is not inside the dropbox')
+                assert.ok(/SuBITI Bremen/.test(text),'Fail')
         });
     });
 });
@@ -157,6 +160,17 @@ await driver.findElement(By.className("p-autocomplete-input p-inputtext p-compon
 
 //wait for droplist
 await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//compare input with elements inside searchbox
+driver.findElements(By.css("li.p-autocomplete-item")).then(function(elements){
+    elements.forEach(function (element) {
+        element.getText().then(function(text){
+            console.log("Pass - Input match with text inside searchbox- Schulcampus RLP");
+                //assert.match(text,/Schulcampus RLP/,'Fail')
+                assert.ok(/Schulcampus RLP/.test(text),'Fail')
+        });
+    });
+});
 
 //return to main menu
 await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
@@ -176,7 +190,7 @@ driver.findElements(By.css("li.p-autocomplete-item")).then(function(elements){
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/Bayern Cloud/,'Fail')
-                assert.ok(/Bayern Cloud/.test(text),'Fail - Bayern Cloud is not inside the dropbox')
+                assert.ok(/Bayern Cloud/.test(text),'Fail')
         });
     });
 });
@@ -195,8 +209,6 @@ await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40
 
 //
 await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
-
-driver.wait(until.elementLocated(By.className('p-button p-component idp-choice-button')), 4000);
 
 //click on login button
 await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
@@ -256,7 +268,7 @@ await driver.navigate().back();
             element.getText().then(function(text){
                 console.log(text);
                     //assert.match(text,/schule|SCHULE/,'Fail')
-                    assert.ok(/schule|SCHULE/.test(text),'Fail - schule is not inside the dropbox')
+                    assert.ok(/schule|SCHULE/.test(text),'Fail')
             });
         });
     });
@@ -279,7 +291,7 @@ await driver.navigate().back();
             element.getText().then(function(text){
                 console.log(text);
                     //assert.match(text,/7/,'Fail')
-                    assert.ok(/7/.test(text),'Fail - 7 is not inside the dropbox')
+                    assert.ok(/7/.test(text),'Fail')
             });
         });
     });
@@ -294,7 +306,6 @@ await driver.navigate().back();
     await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
         console.log("Pass - Previous input can be deleted")
 
-
     //input on searchbox error
     await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("@bremen")
 
@@ -307,13 +318,157 @@ await driver.navigate().back();
             element.getText().then(function(text){
                 console.log(text);
                     //assert.match(text,/SuBITI Bremen|Bremen|@bremen.de|SuBITI/,'Fail')
-                    assert.ok(/SuBITI Bremen|Bremen|@bremen.de|SuBITI/.test(text),'Fail - @bremen is not inside the dropbox')
+                    assert.ok(/SuBITI Bremen|Bremen|@bremen.de|SuBITI/.test(text),'Fail')
             });
         });
     });
 
     //refresh the page
     await driver.navigate().refresh();
+
+    //refresh the page
+    await driver.navigate().refresh();
+
+    //click on 2nd VIDIS button [SIZE L, cookie=true]
+    await driver.findElement(By.css("vidis-login[size='L'] button.entrance-button")).click();
+
+    //clear the previous text
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+    //input on searchbox error
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("rheinland")
+
+    //wait for droplist
+    await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+    //compare input with elements inside searchbox
+    driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+        elements.forEach(function (element) {
+            element.getText().then(function(text){
+                console.log("Pass - Input match with text inside searchbox - rheiland");
+                    //assert.match(text,/rheinland|Schulcampus RLP|Rheinland Pfalz/,'Fail')
+                    assert.ok(/rheinland|Schulcampus RLP|Rheinland Pfalz/.test(text),'Fail')
+            });
+        });
+    });
+
+    //return to main menu
+    await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
+
+    //click on 2nd VIDIS button [SIZE L, cookie=true]
+    await driver.findElement(By.css("vidis-login[size='L'] button.entrance-button")).click();
+
+    //clear the previous text
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+    //input on searchbox error
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("bayern.de")
+
+    //wait for droplist
+    await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+    //compare input with elements inside searchbox
+    driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+        elements.forEach(function (element) {
+            element.getText().then(function(text){
+                console.log("Pass - Input match with text inside searchbox - bayern.de");
+                    //assert.match(text,/bayern|Bayern Cloud|@bayern.de/,'Fail')
+                    assert.ok(/bayern|BayernCloud Schule|@bayern.de/.test(text),'Fail')
+            });
+        });
+    });
+
+    //refresh the page
+    await driver.navigate().refresh();
+
+    //click on 2nd VIDIS button [SIZE L, cookie=true]
+    await driver.findElement(By.css("vidis-login[size='L'] button.entrance-button")).click();
+
+    //clear the previous text
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+    //input on searchbox
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("Bremen")
+
+    //wait for droplist
+    await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+    //
+    await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+    //click on login button
+    await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+    //return to main page
+    await driver.navigate().back();
+
+    //click on 2nd VIDIS button [SIZE L, cookie=true]
+    await driver.findElement(By.css("vidis-login[size='L'] button.entrance-button")).click();
+
+    //clear the previous text
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+    //input on searchbox
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("@schulcampus")
+
+    //wait for droplist
+    await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+    //
+    await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+    //click on login button
+    await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+    //return to main page
+    await driver.navigate().back();
+
+    //click on 2nd VIDIS button [SIZE L, cookie=true]
+    await driver.findElement(By.css("vidis-login[size='L'] button.entrance-button")).click();
+
+    //clear the previous text
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+    //input on searchbox
+    await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("Bayern")
+
+    //wait for droplist
+    await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+    //
+    await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+    //click on login button
+    await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+    //return to main page
+    await driver.navigate().back();
+
+        //click on the 3rd VIDIS button [SIZE=M, cookie=false]
+        await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+        //clear the previous text
+        await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+        //input on searchbox with all elements present
+        await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("bayern")
+
+        //wait for droplist
+        await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+        //compare input with elements inside searchbox
+        driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+            elements.forEach(function (element) {
+                element.getText().then(function(text){
+                    console.log("Pass - Input match with text inside searchbox - Bayern");
+                        //assert.match(text,/SuBITI Bremen|Schulcampus RLP|Bayern Cloud/,'Fail')
+                        assert.ok(/SuBITI Bremen|Schulcampus RLP|BayernCloud Schule/.test(text),'Fail')
+                });
+            });
+        });
+
+        //return to main menu
+        await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
 
         //click on 3rd VIDIS button [SIZE L, cookie=true]
         await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
@@ -331,7 +486,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/schul|SCHUL/,'Fail')
-                assert.ok(/schul|SCHUL/.test(text),'Fail - schul is not inside the dropbox')
+                assert.ok(/schul|SCHUL/.test(text),'Fail')
         });
     });
 });
@@ -354,7 +509,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/7/,'Fail')
-                assert.ok(/7/.test(text),'Fail - 3 is not inside the dropbox')
+                assert.ok(/7/.test(text),'Fail')
         });
     });
 });
@@ -380,7 +535,7 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
         element.getText().then(function(text){
             console.log(text);
                 //assert.match(text,/SuBITI Bremen|Bremen|@bremen.de|SuBITI/,'Fail')
-                assert.ok(/SuBITI Bremen|Bremen|@bremen.de|SuBITI/.test(text),'Fail - @bremen is not inside the dropbox')
+                assert.ok(/SuBITI Bremen|Bremen|@bremen.de|SuBITI/.test(text),'Fail')
         });
     });
 });
@@ -388,6 +543,149 @@ driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-ite
 //refresh the page
 await driver.navigate().refresh();
 
+//refresh the page
+await driver.navigate().refresh();
+
+//click on 3rd VIDIS button [SIZE L, cookie=true]
+await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+//clear the previous text
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+//input on searchbox error
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("Rheinland Pfalz")
+
+//wait for droplist
+await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//compare input with elements inside searchbox
+driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+    elements.forEach(function (element) {
+        element.getText().then(function(text){
+            console.log("Pass - Input match with text inside searchbox - Rheinland Pfalz");
+                //assert.match(text,/rheinland|Schulcampus RLP|Rheinland Pfalz/,'Fail')
+                assert.ok(/rheinland|Schulcampus RLP|Rheinland Pfalz/.test(text),'Fail')
+        });
+    });
+});
+
+//return to main menu
+await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
+
+//click on 3rd VIDIS button [SIZE L, cookie=true]
+await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+//clear the previous text
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+//input on searchbox error
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("bayern.de")
+
+//wait for droplist
+await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//compare input with elements inside searchbox
+driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+    elements.forEach(function (element) {
+        element.getText().then(function(text){
+            console.log(text);
+                //assert.match(text,/bayern|Bayern Cloud|@bayern.de/,'Fail')
+                assert.ok(/bayern|Bayern Cloud|@bayern.de/.test(text),'Fail')
+        });
+    });
+});
+
+//refresh the page
+await driver.navigate().refresh();
+
+//click on 3rd VIDIS button [SIZE L, cookie=true]
+await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+//clear the previous text
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+//input on searchbox
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("bremen")
+
+//wait for droplist
+await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//
+await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+//click on login button
+await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+//return to main page
+await driver.navigate().back();
+
+//click on 3rd VIDIS button [SIZE L, cookie=true]
+await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+//clear the previous text
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+//input on searchbox
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("schulcampus")
+
+//wait for droplist
+await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//
+await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+//click on login button
+await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+//return to main page
+await driver.navigate().back();
+
+//click on 3rd VIDIS button [SIZE L, cookie=true]
+await driver.findElement(By.css("vidis-login[size='M'] button.entrance-button")).click();
+
+//clear the previous text
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+//input on searchbox
+await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("bayern")
+
+//wait for droplist
+await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+//
+await driver.findElement(By.css("html body div.p-autocomplete-panel.p-component.p-ripple-disabled ul#pv_id_2_list.p-autocomplete-items li.p-autocomplete-item div.flex.align-items-center.justify-content-between")).click();
+
+//click on login button
+await driver.findElement(By.className("p-button p-component idp-choice-button")).click();
+
+//return to main page
+await driver.navigate().back();
+
+            //click on the 4th VIDIS button [SIZE=M, cookie=false]
+        await driver.findElement(By.css("vidis-login[size='S'] button.entrance-button")).click();
+
+        //clear the previous text
+        await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).clear();
+
+        //input on searchbox with all elements present
+        await driver.findElement(By.className("p-autocomplete-input p-inputtext p-component")).sendKeys("baye")
+
+        //wait for droplist
+        await driver.wait(until.elementLocated(By.className('p-autocomplete-panel')), 40000);
+
+        //compare input with elements inside searchbox
+        driver.findElements(By.css("li.p-autocomplete-item .idp-item-icon + div .idp-item-label")).then(function(elements){
+            elements.forEach(function (element) {
+                element.getText().then(function(text){
+                    console.log("Pass - Input match with text inside searchbox - baye");
+                        //assert.match(text,/SuBITI Bremen|Schulcampus RLP|Bayern Cloud/,'Fail')
+                        assert.ok(/SuBITI Bremen|Schulcampus RLP|BayernCloud Schule/.test(text),'Fail')
+                });
+            });
+        });
+
+        //return to main menu
+        await driver.findElement(By.className("p-button p-component p-button-link backButton")).click();
 //click on first VIDIS button
 await driver.findElement(By.css("vidis-login:not([size]) button.entrance-button")).click();
     
@@ -436,6 +734,7 @@ driver.quit();
 
 
 }
+
 
 
 VIDIS()
