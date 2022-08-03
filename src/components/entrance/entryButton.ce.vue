@@ -13,6 +13,15 @@
     <img alt="logo" :src="icon" style="width: 1.5rem" />
     <span class="ml-2 font-semibold">{{ this.buttonLabel }}</span>
   </Button>
+  <Button
+    v-if="cookieIdp.length > 0"
+    class="col-12 p-button-link changeIdpButton flex align-content-center"
+    @click="openIdpSelection"
+  >
+    <span class="changeIdpButtonLabel">
+      {{ $t("entrance.cookieSelectIdp") }}
+    </span>
+  </Button>
 </template>
 
 <script lang="ts">
@@ -71,6 +80,9 @@ export default defineComponent({
     },
   },
   methods: {
+    openIdpSelection() {
+      this.$emit("clicked");
+    },
     clicked() {
       if (this.cookieIdp.length > 0) {
         this.loading = true;
@@ -84,7 +96,7 @@ export default defineComponent({
           this.loading = false;
         }
       } else {
-        this.$emit("clicked");
+        this.openIdpSelection();
       }
     },
     async loadIdpsSelection(): Promise<void> {

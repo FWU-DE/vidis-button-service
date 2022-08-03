@@ -1,5 +1,33 @@
 # Changelog Vidis-Button
 
+## Version 1.0.14
+
+### Added
+
+- VBTN-85: User now can change their idp-selection after they saved it in the cookie
+
+## Version 1.0.13
+
+### Fixed
+
+- VBTN-80: fixed hover color of the idp-redirect button
+
+## Version 1.0.12
+
+### Added
+
+- VBTN-86: Changed the browserlist Config to support more browsers
+
+### Fixed
+
+- VBTN-75: Fix Image Quality of "DigitalPakt Schule"
+
+## Version 1.0.11
+
+### Added
+
+- VBTN-91: Automatically Focus on the idp-seletion when it comes into view
+
 ## Version 1.0.10
 
 ### Fixed

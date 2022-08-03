@@ -9,7 +9,7 @@
         {{ $t("general.back") }}
       </Button>
       <div
-        class="entrance-overLine"
+        class="header-overLine"
         style="margin-bottom: 32px"
         :class="{ 'mb-3': size !== 'L' }"
       />
