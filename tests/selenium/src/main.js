@@ -9,12 +9,15 @@ const screen = {
     height: 480
 };
 
-    
 async function VIDIS(){
 
 //select the browser
-let driver = await new Builder().forBrowser("firefox").build();
-    
+let driver = await new Builder()
+                        .forBrowser("chrome")
+                        .setChromeOptions(new chrome.Options().headless().windowSize(screen))
+                        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
+                        .build();
+
 //navigate to website
 await driver.get("https://tp.fwu.intension.eu/?version=latest")
 
@@ -460,3 +463,6 @@ await driver.navigate().refresh();
  }
 
  VIDIS();
+
+ 
+
