@@ -111,6 +111,46 @@ export default defineComponent({
       immediate: true,
     },
   },
+  watch: {
+    idpdatafile: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdpsSelection();
+      },
+      immediate: true,
+    },
+    idpPreselected: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdpsSelection();
+      },
+      immediate: true,
+    },
+    cookieIdp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdpsSelection();
+        else if (this.idpPreselected) {
+          this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdpsSelection();
+        else if (this.idpPreselected) {
+          this.selectedIdP = IdP.find(this.idp);
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
+      },
+      immediate: true,
+    },
+  },
   methods: {
     async reloadPreselectedIdp(cookiePriority = true): Promise<void> {
       if (this.idpPreConfigured && IdP.all().length === 0)
