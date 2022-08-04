@@ -1,16 +1,24 @@
 export default {
+  data() {
+    return {
+      reloadCookie: false,
+    };
+  },
   computed: {
     cookie() {
       return this.$store.getters.cookie;
     },
     cookieIdp() {
+      this.reloadCookie;
       return this.getCookie();
     },
   },
   methods: {
     setCookie(idp: string): void {
-      if (this.cookie)
+      if (this.cookie) {
         document.cookie = `vbtn=${encodeURIComponent(idp)};path=/`;
+        this.reloadCookie = !this.reloadCookie;
+      }
     },
     getCookie(): string {
       if (this.cookie) {

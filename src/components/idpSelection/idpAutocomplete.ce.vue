@@ -123,7 +123,6 @@ export default defineComponent({
   },
   async created() {
     await this.loadIdps();
-    this.groupIdps();
   },
   mounted() {
     this.ready = true;
@@ -147,6 +146,36 @@ export default defineComponent({
     },
   },
   watch: {
+    idpdatafile: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+      immediate: true,
+    },
+    idpPreselected: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+      immediate: true,
+    },
+    cookieIdp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
     showMobile(newShowMobile) {
       this.disableTeleport = !newShowMobile;
     },
@@ -176,6 +205,7 @@ export default defineComponent({
           IdP.insert({
             data: this.availableIdps,
           });
+          this.groupIdps();
           this.loadingIdps = false;
         } catch (e) {
           this.loadingIdps = false;

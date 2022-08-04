@@ -15,8 +15,8 @@ describe("EntryButton", () => {
   beforeEach(async () => {
     axios.get = jest.fn().mockResolvedValue({ data: getResults });
     entryButtonWrapper = shallowMount(EntryButton, {
-      store,
       global: {
+        plugins: [store],
         provide: {
           size: "L",
           dark: false,
@@ -103,7 +103,9 @@ describe("EntryButton", () => {
         );
       });
       test("that text of button is 'Weiter mit ' when run with selected idp in cookie", async () => {
-        entryButtonWrapper.vm.cookieIdp = "1";
+        entryButtonWrapper.vm.$store.commit("update_cookie", false);
+        entryButtonWrapper.vm.$store.commit("update_cookie", true);
+        entryButtonWrapper.vm.setCookie(1);
         await entryButtonWrapper.vm.loadIdpsSelection();
         expect(entryButtonWrapper.vm.buttonLabel).toBe(
           "Weiter mit SuBITI Bremen"

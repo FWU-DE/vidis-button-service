@@ -32,7 +32,6 @@ const mutations = {
   update_loginurl: (state: any, loginurl: string) =>
     (state.loginurl = loginurl),
   update_cookie: (state: any, cookie: string) => {
-    console.log("update_cookie", cookie);
     state.cookie = cookie;
   },
   update_idphintname: (state: any, idphintname: string) =>
