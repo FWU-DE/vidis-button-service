@@ -103,14 +103,6 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar },
-  inject: {
-    idpdatafile: {
-      default: "idps",
-    },
-    idp: {
-      default: "",
-    },
-  },
   data() {
     return {
       schoolIcon,
@@ -141,6 +133,12 @@ export default defineComponent({
     this.switchToMobile();
   },
   computed: {
+    idpdatafile() {
+      return this.$store.getters.idpdatafile;
+    },
+    idp() {
+      return this.$store.getters.idp;
+    },
     idpsInStore() {
       return IdP.all();
     },

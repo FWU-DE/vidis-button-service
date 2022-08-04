@@ -37,23 +37,6 @@ import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 export default defineComponent({
   name: "entryButton",
-  inject: {
-    size: {
-      default: "L",
-    },
-    idpdatafile: {
-      default: "idps",
-    },
-    idphintname: {
-      default: "kc_idp_hint",
-    },
-    loginurl: {
-      default: "",
-    },
-    idp: {
-      default: "",
-    },
-  },
   props: {},
   mixins: [Cookie],
   components: { Button },
@@ -76,6 +59,21 @@ export default defineComponent({
     await this.loadIdpsSelection();
   },
   computed: {
+    size() {
+      return this.$store.getters.size;
+    },
+    idpdatafile() {
+      return this.$store.getters.idpdatafile;
+    },
+    idphintname() {
+      return this.$store.getters.idphintname;
+    },
+    loginurl() {
+      return this.$store.getters.loginurl;
+    },
+    idp() {
+      return this.$store.getters.idp;
+    },
     icon() {
       if (this.size === "S")
         return this.buttonHovered ? this.logoNoText_inverted : this.logoNoText;
@@ -83,6 +81,46 @@ export default defineComponent({
     },
     idpPreselected() {
       return !!this.idp || this.cookieIdp.length > 0;
+    },
+  },
+  watch: {
+    idpdatafile: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdpsSelection();
+      },
+      immediate: true,
+    },
+    idpPreselected: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdpsSelection();
+      },
+      immediate: true,
+    },
+    cookieIdp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdpsSelection();
+        else if (this.idpPreselected) {
+          this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdpsSelection();
+        else if (this.idpPreselected) {
+          this.selectedIdP = IdP.find(this.idp);
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
+      },
+      immediate: true,
     },
   },
   methods: {

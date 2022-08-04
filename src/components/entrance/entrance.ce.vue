@@ -52,11 +52,6 @@ import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 
 export default defineComponent({
   name: "entranceButton",
-  inject: {
-    size: {
-      default: "L",
-    },
-  },
   components: { idpDialog, entryButton, Button, helpDialog },
   data() {
     return {
@@ -70,6 +65,11 @@ export default defineComponent({
       showHelp: false,
       openArrow,
     };
+  },
+  computed: {
+    size() {
+      return this.$store.getters.size;
+    },
   },
   methods: {
     toggleDialog(mode?: boolean) {

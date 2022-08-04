@@ -10,12 +10,10 @@ import smallEntrance from "@/components/entrance/smallEntrance.ce.vue";
 export default defineComponent({
   name: "vidis-login",
   components: { entrance, smallEntrance },
-  inject: {
-    size: {
-      default: "L",
-    },
-  },
   computed: {
+    size() {
+      return this.$store.getters.size;
+    },
     entranceComponent(): string {
       console.log("entranceComponent size", this.size);
       if (this.size === "L" || this.size === "M") return "entrance";

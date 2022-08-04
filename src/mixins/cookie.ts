@@ -1,14 +1,11 @@
 export default {
-  inject: {
-    cookie: {
-      default: false,
+  computed: {
+    cookie() {
+      return this.$store.getters.cookie;
     },
-  },
-  data() {
-    return { cookieIdp: this.getCookie() };
-  },
-  created() {
-    this.cookieIdp = this.getCookie();
+    cookieIdp() {
+      return this.getCookie();
+    },
   },
   methods: {
     setCookie(idp: string): void {
