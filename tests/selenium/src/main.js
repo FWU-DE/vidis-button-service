@@ -12,8 +12,9 @@ const screen = {
 async function VIDIS(){
 
 //select the browser
+/* let driver = await new Builder().forBrowser("firefox").build(); */
 let driver = await new Builder()
-                        .forBrowser("chrome")
+                        .forBrowser("firefox")
                         .setChromeOptions(new chrome.Options().headless().windowSize(screen))
                         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen))
                         .build();
