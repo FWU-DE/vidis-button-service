@@ -5,8 +5,8 @@ const chrome = require('selenium-webdriver/chrome');
 
 const assert = require("assert");
 const screen = {
-    width: 640,
-    height: 480
+    width: 1200,
+    height: 850
 };
 
 async function VIDIS(){
