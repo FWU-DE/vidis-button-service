@@ -151,14 +151,12 @@ export default defineComponent({
         IdP.deleteAll();
         await this.loadIdps();
       },
-      immediate: true,
     },
     idpPreselected: {
       async handler() {
         IdP.deleteAll();
         await this.loadIdps();
       },
-      immediate: true,
     },
     cookieIdp: {
       async handler() {
