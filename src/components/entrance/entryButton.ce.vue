@@ -78,6 +78,9 @@ export default defineComponent({
     _idp() {
       return IdP.find(this.idp);
     },
+    requestmethod() {
+      return this.$store.getters.requestmethod;
+    },
     icon() {
       if (this.size === "S")
         return this.buttonHovered ? this.logoNoText_inverted : this.logoNoText;
@@ -128,13 +131,20 @@ export default defineComponent({
     openIdpSelection(): void {
       this.$emit("clicked");
     },
-    clicked(): void {
+    async clicked(): Promise<void> {
       if (this.idpPreselected) {
         this.loading = true;
         try {
           let url =
             this.loginurl + `?${this.idphintname}=${this.selectedIdP.id}`;
-          window.location.href = url;
+          if (this.requestmethod === "GET") window.location.href = url;
+          else if (this.requestmethod === "POST") {
+            const headers = {
+              "Content-Type":
+                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+            };
+            await axios({ method: "POST", url: url, headers });
+          }
           this.loading = false;
         } catch (e) {
           console.error("Couldn't redirect to selected IdP ", e);
