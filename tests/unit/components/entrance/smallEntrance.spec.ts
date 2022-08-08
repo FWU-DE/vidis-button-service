@@ -1,5 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import smallEntrance from "@/components/entrance/smallEntrance.ce.vue";
+import store from "@/store/index";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("smallEntrance", () => {
@@ -7,6 +8,7 @@ describe("smallEntrance", () => {
   beforeEach(() => {
     smallEntranceWrapper = shallowMount(smallEntrance, {
       global: {
+        plugins: [store],
         provide: {
           size: "L",
           dark: false,

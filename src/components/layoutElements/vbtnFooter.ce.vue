@@ -143,11 +143,6 @@ export default defineComponent({
   props: {},
   mixins: [breakpoints],
   components: { Button, helpDialog },
-  inject: {
-    opentab: {
-      default: true,
-    },
-  },
   data() {
     return {
       digitalPakt,
@@ -173,7 +168,11 @@ export default defineComponent({
       showHelp: false,
     };
   },
-  computed: {},
+  computed: {
+    opentab() {
+      return this.$store.getters.opentab;
+    },
+  },
   methods: {
     toggleHelp(show: boolean): void {
       this.showHelp = show;

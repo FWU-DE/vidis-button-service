@@ -14,7 +14,7 @@
     <span class="ml-2 font-semibold">{{ this.buttonLabel }}</span>
   </Button>
   <Button
-    v-if="cookieIdp.length > 0"
+    v-if="idpPreselected"
     class="col-12 p-button-link changeIdpButton flex align-content-center"
     @click="openIdpSelection"
   >
@@ -28,6 +28,7 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import Button from "primevue/button";
+import ProgressSpinner from "primevue/button";
 import Cookie from "@/mixins/cookie";
 import IdP from "@/store/ORM-Stores/models/idps";
 import logo from "@/assets/svgs/Logo.svg";
@@ -37,23 +38,9 @@ import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 export default defineComponent({
   name: "entryButton",
-  inject: {
-    size: {
-      default: "L",
-    },
-    idpdatafile: {
-      default: "idps",
-    },
-    idphintname: {
-      default: "kc_idp_hint",
-    },
-    loginurl: {
-      default: "",
-    },
-  },
   props: {},
   mixins: [Cookie],
-  components: { Button },
+  components: { Button, ProgressSpinner },
   data() {
     return {
       logo,
@@ -69,22 +56,80 @@ export default defineComponent({
       loading: false,
     };
   },
-  async created() {
+  async mounted() {
     await this.loadIdpsSelection();
   },
   computed: {
+    size(): string {
+      return this.$store.getters.size;
+    },
+    idpdatafile(): string {
+      return this.$store.getters.idpdatafile;
+    },
+    idphintname(): string {
+      return this.$store.getters.idphintname;
+    },
+    loginurl(): string {
+      return this.$store.getters.loginurl;
+    },
+    idp(): string {
+      return this.$store.getters.idp;
+    },
+    _idp() {
+      return IdP.find(this.idp);
+    },
     icon() {
       if (this.size === "S")
         return this.buttonHovered ? this.logoNoText_inverted : this.logoNoText;
       else return this.buttonHovered ? this.lockIconInverted : this.lockIcon;
     },
+    idpPreselected(): boolean {
+      return !!this._idp?.name || this.cookieIdp.length > 0;
+    },
+    idpPreConfigured(): boolean {
+      return this.cookieIdp.length > 0 || !!this.idp;
+    },
+  },
+  watch: {
+    idpdatafile: {
+      async handler(): Promise<void> {
+        IdP.deleteAll();
+        await this.loadIdpsSelection();
+      },
+      immediate: true,
+    },
+    cookieIdp: {
+      async handler(): Promise<void> {
+        await this.reloadPreselectedIdp(true);
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler(): Promise<void> {
+        await this.reloadPreselectedIdp(false);
+      },
+      immediate: true,
+    },
   },
   methods: {
-    openIdpSelection() {
+    async reloadPreselectedIdp(cookiePriority = true): Promise<void> {
+      if (this.idpPreConfigured && IdP.all().length === 0)
+        await this.loadIdpsSelection();
+      else if (this.idpPreConfigured) {
+        if (cookiePriority)
+          this.selectedIdP = IdP.find(this.cookieIdp) || this._idp;
+        else this.selectedIdP = this._idp || IdP.find(this.cookieIdp);
+        if (this.selectedIdP) {
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
+      } else this.buttonLabel = this.$t("entrance.button");
+    },
+    openIdpSelection(): void {
       this.$emit("clicked");
     },
-    clicked() {
-      if (this.cookieIdp.length > 0) {
+    clicked(): void {
+      if (this.idpPreselected) {
         this.loading = true;
         try {
           let url =
@@ -92,7 +137,7 @@ export default defineComponent({
           window.location.href = url;
           this.loading = false;
         } catch (e) {
-          console.log("Couldn't redirect to selected IdP ", e);
+          console.error("Couldn't redirect to selected IdP ", e);
           this.loading = false;
         }
       } else {
@@ -100,7 +145,7 @@ export default defineComponent({
       }
     },
     async loadIdpsSelection(): Promise<void> {
-      if (this.cookieIdp.length > 0) {
+      if (this.idpPreConfigured) {
         if (IdP.all().length === 0) {
           try {
             this.loadingIdps = true;
@@ -116,9 +161,11 @@ export default defineComponent({
             throw new Error("Couldn't load IdPs " + e);
           }
         }
-        this.selectedIdP = IdP.find(this.cookieIdp);
-        this.buttonLabel =
-          this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        this.selectedIdP = IdP.find(this.cookieIdp) || IdP.find(this.idp);
+        if (this.selectedIdP) {
+          this.buttonLabel =
+            this.$t("entrance.buttonSelectedIdp") + this.selectedIdP.name;
+        } else this.buttonLabel = this.$t("entrance.button");
       } else {
         this.buttonLabel = this.$t("entrance.button");
       }

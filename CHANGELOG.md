@@ -1,5 +1,13 @@
 # Changelog Vidis-Button
 
+## Version 1.0.15
+
+- VBTN-92: The Service Provider can now specify the preselected idphint via the attribute api.
+
+### Added
+
+- VBTN-85: User now can change their idp-selection after they saved it in the cookie
+
 ## Version 1.0.14
 
 ### Added

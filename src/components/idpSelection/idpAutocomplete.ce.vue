@@ -103,11 +103,6 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar },
-  inject: {
-    idpdatafile: {
-      default: "idps",
-    },
-  },
   data() {
     return {
       schoolIcon,
@@ -128,7 +123,6 @@ export default defineComponent({
   },
   async created() {
     await this.loadIdps();
-    this.groupIdps();
   },
   mounted() {
     this.ready = true;
@@ -138,6 +132,12 @@ export default defineComponent({
     this.switchToMobile();
   },
   computed: {
+    idpdatafile() {
+      return this.$store.getters.idpdatafile;
+    },
+    idp() {
+      return this.$store.getters.idp;
+    },
     idpsInStore() {
       return IdP.all();
     },
@@ -146,6 +146,34 @@ export default defineComponent({
     },
   },
   watch: {
+    idpdatafile: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+    },
+    idpPreselected: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+    },
+    cookieIdp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
     showMobile(newShowMobile) {
       this.disableTeleport = !newShowMobile;
     },
@@ -175,13 +203,14 @@ export default defineComponent({
           IdP.insert({
             data: this.availableIdps,
           });
+          this.groupIdps();
           this.loadingIdps = false;
         } catch (e) {
           this.loadingIdps = false;
           throw new Error("Couldn't load IdPs " + e);
         }
       }
-      this.selectedIdP = IdP.find(this.cookieIdp);
+      this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
     emitToParent(): void {

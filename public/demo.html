@@ -1,36 +1,50 @@
 <!DOCTYPE html><meta charset="utf-8" /> <title>vidisLogin demo</title>
 <script src="./vidisLogin.umd.js"></script>
-<h1>Default (size = L, cookie = false)</h1>
-<vidis-login loginurl="https://www.taskcards.de/auth/openid"></vidis-login>
-<br /><br />
-<br /><br />
-<h1>Large (size = L, cookie = true)</h1>
+<div>
+  <ul>
+    <li>
+      <span class="vbtnInputLabels">
+        Size (Large :"L", Medium: "M", Small: "S", Default: "L"):
+      </span>
+      <input class="vbtnInputfields" type="text" id="size" />
+    </li>
+    <li>
+      <span class="vbtnInputLabels">loginurl* ("https://..."):</span>
+      <input
+        type="text"
+        id="loginurl"
+        value="https://www.taskcards.de/auth/openid"
+        class="vbtnInputfields"
+      />
+    </li>
+
+    <li>
+      <span class="vbtnInputLabels">
+        idphintname (Default: "kc_idp_hint"):
+      </span>
+      <input class="vbtnInputfields" type="text" id="idphintname" />
+    </li>
+    <li>
+      <span class="vbtnInputLabels"> idpdatafile (Default: "idps"):</span>
+      <input class="vbtnInputfields" type="text" id="idpdatafile" />
+    </li>
+    <li>
+      <span class="vbtnInputLabels">idp:</span>
+      <input class="vbtnInputfields" type="text" id="idp" />
+    </li>
+    <li>
+      <span class="vbtnInputLabels"> cookie:</span>
+      <input type="checkbox" id="cookie" />
+    </li>
+    <li>
+      <span class="vbtnInputLabels"> opentab:</span>
+      <input type="checkbox" id="opentab" checked="true" />
+    </li>
+  </ul>
+</div>
 <vidis-login
-  size="L"
-  dark="false"
-  cookie="true"
+  id="vidislogin"
   loginurl="https://www.taskcards.de/auth/openid"
 >
 </vidis-login>
-<br /><br />
-<br /><br />
-<h1>Medium (size = M,cookie = true, openTab = true, idphintname = idpHint)</h1>
-<vidis-login
-  size="M"
-  dark="false"
-  cookie="true"
-  idphintname="idpHint"
-  loginurl="https://www.taskcards.de/auth/openid"
-  opentab="false"
->
-</vidis-login>
-<br /><br />
-<br /><br />
-<h1>Small (size = S, cookie = false)</h1>
-<vidis-login
-  size="S"
-  dark="false"
-  cookie="false"
-  loginurl="https://www.taskcards.de/auth/openid"
->
-</vidis-login>
+</div>

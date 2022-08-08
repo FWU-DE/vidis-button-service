@@ -59,17 +59,6 @@ import vbtnFooter from "@/components/layoutElements/vbtnFooter.ce.vue";
 
 export default defineComponent({
   name: "idp-dialog",
-  inject: {
-    loginurl: {
-      default: "",
-    },
-    cookie: {
-      default: false,
-    },
-    idphintname: {
-      default: "kc_idp_hint",
-    },
-  },
   props: {
     visible: { type: Boolean, default: false },
   },
@@ -89,6 +78,17 @@ export default defineComponent({
       showButton: false,
       loading: false,
     };
+  },
+  computed: {
+    loginurl() {
+      return this.$store.getters.loginurl;
+    },
+    cookie() {
+      return this.$store.getters.cookie;
+    },
+    idphintname() {
+      return this.$store.getters.idphintname;
+    },
   },
   watch: {
     showDialog(newVal: boolean): void {
