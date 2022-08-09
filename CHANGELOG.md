@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.1.0
+
+### Added
+
+- VBTN-96: The IDP-Autocomplete now comes with a Label that indicates what the autocomplete does.
+
 ## Version 1.0.16
 
 ### Added

@@ -13,6 +13,11 @@
       to="#mobileAutocompletePlace"
       :disabled="disableTeleport"
     >
+      <div :style="labelStyle">
+        <span class="idpAutocompleteLabel">
+          {{ $t("idp.label") }}
+        </span>
+      </div>
       <AutoComplete
         v-model="selectedIdP"
         ref="idpAutocomplete"
@@ -143,6 +148,13 @@ export default defineComponent({
     },
     allowTeleportToMobile(): boolean {
       return this.breakpoint === "xs";
+    },
+    labelStyle() {
+      return {
+        "margin-bottom": !this.showMobile ? "17px" : "",
+        "padding-top": this.showMobile ? "20px" : "",
+        "padding-left": this.showMobile ? "20px" : "2px",
+      };
     },
   },
   watch: {
