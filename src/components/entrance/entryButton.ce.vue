@@ -140,9 +140,11 @@ export default defineComponent({
           if (this.requestmethod === "GET") window.location.href = url;
           else if (this.requestmethod === "POST") {
             const headers = {
-              "Content-Type":
+              Accept:
                 "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+              "Content-Type": "application/x-www-form-urlencoded",
             };
+
             await axios({ method: "POST", url: url, headers });
           }
           this.loading = false;
