@@ -138,14 +138,8 @@ export default defineComponent({
           let url =
             this.loginurl + `?${this.idphintname}=${this.selectedIdP.id}`;
           if (this.requestmethod === "GET") window.location.href = url;
-          else if (this.requestmethod === "POST") {
-            const headers = {
-              Accept:
-                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-              "Content-Type": "application/x-www-form-urlencoded",
-            };
-
-            await axios({ method: "POST", url: url, headers });
+          else if (this.requestmethod !== "GET") {
+            await axios({ method: this.requestmethod, url: url });
           }
           this.loading = false;
         } catch (e) {
