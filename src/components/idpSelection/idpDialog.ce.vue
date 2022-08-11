@@ -48,6 +48,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import axios from "axios";
 import Cookie from "@/mixins/cookie";
 
 import Dialog from "primevue/dialog";
@@ -89,6 +90,9 @@ export default defineComponent({
     idphintname() {
       return this.$store.getters.idphintname;
     },
+    requestmethod() {
+      return this.$store.getters.requestmethod;
+    },
   },
   watch: {
     showDialog(newVal: boolean): void {
@@ -99,15 +103,19 @@ export default defineComponent({
     },
   },
   methods: {
-    redirectToIdpLogin(): void {
+    async redirectToIdpLogin(): Promise<void> {
       this.loading = true;
       try {
         let url = this.loginurl + `?${this.idphintname}=${this.receivedIdp.id}`;
         this.setCookie(this.receivedIdp.id);
-        window.location.href = url;
+        if (this.requestmethod === "GET") window.location.href = url;
+        else if (this.requestmethod !== "GET") {
+          await axios({ method: this.requestmethod, url: url });
+        }
+
         this.loading = false;
       } catch (e) {
-        console.log("Couldn't redirect to selected IdP ", e); //TODO show Error Toastnotification
+        console.error("Couldn't redirect to selected IdP ", e); //TODO show Error Toastnotification
         this.loading = false;
       }
     },

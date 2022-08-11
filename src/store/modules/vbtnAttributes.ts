@@ -8,6 +8,7 @@ const defaultVbtnAttributes = () => {
     opentab: true,
     idpdatafile: "idps",
     idp: "",
+    requestmethod: "GET",
   };
 };
 const state = defaultVbtnAttributes();
@@ -21,6 +22,7 @@ const getters = {
   opentab: (state: any) => state.opentab,
   idpdatafile: (state: any) => state.idpdatafile,
   idp: (state: any) => state.idp,
+  requestmethod: (state: any) => state.requestmethod,
 };
 
 const mutations = {
@@ -40,6 +42,8 @@ const mutations = {
   update_idpdatafile: (state: any, idpdatafile: string) =>
     (state.idpdatafile = idpdatafile),
   update_idp: (state: any, idp: string) => (state.idp = idp),
+  update_requestmethod: (state: any, requestmethod: string) =>
+    (state.requestmethod = requestmethod),
 };
 
 export default {

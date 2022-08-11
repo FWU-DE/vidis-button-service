@@ -29,6 +29,7 @@ export class VidisLoginApp extends HTMLElement {
       "opentab",
       "idpdatafile",
       "idp",
+      "requestmethod",
     ];
   }
 
@@ -67,6 +68,7 @@ export class VidisLoginApp extends HTMLElement {
     if (attrName === "dark") newVal = JSON.parse(newVal);
     if (attrName === "opentab") newVal = JSON.parse(newVal);
     if (attrName === "cookie") newVal = JSON.parse(newVal);
+    if (attrName === "requestmethod") newVal = newVal.toUpperCase();
     store.commit(`update_${attrName}`, newVal);
   }
 

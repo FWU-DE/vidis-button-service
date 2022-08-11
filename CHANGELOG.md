@@ -1,12 +1,22 @@
 # Changelog Vidis-Button
 
-## Version 1.0.15
-
-- VBTN-92: The Service Provider can now specify the preselected idphint via the attribute api.
+## Version 1.1.0
 
 ### Added
 
-- VBTN-85: User now can change their idp-selection after they saved it in the cookie
+- VBTN-96: The IDP-Autocomplete now comes with a Label that indicates what the autocomplete does.
+
+## Version 1.0.16
+
+### Added
+
+- VBTN-95: The Service Provider can now specify the Request Method (GET, POST, ...) that is used for redirection of the user
+
+## Version 1.0.15
+
+### Added
+
+- VBTN-92: The Service Provider can now specify the preselected idphint via the attribute api.
 
 ## Version 1.0.14
 
