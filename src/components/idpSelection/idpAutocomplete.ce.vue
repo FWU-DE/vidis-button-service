@@ -25,10 +25,14 @@
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
+        :inputStyle="'font-size: 18px'"
+        :class="{ idpAutocomplete: focused && !showMobile }"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
         @click="switchToMobile"
+        @focus="focused = true"
+        @blur="focused = false"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
@@ -38,8 +42,7 @@
         <template #item="{ item }">
           <div
             v-if="!item.noResult"
-            class="flex align-items-center justify-content-between"
-            style="padding: 0.75rem 1rem"
+            class="flex align-items-center justify-content-between idpAutocompleteItem"
           >
             <div class="flex align-items-center">
               <img :src="schoolIcon" class="idp-item-icon" />
@@ -124,6 +127,7 @@ export default defineComponent({
       ready: false,
       disableTeleport: true,
       autocompleteRef: {},
+      focused: false,
     };
   },
   async created() {
