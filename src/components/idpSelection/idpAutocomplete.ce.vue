@@ -195,10 +195,6 @@ export default defineComponent({
     },
   },
   methods: {
-    handleFocus(event: any) {
-      console.log(event);
-      this.focused = event;
-    },
     async switchToMobile() {
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
