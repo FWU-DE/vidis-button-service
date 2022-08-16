@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.2.0
+
+### Added
+
+- VBTN-82: Adaptation of styles for search field and list elements
+
 ## Version 1.1.0
 
 ### Added
