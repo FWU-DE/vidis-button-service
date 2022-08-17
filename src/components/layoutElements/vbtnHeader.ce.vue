@@ -5,7 +5,11 @@
     class="grid-nogutter flex justify-content-center blue-background standard-padding"
   >
     <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
-      <Button class="p-button-link backButton" @click="closeDialog">
+      <Button
+        class="p-button-link backButton"
+        v-esc="closeDialog"
+        @click="closeDialog"
+      >
         {{ $t("general.back") }}
       </Button>
       <div
@@ -34,6 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import esc from "@/directives/v-esc";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
 
@@ -67,6 +72,9 @@ export default defineComponent({
     closeDialog(): void {
       this.$emit("closeDialog");
     },
+  },
+  directives: {
+    esc,
   },
 });
 </script>

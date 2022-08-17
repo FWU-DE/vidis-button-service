@@ -2,7 +2,6 @@
   <Dialog
     v-model:visible="showDialog"
     class="p-dialog-maximized"
-    @keydown.esc="showDialog = false"
     :closable="false"
   >
     <template #header="">
