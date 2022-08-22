@@ -7,6 +7,8 @@ import groupedIdps from "./groupedIdps.json";
 import idpsInStore from "./idpsInStore.json";
 import searchResults from "./searchResults.json";
 import getResults from "./getResults.json";
+import cookie from "@/mixins/cookie";
+import breakpoints from "@/mixins/breakpoints";
 
 import { messages } from "@/languages/i18nPlugin";
 import axios from "axios";
@@ -16,8 +18,9 @@ describe("IdPAutocomplete", () => {
   beforeEach(async () => {
     axios.get = jest.fn().mockResolvedValue({ data: getResults });
     IdPAutocompleteWrapper = shallowMount(IdPAutocomplete, {
-      store,
       global: {
+        mixins: [cookie, breakpoints],
+        plugins: [store],
         provide: {
           size: "L",
           dark: false,
@@ -72,7 +75,9 @@ describe("IdPAutocomplete", () => {
           IdPAutocompleteWrapper.vm,
           "emitToParent"
         );
-        IdPAutocompleteWrapper.vm.cookieIdp = 1;
+        IdPAutocompleteWrapper.vm.$store.commit("update_cookie", false);
+        IdPAutocompleteWrapper.vm.$store.commit("update_cookie", true);
+        IdPAutocompleteWrapper.vm.setCookie(1);
         await IdPAutocompleteWrapper.vm.loadIdps();
         expect(IdPAutocompleteWrapper.vm.idpsInStore).toEqual(idpsInStore);
         expect(emitToParentSpy).toHaveBeenCalled();

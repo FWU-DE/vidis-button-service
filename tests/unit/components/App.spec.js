@@ -1,5 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import App from "@/App.ce.vue";
+import store from "@/store/index";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("App", () => {
@@ -7,6 +8,7 @@ describe("App", () => {
   beforeEach(() => {
     appWrapper = shallowMount(App, {
       global: {
+        plugins: [store],
         provide: {
           size: "L",
           dark: false,

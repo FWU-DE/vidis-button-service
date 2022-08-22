@@ -1,4 +1,4 @@
-import { App, createApp, InjectionKey } from "vue";
+import { App, createApp } from "vue";
 import Application from "./App.ce.vue";
 
 import i18n from "@/languages/i18nPlugin";
@@ -28,6 +28,8 @@ export class VidisLoginApp extends HTMLElement {
       "idphintname",
       "opentab",
       "idpdatafile",
+      "idp",
+      "requestmethod",
     ];
   }
 
@@ -66,10 +68,8 @@ export class VidisLoginApp extends HTMLElement {
     if (attrName === "dark") newVal = JSON.parse(newVal);
     if (attrName === "opentab") newVal = JSON.parse(newVal);
     if (attrName === "cookie") newVal = JSON.parse(newVal);
-    this.app.provide(
-      attrName,
-      newVal as unknown as InjectionKey<typeof newVal>
-    );
+    if (attrName === "requestmethod") newVal = newVal.toUpperCase();
+    store.commit(`update_${attrName}`, newVal);
   }
 
   /**

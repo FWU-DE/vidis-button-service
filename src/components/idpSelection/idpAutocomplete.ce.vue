@@ -13,6 +13,11 @@
       to="#mobileAutocompletePlace"
       :disabled="disableTeleport"
     >
+      <div :style="labelStyle">
+        <span class="idpAutocompleteLabel">
+          {{ $t("idp.label") }}
+        </span>
+      </div>
       <AutoComplete
         v-model="selectedIdP"
         ref="idpAutocomplete"
@@ -20,10 +25,14 @@
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
+        :inputStyle="'font-size: 18px'"
+        :class="{ idpAutocomplete: focused && !showMobile }"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
         @click="switchToMobile"
+        @focus="focused = true"
+        @blur="focused = false"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
@@ -33,8 +42,7 @@
         <template #item="{ item }">
           <div
             v-if="!item.noResult"
-            class="flex align-items-center justify-content-between"
-            style="padding: 0.75rem 1rem"
+            class="flex align-items-center justify-content-between idpAutocompleteItem"
           >
             <div class="flex align-items-center">
               <img :src="schoolIcon" class="idp-item-icon" />
@@ -103,11 +111,6 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar },
-  inject: {
-    idpdatafile: {
-      default: "idps",
-    },
-  },
   data() {
     return {
       schoolIcon,
@@ -124,25 +127,69 @@ export default defineComponent({
       ready: false,
       disableTeleport: true,
       autocompleteRef: {},
+      focused: false,
     };
   },
   async created() {
     await this.loadIdps();
-    this.groupIdps();
   },
   mounted() {
     this.ready = true;
     this.showMobile = false;
+    if (!this.allowTeleportToMobile)
+      this.$nextTick(() => this.$refs.idpAutocomplete.focus());
+    this.switchToMobile();
   },
   computed: {
+    idpdatafile() {
+      return this.$store.getters.idpdatafile;
+    },
+    idp() {
+      return this.$store.getters.idp;
+    },
     idpsInStore() {
       return IdP.all();
     },
     allowTeleportToMobile(): boolean {
       return this.breakpoint === "xs";
     },
+    labelStyle() {
+      return {
+        "margin-bottom": !this.showMobile ? "17px" : "",
+        "padding-top": this.showMobile ? "20px" : "",
+        "padding-left": this.showMobile ? "20px" : "2px",
+      };
+    },
   },
   watch: {
+    idpdatafile: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+    },
+    idpPreselected: {
+      async handler() {
+        IdP.deleteAll();
+        await this.loadIdps();
+      },
+    },
+    cookieIdp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
+    idp: {
+      async handler() {
+        if (this.idpPreselected && IdP.all().length === 0)
+          await this.loadIdps();
+        else if (this.idpPreselected) this.selectedIdP = IdP.find(this.idp);
+      },
+      immediate: true,
+    },
     showMobile(newShowMobile) {
       this.disableTeleport = !newShowMobile;
     },
@@ -172,13 +219,14 @@ export default defineComponent({
           IdP.insert({
             data: this.availableIdps,
           });
+          this.groupIdps();
           this.loadingIdps = false;
         } catch (e) {
           this.loadingIdps = false;
           throw new Error("Couldn't load IdPs " + e);
         }
       }
-      this.selectedIdP = IdP.find(this.cookieIdp);
+      this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
     emitToParent(): void {

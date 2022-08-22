@@ -9,7 +9,7 @@
         {{ $t("general.back") }}
       </Button>
       <div
-        class="entrance-overLine"
+        class="header-overLine"
         style="margin-bottom: 32px"
         :class="{ 'mb-3': size !== 'L' }"
       />
@@ -45,16 +45,14 @@ export default defineComponent({
   props: {},
   mixins: [breakpoints],
   components: { Button },
-  inject: {
-    size: {
-      default: "L",
-    },
-  },
   data() {
     return { logo, shield };
   },
 
   computed: {
+    size() {
+      return this.$store.getters.size;
+    },
     pushdown(): string {
       return this.breakpoint === "xs" ||
         this.breakpoint === "sm" ||

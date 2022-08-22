@@ -1,12 +1,14 @@
 import { shallowMount } from "@vue/test-utils";
 import IdpDialog from "@/components/idpSelection/idpDialog.ce.vue";
+import store from "@/store/index";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("idpDialog", () => {
   let idpDialogWrapper: any;
-  beforeEach(() => {
+  beforeEach(async () => {
     idpDialogWrapper = shallowMount(IdpDialog, {
       global: {
+        plugins: [store],
         provide: {
           size: "L",
           dark: false,
@@ -16,6 +18,7 @@ describe("idpDialog", () => {
         },
       },
     });
+    await idpDialogWrapper.vm.$nextTick();
   });
   describe("watch", () => {
     describe("showDialog", () => {

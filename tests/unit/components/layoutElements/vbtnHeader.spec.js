@@ -1,5 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import Header from "@/components/layoutElements/vbtnHeader.ce.vue";
+import store from "@/store/index";
 
 import { messages } from "@/languages/i18nPlugin";
 describe("Entrance", () => {
@@ -7,6 +8,7 @@ describe("Entrance", () => {
   beforeEach(() => {
     headerWrapper = shallowMount(Header, {
       global: {
+        plugins: [store],
         mocks: {
           $t: (key) => messages["de"][key],
         },
