@@ -32,6 +32,7 @@
     </div>
     <div>
       <Button
+        name="help"
         class="p-button-link closeHelpButton"
         v-esc="closeDialog"
         @click="closeDialog"

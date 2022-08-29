@@ -6,6 +6,7 @@
   >
     <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
       <Button
+        name="vbtn"
         class="p-button-link backButton"
         v-esc="closeDialog"
         @click="closeDialog"

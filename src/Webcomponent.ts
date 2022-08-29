@@ -28,6 +28,8 @@ export class VidisLoginApp extends HTMLElement {
       "idphintname",
       "opentab",
       "idpdatafile",
+      "idp",
+      "requestmethod",
     ];
   }
 
