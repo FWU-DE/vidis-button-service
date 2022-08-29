@@ -16,9 +16,87 @@
       >
     </noscript>
     <div>
-      <h1>Default (size = L, cookie = false)</h1>
-      <vidis-login loginurl="https://www.taskcards.de/auth/openid">
+      <div>
+        <ul>
+          <li>
+            <span class="vbtnInputLabels">
+              Size (Large :"L", Medium: "M", Small: "S", Default: "L"):
+            </span>
+            <input class="vbtnInputfields" type="text" id="size" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels">loginurl* ("https://..."):</span>
+            <input
+              type="text"
+              id="loginurl"
+              value="https://www.taskcards.de/auth/openid"
+              class="vbtnInputfields"
+            />
+          </li>
+
+          <li>
+            <span class="vbtnInputLabels">
+              idphintname (Default: "kc_idp_hint"):
+            </span>
+            <input class="vbtnInputfields" type="text" id="idphintname" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels"> idpdatafile (Default: "idps"):</span>
+            <input class="vbtnInputfields" type="text" id="idpdatafile" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels">idp:</span>
+            <input class="vbtnInputfields" type="text" id="idp" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels">Request Method:</span>
+            <input class="vbtnInputfields" type="text" id="requestmethod" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels"> cookie:</span>
+            <input type="checkbox" id="cookie" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels"> opentab:</span>
+            <input type="checkbox" id="opentab" checked="true" />
+          </li>
+        </ul>
+      </div>
+      <vidis-login
+        id="vidislogin"
+        loginurl="https://www.taskcards.de/auth/openid"
+      >
       </vidis-login>
     </div>
   </body>
+  <script>
+    function handleInputOf(elem = "") {
+      let el = document.getElementById(elem);
+      el.addEventListener("input", function (evt) {
+        console.log(evt.data, el.value);
+        if (el.type === "text")
+          document.getElementById("vidislogin")?.setAttribute(elem, el.value);
+        else if (el.type === "checkbox")
+          document.getElementById("vidislogin")?.setAttribute(elem, el.checked);
+      });
+    }
+    handleInputOf("size");
+    handleInputOf("loginurl");
+    handleInputOf("idphintname");
+    handleInputOf("idpdatafile");
+    handleInputOf("idp");
+    handleInputOf("cookie");
+    handleInputOf("opentab");
+    handleInputOf("requestmethod");
+  </script>
+  <style>
+    .vbtnInputLabels {
+      display: inline-block;
+      width: 500px;
+    }
+    .vbtnInputfields {
+      display: inline-block;
+      width: 400px;
+    }
+  </style>
 </html>

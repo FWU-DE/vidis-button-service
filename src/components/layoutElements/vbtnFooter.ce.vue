@@ -44,6 +44,7 @@
           "
           :src="digitalPakt"
           :alt="$t('general.digitalPaktAlt')"
+          style="width: 178px; height: 97px"
         />
       </div>
       <div
@@ -65,7 +66,11 @@
       class="col-12 flex justify-content-center"
       style="margin-top: 10px"
     >
-      <img :src="digitalPakt" :alt="$t('general.digitalPaktAlt')" />
+      <img
+        :src="digitalPakt"
+        :alt="$t('general.digitalPaktAlt')"
+        style="width: 178px; height: 97px"
+      />
     </div>
     <div
       v-if="breakpoint === 'xs'"
@@ -98,7 +103,11 @@
       class="col-12 flex"
       style="margin-top: 40px"
     >
-      <img :src="digitalPakt" :alt="$t('general.digitalPaktAlt')" />
+      <img
+        :src="digitalPakt"
+        :alt="$t('general.digitalPaktAlt')"
+        style="width: 178px; height: 97px"
+      />
     </div>
 
     <helpDialog :visible="showHelp" @closed="toggleHelp(false)" />
@@ -134,11 +143,6 @@ export default defineComponent({
   props: {},
   mixins: [breakpoints],
   components: { Button, helpDialog },
-  inject: {
-    opentab: {
-      default: true,
-    },
-  },
   data() {
     return {
       digitalPakt,
@@ -164,7 +168,11 @@ export default defineComponent({
       showHelp: false,
     };
   },
-  computed: {},
+  computed: {
+    opentab() {
+      return this.$store.getters.opentab;
+    },
+  },
   methods: {
     toggleHelp(show: boolean): void {
       this.showHelp = show;

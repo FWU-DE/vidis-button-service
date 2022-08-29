@@ -19,14 +19,6 @@ import helpHeader from "@/components/help/helpHeader.ce.vue";
 import helpContent from "@/components/help/helpContent.vue";
 export default defineComponent({
   name: "idp-dialog",
-  inject: {
-    loginurl: {
-      default: "",
-    },
-    cookie: {
-      default: false,
-    },
-  },
   props: {
     visible: { type: Boolean, default: false },
   },
@@ -42,6 +34,14 @@ export default defineComponent({
       showButton: false,
       loading: false,
     };
+  },
+  computed: {
+    loginurl() {
+      return this.$store.getters.loginurl;
+    },
+    cookie() {
+      return this.$store.getters.cookie;
+    },
   },
   watch: {
     showDialog(newVal: boolean): void {
