@@ -36,7 +36,6 @@
 import { defineComponent } from "vue";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
-
 import logo from "@/assets/svgs/Logo.svg";
 import shield from "@/assets/svgs/vidis_schield.svg";
 
