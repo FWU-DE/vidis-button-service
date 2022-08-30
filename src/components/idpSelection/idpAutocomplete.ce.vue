@@ -111,6 +111,11 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar },
+  inject: {
+    idpdatafile: {
+      default: "idps",
+    },
+  },
   data() {
     return {
       schoolIcon,
