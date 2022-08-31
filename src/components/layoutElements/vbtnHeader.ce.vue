@@ -27,7 +27,7 @@
           :alt="$t('general.branding_accessibility')"
         />
         <div style="display: inline" class="flex align-items-center">
-          <span class="secureLoginLabel">
+          <span style="white-space: nowrap" class="secureLoginLabel">
             {{ $t("general.secureLoginLabel") }}
           </span>
           <img style="height: 18px; opacity: 0.7" :src="shield" />
