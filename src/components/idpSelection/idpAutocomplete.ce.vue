@@ -18,6 +18,13 @@
           {{ $t("idp.label") }}
         </span>
       </div>
+      <Button :class="resetSelectionIconClass" @click="resetSelection">
+        <img
+          :src="cross"
+          :alt="$t('idp.resetSelection')"
+          :title="$t('idp.resetSelection')"
+        />
+      </Button>
       <AutoComplete
         v-model="selectedIdP"
         ref="idpAutocomplete"
@@ -97,7 +104,7 @@ import { defineComponent } from "vue";
 import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
-
+import Button from "primevue/button";
 import Sidebar from "primevue/sidebar";
 import AutoComplete from "primevue/autocomplete";
 import IdP from "@/store/ORM-Stores/models/idps";
@@ -110,7 +117,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Sidebar },
+  components: { AutoComplete, Sidebar, Button },
   inject: {
     idpdatafile: {
       default: "idps",
@@ -164,6 +171,11 @@ export default defineComponent({
         "padding-top": this.showMobile ? "20px" : "",
         "padding-left": this.showMobile ? "20px" : "2px",
       };
+    },
+    resetSelectionIconClass() {
+      return this.showMobile && this.allowTeleportToMobile
+        ? "resetSelectionIcon-mobile"
+        : "resetSelectionIcon";
     },
   },
   watch: {
@@ -314,6 +326,11 @@ export default defineComponent({
       }
       this.finalGroupedIdps = finalGroupedIdps;
       return finalGroupedIdps;
+    },
+    resetSelection(): void {
+      this.selectedIdP = "";
+      this.setCookie("");
+      this.emitToParent();
     },
   },
 });
