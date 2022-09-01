@@ -330,7 +330,6 @@ export default defineComponent({
     },
     resetSelection(): void {
       this.selectedIdP = "";
-      this.setCookie("");
       this.emitToParent();
     },
   },
