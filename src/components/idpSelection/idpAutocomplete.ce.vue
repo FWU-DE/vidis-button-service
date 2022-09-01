@@ -17,14 +17,15 @@
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
         </span>
+        <Button :class="resetSelectionIconClass" @click="resetSelection">
+          <img
+            :src="cross"
+            :alt="$t('idp.resetSelection')"
+            :title="$t('idp.resetSelection')"
+          />
+        </Button>
       </div>
-      <Button :class="resetSelectionIconClass" @click="resetSelection">
-        <img
-          :src="cross"
-          :alt="$t('idp.resetSelection')"
-          :title="$t('idp.resetSelection')"
-        />
-      </Button>
+
       <AutoComplete
         v-model="selectedIdP"
         ref="idpAutocomplete"
