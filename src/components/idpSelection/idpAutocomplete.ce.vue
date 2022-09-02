@@ -17,7 +17,15 @@
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
         </span>
+        <Button :class="resetSelectionIconClass" @click="resetSelection">
+          <img
+            :src="cross"
+            :alt="$t('idp.resetSelection')"
+            :title="$t('idp.resetSelection')"
+          />
+        </Button>
       </div>
+
       <AutoComplete
         v-model="selectedIdP"
         ref="idpAutocomplete"
@@ -97,7 +105,7 @@ import { defineComponent } from "vue";
 import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
-
+import Button from "primevue/button";
 import Sidebar from "primevue/sidebar";
 import AutoComplete from "primevue/autocomplete";
 import IdP from "@/store/ORM-Stores/models/idps";
@@ -110,7 +118,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Sidebar },
+  components: { AutoComplete, Sidebar, Button },
   inject: {
     idpdatafile: {
       default: "idps",
@@ -164,6 +172,11 @@ export default defineComponent({
         "padding-top": this.showMobile ? "20px" : "",
         "padding-left": this.showMobile ? "20px" : "2px",
       };
+    },
+    resetSelectionIconClass() {
+      return this.showMobile && this.allowTeleportToMobile
+        ? "resetSelectionIcon-mobile"
+        : "resetSelectionIcon";
     },
   },
   watch: {
@@ -240,7 +253,8 @@ export default defineComponent({
     },
     searchGroupedIdps({ query }: { query: string }): void {
       let filteredIdps = [];
-      for (let state of this.finalGroupedIdps) {
+      const localFinalGroupedIdps = this.finalGroupedIdps || [];
+      for (let state of localFinalGroupedIdps) {
         let filteredItems = state.items.filter((item: any) => {
           let found =
             this.contains(item.name, query) ||
@@ -314,6 +328,11 @@ export default defineComponent({
       }
       this.finalGroupedIdps = finalGroupedIdps;
       return finalGroupedIdps;
+    },
+    async resetSelection(): Promise<void> {
+      this.selectedIdP = "";
+      this.focused = true;
+      this.$emit("emitSelectedIdp", this.selectedIdP);
     },
   },
 });

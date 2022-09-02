@@ -1,5 +1,17 @@
 # Changelog Vidis-Button
 
+## Version 1.4.0
+
+### Added
+
+- VBTN-98: Reseting IDP-Section is now possible
+- VBTN-81: Added Accessability by making all Windows closable correctly using "Esc"
+- VBTN-82: Added/Changed an array of visual effects and fonts
+
+### Fixed
+
+- VBTN-84: Fixing Visual Bug in Safari
+
 ## Version 1.1.0
 
 ### Added

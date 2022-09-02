@@ -23,6 +23,7 @@ export default {
     noResult: "Leider haben wir zu Ihren Suchkriterien",
     noResult2: "keine passenden Ergebnisse gefunden.",
     label: "Bitte wähle Dein Landesportal / Schulportal",
+    resetSelection: "Auswahl zurücksetzen",
   },
   help: {
     closeAlt: "Hilfe Schließen",
