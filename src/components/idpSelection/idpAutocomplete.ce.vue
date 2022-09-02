@@ -332,10 +332,7 @@ export default defineComponent({
     async resetSelection(): Promise<void> {
       this.selectedIdP = "";
       this.focused = true;
-      console.log("test");
-      //this.$refs.idpAutocomplete.focus();
-      await this.switchToMobile();
-      this.emitToParent();
+      this.$emit("emitSelectedIdp", this.selectedIdP);
     },
   },
 });
