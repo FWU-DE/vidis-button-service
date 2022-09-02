@@ -120,7 +120,7 @@ export default defineComponent({
     },
     onIdpSelected(value: string): void {
       this.receivedIdp = value;
-      if (this.receivedIdp) this.showButton = true;
+      this.showButton = !!this.receivedIdp;
     },
   },
 });

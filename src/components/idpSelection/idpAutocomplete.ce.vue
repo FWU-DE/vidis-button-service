@@ -253,7 +253,8 @@ export default defineComponent({
     },
     searchGroupedIdps({ query }: { query: string }): void {
       let filteredIdps = [];
-      for (let state of this.finalGroupedIdps) {
+      const localFinalGroupedIdps = this.finalGroupedIdps || [];
+      for (let state of localFinalGroupedIdps) {
         let filteredItems = state.items.filter((item: any) => {
           let found =
             this.contains(item.name, query) ||
@@ -328,8 +329,12 @@ export default defineComponent({
       this.finalGroupedIdps = finalGroupedIdps;
       return finalGroupedIdps;
     },
-    resetSelection(): void {
+    async resetSelection(): Promise<void> {
       this.selectedIdP = "";
+      this.focused = true;
+      console.log("test");
+      //this.$refs.idpAutocomplete.focus();
+      await this.switchToMobile();
       this.emitToParent();
     },
   },
