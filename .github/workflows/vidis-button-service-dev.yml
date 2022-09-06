@@ -8,24 +8,19 @@ on:
       - main
 
 jobs:
-  version-check:
+  version-check-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+
+      - run: git fetch --all --tags
+
+      - name: Check Release Version
+        uses: thebongy/version-check@v1
         with:
-          node-version: "14"
-      - name: Check Version
-        id: check
-        uses: EndBug/version-check@v1
-        with:
-          file-url: https://raw.githubusercontent.com/FWU-DE/vidis-button-service/main/package.json?token=GHSAT0AAAAAABXRNTLKLSHJFEGGBABRJIZIYYXJNSQ
-          static-checking: localIsNew
-      - name: Log when changed
-        if: steps.check.outputs.changed == 'true'
-        run: 'echo "Version change found. New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
-      - name: Log when unchanged
-        if: steps.check.outputs.changed == 'false'
-        run: 'echo "No version change :/"'
+          file: package.json
+          tagFormat: ${version}-rc
+        id: version_check_staging
+      - name:
+        run: |
+          echo "Version ${{steps.version_check_staging.outputs.releaseVersion}}"
