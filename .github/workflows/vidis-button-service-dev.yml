@@ -21,7 +21,7 @@ jobs:
         id: check
         uses: EndBug/version-check@v1
         with:
-          file-url: https://github.com/FWU-DE/vidis-button-service/blob/main/package.json?raw=true
+          file-url: https://raw.githubusercontent.com/FWU-DE/vidis-button-service/main/package.json?token=GHSAT0AAAAAABXRNTLKENJ4EZ4AF3RUFX6SYYXIJDA
           static-checking: localIsNew
       - name: Log when changed
         if: steps.check.outputs.changed == 'true'
