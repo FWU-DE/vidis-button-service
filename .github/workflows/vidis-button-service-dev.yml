@@ -21,7 +21,7 @@ jobs:
         id: check
         uses: EndBug/version-check@v1
         with:
-          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+          token: "${{ secrets.ACCESS_TOKEN }}"
           file-url: https://github.com/FWU-DE/vidis-button-service/blob/main/package.json?raw=true
           static-checking: localIsNew
       - name: Log when changed
