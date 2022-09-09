@@ -112,12 +112,6 @@ describe("EntryButton", () => {
     });
     describe("idpPreConfigured", () => {
       test("that it returns the idpPreConfigured in the store", () => {
-        console.log(
-          "idpPreConfigured",
-          entryButtonWrapper.vm.cookieIdp.length > 0,
-          entryButtonWrapper.vm.idp
-        );
-
         expect(entryButtonWrapper.vm.idpPreConfigured).toBe(false);
         entryButtonWrapper.vm.$store.commit("update_idp", "foo");
         expect(entryButtonWrapper.vm.idpPreConfigured).toBe(true);
@@ -187,9 +181,7 @@ describe("EntryButton", () => {
       test("that it shows the default Label", async () => {
         entryButtonWrapper.vm.loadIdpsSelection = jest.fn();
         await entryButtonWrapper.vm.reloadPreselectedIdp();
-        expect(entryButtonWrapper.vm.buttonLabel).toBe(
-          "Anmelden mit deinem Schulaccount"
-        );
+        expect(entryButtonWrapper.vm.buttonLabel).toBe("Anmelden");
         expect(entryButtonWrapper.vm.loadIdpsSelection).not.toHaveBeenCalled();
 
         IdP.create({
@@ -202,9 +194,7 @@ describe("EntryButton", () => {
         });
         entryButtonWrapper.vm.$store.commit("update_idp", "dfsdf");
         await entryButtonWrapper.vm.reloadPreselectedIdp();
-        expect(entryButtonWrapper.vm.buttonLabel).toBe(
-          "Anmelden mit deinem Schulaccount"
-        );
+        expect(entryButtonWrapper.vm.buttonLabel).toBe("Anmelden");
       });
       test("that it loads the IDPS", async () => {
         entryButtonWrapper.vm.loadIdpsSelection = jest.fn();
@@ -237,9 +227,7 @@ describe("EntryButton", () => {
     });
     describe("loadIdpsSelection", () => {
       test("that text of button is 'Anmelden mit deinem Schulaccount' when run without selected idp in cookie", async () => {
-        expect(entryButtonWrapper.vm.buttonLabel).toBe(
-          "Anmelden mit deinem Schulaccount"
-        );
+        expect(entryButtonWrapper.vm.buttonLabel).toBe("Anmelden");
       });
       test("that text of button is 'Weiter mit ' when run with selected idp in cookie", async () => {
         entryButtonWrapper.vm.$store.commit("update_cookie", false);
