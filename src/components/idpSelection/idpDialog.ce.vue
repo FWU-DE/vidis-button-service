@@ -2,7 +2,6 @@
   <Dialog
     v-model:visible="showDialog"
     class="p-dialog-maximized"
-    @keydown.esc="showDialog = false"
     :closable="false"
   >
     <template #header="">
@@ -121,7 +120,7 @@ export default defineComponent({
     },
     onIdpSelected(value: string): void {
       this.receivedIdp = value;
-      if (this.receivedIdp) this.showButton = true;
+      this.showButton = !!this.receivedIdp;
     },
   },
 });

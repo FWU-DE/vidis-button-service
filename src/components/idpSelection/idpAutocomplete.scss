@@ -1,125 +1,147 @@
 .p-autocomplete-input {
-    background-image: url("../../assets/svgs/search.svg");
-    background-size: 1.5em;
-    background-position: left 22px top 20px;
-    background-repeat: no-repeat;
-    text-indent: 40px;
-    padding: 20px;
-    color: #0000c4;
-    width: 100%;
-    border: 0px;
+  background-image: url("../../assets/svgs/search.svg");
+  background-size: 1.5em;
+  background-position: left 22px top 20px;
+  background-repeat: no-repeat;
+  text-indent: 40px;
+  padding: 20px;
+  color: #0000c4;
+  width: 100%;
+  border: 0px;
 }
 
 .p-autocomplete-input:enabled:focus {
-    outline-color: transparent;
-    outline-style: none;
+  outline-color: transparent;
+  outline-style: none;
 }
 
 .autocomplete-main-item {
-    font-size: 18px;
-    color: #0000c4;
-    vertical-align: middle;
-    display: inline-block;
-    padding-left: 20px;
+  font-size: 18px;
+  color: #0000c4;
+  vertical-align: middle;
+  display: inline-block;
+  padding-left: 20px;
 }
 
 .autocomplete-small-item {
-    padding: 0.75rem 1rem;
-    font-size: 12px;
-    color: #0000c4;
-    display: block;
-    font-weight: normal;
+  padding: 0.75rem 1rem;
+  font-size: 12px;
+  color: #0000c4;
+  display: block;
+  font-weight: normal;
 }
 
 .p-autocomplete-panel {
-    border-radius: 0px 0px 8px 8px;
-    margin-top: -10px;
+  border-radius: 0px 0px 8px 8px;
+  margin-top: -10px;
 }
 
 .idp-item-icon {
-    height: 35px;
-    margin-right: 15px;
+  height: 35px;
+  margin-right: 15px;
 }
 
 .idp-item-label {
-    font-size: 18px;
-    color: #0000c4;
+  font-size: 18px;
+  color: #0000c4;
 }
 
 .p-inputtext:enabled:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 1px transparent;
+  border-color: transparent;
+  box-shadow: 0 0 0 1px transparent;
 }
 
 ::placeholder {
-    color: #6666ff;
-    opacity: 1; /* Firefox */
+  color: #6666ff;
+  opacity: 1; /* Firefox */
 }
 
 input:hover::placeholder {
-    color: #0000c4;
-    opacity: 1; /* Firefox */
+  color: #0000c4;
+  opacity: 1; /* Firefox */
 }
 
 .p-sidebar-header {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .p-sidebar-content {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .mobile-input {
-    border: 0px;
-    width: 100%;
-    z-index: 1200;
+  border: 0px;
+  width: 100%;
+  z-index: 1200;
 }
 
 .p-autocomplete-item-group {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 .idp-noResult {
-    padding-top: 24px;
-    padding-right: 0px;
-    padding-bottom: 24px;
-    padding-left: 40px;
+  padding-top: 24px;
+  padding-right: 0px;
+  padding-bottom: 24px;
+  padding-left: 40px;
 }
 
 .idp-noResult-label {
-    white-space: normal;
-    font-size: 18px;
-    font-weight: 400;
-    display: inline-block;
+  white-space: normal;
+  font-size: 18px;
+  font-weight: 400;
+  display: inline-block;
 }
 
 .p-autocomplete-item {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .idpAutocompleteLabel {
-    font-weight: 400;
-    font-size: 14px;
-    color: #0000c4;
+  font-weight: 400;
+  font-size: 14px;
+  color: #0000c4;
 }
 
 .idpAutocomplete:focus,
 .idpAutocomplete:focus-within {
-    box-shadow: 0px 0px 4px 8px rgba(0, 0, 196, 0.04);
-    border-radius: 8px;
+  box-shadow: 0px 0px 4px 8px rgba(0, 0, 196, 0.04);
+  border-radius: 8px;
 }
 
 .idpAutocompleteItem {
-    padding-left: 16px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-right: 16px;
-    border-radius: 8px;
+  padding-left: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 16px;
+  border-radius: 8px;
 }
 .idpAutocompleteItem:hover {
-    color: #18181b;
-    background: #f7f7fd;
+  color: #18181b;
+  background: #f7f7fd;
 }
 .p-autocomplete-item:hover {
-    color: inherit !important;
-    background: inherit !important;
+  color: inherit !important;
+  background: inherit !important;
+}
+.resetSelectionIcon {
+  width: 10px !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  float: right !important;
+  position: relative !important;
+  top: 56px !important;
+  right: 15px !important;
+  z-index: 1 !important;
+}
+.resetSelectionIcon-mobile {
+  width: 10px !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  float: right !important;
+  position: fixed !important;
+  top: 60px !important;
+  right: 15px !important;
+  z-index: 1300 !important;
 }

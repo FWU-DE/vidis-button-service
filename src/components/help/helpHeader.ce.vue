@@ -32,7 +32,9 @@
     </div>
     <div>
       <Button
+        name="help"
         class="p-button-link closeHelpButton"
+        v-esc="closeDialog"
         @click="closeDialog"
         :style="{ 'margin-top': showCrestLogoArea ? '1.5rem' : '' }"
       >
@@ -44,6 +46,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import esc from "@/directives/v-esc";
 import Button from "primevue/button";
 import breakpoints from "@/mixins/breakpoints";
 import crests from "@/components/layoutElements/crests.vue";
@@ -70,6 +73,9 @@ export default defineComponent({
     closeDialog(): void {
       this.$emit("closeDialog");
     },
+  },
+  directives: {
+    esc,
   },
 });
 </script>
