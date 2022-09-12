@@ -56,8 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
       - name: Check if version changed
-        uses: rpiambulance/action-pr-version-check
+        uses: rpiambulance/action-pr-version-check@v0
         with:
           file: package.json # optional, defaults to "package.json"
