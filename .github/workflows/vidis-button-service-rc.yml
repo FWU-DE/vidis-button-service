@@ -1,5 +1,9 @@
 name: Release Candidate Manual Tagging
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    branches:
+      - main
+      - 'bugfix/**'
 
 jobs:
   create-rc-tag:
