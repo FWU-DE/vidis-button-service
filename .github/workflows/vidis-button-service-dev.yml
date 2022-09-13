@@ -6,37 +6,25 @@ on:
   pull_request:
 
 jobs:
-  compare:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: "Compare Version"
-        id: compare
-        uses: sharesight/compare-package-json-version-with-latest@v1.1.1
-        with:
-          repository: ${{ github.repository }}
-
-      - name: Debug
-        run: |
-          echo current_version: ${{ steps.compare.outputs.current_version }}
-          echo latest_version: ${{ steps.compare.outputs.latest_version }}
-          echo matches?: ${{ steps.compare.outputs.matches }}
-          echo newer?: ${{ steps.compare.outputs.newer }}
-          echo diff: ${{ steps.compare.outputs.diff }}
-
-      - name: Fail if not newer
-        if: steps.compare.outputs.newer != 'true'
-        run: |
-          echo Version was not newer: ${{ steps.compare.outputs.current_version }} vs. ${{ steps.compare.outputs.latest_version }}
-          exit 1
-          
   test1:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: del-systems/check-if-version-bumped@v1
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+    - uses: del-systems/check-if-version-bumped@v1
+    with:
+      token: ${{ secrets.ACCESS_TOKEN }}
+
+  test2:
+  runs-on: ubuntu-latest
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Check package version
+      id: cpv
+      uses: PostHog/check-package-version@v2
+
+    - name: Echo output
+      run: |
+        echo "Committed version: ${{ steps.cpv.outputs.committed-version }}"
+        echo "Published version: ${{ steps.cpv.outputs.published-version }}"
+        echo "Is new version: ${{ steps.cpv.outputs.is-new-version }}"
 
   master-pr-check-version:
     runs-on: ubuntu-latest
