@@ -1,30 +1,17 @@
 name: Dev Vidis Button Service Pipelines
 on:
+  pull_request:
   push:
     branches-ignore:
       - main
-  pull_request:
 
 jobs:
   test1:
-    - uses: del-systems/check-if-version-bumped@v1
-    with:
-      token: ${{ secrets.ACCESS_TOKEN }}
-
-  test2:
-  runs-on: ubuntu-latest
-    - name: Check out repository
-      uses: actions/checkout@v2
-
-    - name: Check package version
-      id: cpv
-      uses: PostHog/check-package-version@v2
-
-    - name: Echo output
-      run: |
-        echo "Committed version: ${{ steps.cpv.outputs.committed-version }}"
-        echo "Published version: ${{ steps.cpv.outputs.published-version }}"
-        echo "Is new version: ${{ steps.cpv.outputs.is-new-version }}"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: del-systems/check-if-version-bumped@v1
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
 
   master-pr-check-version:
     runs-on: ubuntu-latest
