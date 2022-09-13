@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test:chrome": "SEQUENTIAL_TEST=false BROWSER=chrome HEADLESS=true node src/main.js",
+    "test:chrome:browser": "SEQUENTIAL_TEST=false BROWSER=chrome HEADLESS=false node src/main.js",
+    "test:chrome:sequential": "SEQUENTIAL_TEST=true BROWSER=chrome HEADLESS=true node src/main.js",
+    "test:chrome:sequential:browser": "SEQUENTIAL_TEST=true BROWSER=chrome HEADLESS=false node src/main.js",
+    "test:firefox": "SEQUENTIAL_TEST=false BROWSER=firefox HEADLESS=true node src/main.js",
+    "test:firefox:browser": "SEQUENTIAL_TEST=false BROWSER=firefox HEADLESS=false node src/main.js",
+    "test:firefox:sequential": "SEQUENTIAL_TEST=true BROWSER=firefox HEADLESS=true node src/main.js",
+    "test:firefox:sequential:browser": "SEQUENTIAL_TEST=true BROWSER=firefox HEADLESS=false node src/main.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "assert": "^2.0.0",
-    "selenium-webdriver": "^4.2.0"
+    "chromedriver": "^105.0.0",
+    "selenium-webdriver": "^4.4.0"
   }
 }
