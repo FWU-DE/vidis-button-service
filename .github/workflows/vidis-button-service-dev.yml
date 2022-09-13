@@ -1,18 +1,13 @@
 name: Dev Vidis Button Service Pipelines
 on:
   pull_request:
+    branches-ignore:
+      - main
   push:
     branches-ignore:
       - main
 
 jobs:
-  test1:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: del-systems/check-if-version-bumped@v1
-        with:
-          token: ${{ secrets.ACCESS_TOKEN }}
-
   master-pr-check-version:
     runs-on: ubuntu-latest
     steps:
