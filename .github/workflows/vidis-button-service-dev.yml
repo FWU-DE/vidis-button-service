@@ -8,56 +8,29 @@ on:
       - main
 
 jobs:
-  run-unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14"
-      - name: Run Tests
-        run: |
-          npm install -g npm@8
-          npm ci
-          echo "Running unit tests. The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          npm run test:unit -- --coverage
-          echo "This job's status is ${{ job.status }}."
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
-        with:
-          name: code-coverage-report
-          path: coverage/lcov-report/index.html
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: main
-      - name: Get main version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@main
-      - name: 
-        run: |
-          echo "Current version in main branch is ${{ steps.package-version.outputs.current-version}}"
-      - name: Get Feature Branch Version
-        uses: thebongy/version-check@v1
-        id: version_check_staging
-        with:
-          file: package.json
-      - name:
-        run: |
-          echo "Feature branch version is ${{steps.version_check_staging.outputs.rawVersion}}"
-
   master-pr-check-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Check if version changed
-        uses: rpiambulance/action-pr-version-check@v0
+      - uses: actions/checkout@v2
         with:
-          file: package.json # optional, defaults to "package.json"
+          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
+
+      - name: "Compare Version"
+        id: compare
+        uses: sharesight/compare-package-json-version-with-latest@v1.1.1
+        with:
+          repository: ${{ github.repository }}
+
+      - name: Debug
+        run: |
+          echo current_version: ${{ steps.compare.outputs.current_version }}
+          echo latest_version: ${{ steps.compare.outputs.latest_version }}
+          echo matches?: ${{ steps.compare.outputs.matches }}
+          echo newer?: ${{ steps.compare.outputs.newer }}
+          echo diff: ${{ steps.compare.outputs.diff }}
+
+      - name: Fail if not newer
+        if: steps.compare.outputs.newer != 'true'
+        run: |
+          echo Version was not newer: ${{ steps.compare.outputs.current_version }} vs. ${{ steps.compare.outputs.latest_version }}
+          exit 1
