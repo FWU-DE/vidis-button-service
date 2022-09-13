@@ -4,16 +4,12 @@ on:
     branches-ignore:
       - main
   pull_request:
-    branches-ignore:
-      - main
 
 jobs:
-  master-pr-check-version:
+  compare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          GITHUB_TOKEN: "${{ secrets.ACCESS_TOKEN }}"
 
       - name: "Compare Version"
         id: compare
@@ -34,3 +30,26 @@ jobs:
         run: |
           echo Version was not newer: ${{ steps.compare.outputs.current_version }} vs. ${{ steps.compare.outputs.latest_version }}
           exit 1
+          
+  test1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: del-systems/check-if-version-bumped@v1
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
+
+  master-pr-check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dkershner6/npm-version-check-with-comment-action@v1
+        id: version-check
+        with:
+          github-token: "${{ secrets.ACCESS_TOKEN }}"
+
+      # Outputs whether or not it changed
+      - run: echo ${{ steps.version-check.outputs.version-did-change }}
+      
+      # Optionally fail the workflow, should you choose
+      - name: Fail on no version updated
+        if: ${{ steps.version-check.outputs.version-did-change == 'false' }}
+        run: 'echo "No version change :/" && exit 1'
