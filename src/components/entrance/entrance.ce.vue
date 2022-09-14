@@ -1,4 +1,5 @@
 <template>
+  <div id="teleportsTarget" />
   <div class="entrance-overLine" :class="{ 'mb-3': size !== 'L' }" />
   <div
     class="grid-nogutter flex"

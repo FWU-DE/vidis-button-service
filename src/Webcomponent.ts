@@ -4,16 +4,30 @@ import Application from "./App.ce.vue";
 import i18n from "@/languages/i18nPlugin";
 import store from "@/store/index";
 import PrimeVue from "primevue/config";
+
+class VidisLoginApp extends HTMLElement {
+  public app?: App;
+  constructor() {
+    super();
+    this.app = createApp(Application);
+  }
+}
+
 /**
  * This is the class definition of the Webcomponent for the Vidis-Login Button.
  * Notable is that a Vue App is mounted on top of it.
  * It also handles all internal Errors itself.
  */
-export class VidisLoginApp extends HTMLElement {
-  private app: App;
+export class VidisLoginShadowApp extends HTMLElement {
+  public shadowRoot: ShadowRoot;
+  private shadowApp: VidisLoginApp;
   constructor() {
     super();
-    this.app = createApp(Application);
+    //this.app = createApp(Application);
+    this.shadowRoot = this.attachShadow({ mode: "open" });
+    customElements.define("vidis-login-vue-app", VidisLoginApp);
+    this.shadowApp = document.createElement("vidis-login-vue-app");
+    this.shadowApp.setAttribute("id", "vidis-login-vue-app");
   }
   /**
    * Make WC Attributes observable. In order to make the WC aware of the change of its html attributes,
@@ -40,18 +54,20 @@ export class VidisLoginApp extends HTMLElement {
     try {
       this.attachErrorEventHandlers();
       //this.app.config.performance = true;
-      this.app.config.unwrapInjectedRef = true;
-      this.app.config.errorHandler = function (err, vm, info) {
-        //Handle Vue Errors
-        console.error("app.config.errorHandler", err, vm, info);
-      };
+      if (this.shadowApp.app) {
+        this.shadowApp.app.config.unwrapInjectedRef = true;
+        this.shadowApp.app.config.errorHandler = function (err, vm, info) {
+          //Handle Vue Errors
+          console.error("app.config.errorHandler", err, vm, info);
+        };
+        this.shadowApp.app.use(i18n);
+        this.shadowApp.app.use(store);
+        this.shadowApp.app.use(PrimeVue);
 
-      this.app.use(i18n);
-      this.app.use(store);
-      this.app.use(PrimeVue);
-
-      this.app.mount(this);
-      this.appendStyles();
+        this.shadowApp.app.mount(this.shadowApp);
+        this.appendStyles(true);
+        this.shadowRoot.appendChild(this.shadowApp);
+      }
     } catch (e) {
       //Handle Errors during Mount
       console.error("global try/catch", e);
@@ -99,7 +115,7 @@ export class VidisLoginApp extends HTMLElement {
     const element: HTMLElement = document.createElement("style");
     element.innerHTML = style;
     if (!shadow) this.appendChild(element);
-    else this.shadowRoot?.appendChild(element);
+    else this.shadowApp?.appendChild(element);
   }
 
   /**

@@ -1,3 +1,3 @@
-import { VidisLoginApp } from "@/Webcomponent";
+import { VidisLoginShadowApp } from "@/Webcomponent";
 
-customElements.define("vidis-login", VidisLoginApp);
+customElements.define("vidis-login", VidisLoginShadowApp);

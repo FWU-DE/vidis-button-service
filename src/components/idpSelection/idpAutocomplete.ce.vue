@@ -8,11 +8,7 @@
     >
       <div id="mobileAutocompletePlace"></div>
     </Sidebar>
-    <teleport
-      v-if="ready"
-      to="#mobileAutocompletePlace"
-      :disabled="disableTeleport"
-    >
+    <teleport v-if="ready" :to="teleportTarget" :disabled="disableTeleport">
       <div :style="labelStyle">
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
@@ -35,6 +31,7 @@
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
+        :appendTo="'self'"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
@@ -136,12 +133,23 @@ export default defineComponent({
       disableTeleport: true,
       autocompleteRef: {},
       focused: false,
+      teleportTarget: null,
     };
   },
   async created() {
     await this.loadIdps();
   },
-  mounted() {
+
+  async mounted() {
+    await this.$nextTick();
+
+    const shadow = document.querySelector("#vidislogin")?.shadowRoot;
+    this.teleportTarget = shadow?.querySelector("#mobileAutocompletePlace");
+    console.log(this.teleportTarget);
+    console.log("___________", this.$el.parentNode);
+
+    console.log(this.teleportTarget);
+
     this.ready = true;
     this.showMobile = false;
     if (!this.allowTeleportToMobile)
@@ -216,7 +224,8 @@ export default defineComponent({
         this.disableTeleport = false;
         this.ready = true;
         await this.$nextTick();
-        this.$refs.idpAutocomplete.focus();
+        console.log(this.$refs);
+        // this.$refs.idpAutocomplete.focus();
       }
     },
     switchToNormal() {

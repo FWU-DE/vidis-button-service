@@ -1,8 +1,11 @@
 <template>
   <Dialog
+    v-if="ready"
     v-model:visible="showDialog"
     class="p-dialog-maximized"
     :closable="false"
+    :appendTo="'div'"
+    ref="vidis-dialog"
   >
     <template #header="">
       <vbtnHeader @closeDialog="showDialog = false" />
@@ -71,13 +74,22 @@ export default defineComponent({
     vbtnHeader,
     vbtnFooter,
   },
+
   data() {
     return {
       showDialog: false,
       receivedIdp: "",
       showButton: false,
       loading: false,
+      teleportTarget: null,
+      ready: false,
     };
+  },
+  mounted() {
+    console.log("-------", this.$el.parentNode.children[0]);
+
+    this.teleportTarget = this.$el.parentNode.children[0];
+    this.ready = true;
   },
   computed: {
     loginurl() {
@@ -95,9 +107,17 @@ export default defineComponent({
   },
   watch: {
     showDialog(newVal: boolean): void {
+      console.log("-------", this.$el.parentNode.children[0], this.$el);
       if (!newVal) this.$emit("closed");
     },
-    visible(newVal: boolean): void {
+    async visible(newVal: boolean): Promise<void> {
+      /*   await this.$nextTick();
+      const shadow = document.querySelector("#vidislogin")?.shadowRoot;
+      this.teleportTarget = shadow?.querySelector(".entrance-overLine");
+      console.log(this.teleportTarget);
+      console.log(shadow);
+
+      console.log(this.teleportTarget); */
       this.showDialog = newVal;
     },
   },
