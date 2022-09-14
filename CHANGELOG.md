@@ -4,6 +4,13 @@
 
 ### Added
 
+- VBTN-50: Added a version check into the Pipeline to prevent faulty versions to be merged.
+- VBTN-71: Changed some Labels based on the clients request.
+
+## Version 1.4.0
+
+### Added
+
 - VBTN-98: Reseting IDP-Section is now possible
 - VBTN-81: Added Accessability by making all Windows closable correctly using "Esc"
 - VBTN-82: Added/Changed an array of visual effects and fonts
