@@ -6,6 +6,7 @@
 
 - VBTN-50: Added a version check into the Pipeline to prevent faulty versions to be merged.
 - VBTN-71: Changed some Labels based on the clients request.
+- VBTN-88: Improvement of Bugfix Pipeline.
 
 ## Version 1.4.0
 
