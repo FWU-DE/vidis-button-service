@@ -119,11 +119,6 @@ export default defineComponent({
   props: {},
   mixins: [cookie, breakpoints],
   components: { AutoComplete, Sidebar, Button },
-  inject: {
-    idpdatafile: {
-      default: "idps",
-    },
-  },
   data() {
     return {
       schoolIcon,
@@ -243,7 +238,7 @@ export default defineComponent({
           this.loadingIdps = false;
           throw new Error("Couldn't load IdPs " + e);
         }
-      }
+      } else this.groupIdps();
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
