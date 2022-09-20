@@ -79,7 +79,7 @@ jobs:
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
           npm publish
 
-  run-selenium-tests:
+  run-selenium-tests-with-chrome:
     needs: build-and-publish
     runs-on: ubuntu-latest
     steps:
@@ -95,4 +95,4 @@ jobs:
           cd tests/selenium
           npm install -g npm@8
           npm ci
-          node src/main.js
+          npm run test:chrome
