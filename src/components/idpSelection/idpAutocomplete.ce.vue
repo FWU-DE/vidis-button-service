@@ -8,7 +8,11 @@
     >
       <div id="mobileAutocompletePlace"></div>
     </Sidebar>
-    <teleport v-if="ready" :to="teleportTarget" :disabled="disableTeleport">
+    <teleport
+      v-if="ready"
+      :to="'#mobileAutocompletePlace'"
+      :disabled="disableTeleport"
+    >
       <div :style="labelStyle">
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
@@ -23,6 +27,7 @@
       </div>
 
       <AutoComplete
+        v-if="autoready"
         v-model="selectedIdP"
         ref="idpAutocomplete"
         :modelValue="selectedIdP"
@@ -31,7 +36,6 @@
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
-        :appendTo="'self'"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
@@ -104,7 +108,7 @@ import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
 import Sidebar from "primevue/sidebar";
-import AutoComplete from "primevue/autocomplete";
+import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
@@ -134,26 +138,30 @@ export default defineComponent({
       autocompleteRef: {},
       focused: false,
       teleportTarget: null,
+      autoready: false,
     };
   },
   async created() {
     await this.loadIdps();
   },
 
-  async mounted() {
-    await this.$nextTick();
-
-    const shadow = document.querySelector("#vidislogin")?.shadowRoot;
-    this.teleportTarget = shadow?.querySelector("#mobileAutocompletePlace");
+  mounted() {
+    console.log(
+      "------------------",
+      this.$el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+        .parentNode
+    );
+    const shadow = document.querySelector("vidis-login")?.shadowRoot;
+    console.log("target", shadow?.querySelector("#teleportsTarget"));
+    this.teleportTarget = shadow?.querySelector("#teleportsTarget");
+    //this.$el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+    console.log(getComputedStyle(this.teleportTarget));
     console.log(this.teleportTarget);
-    console.log("___________", this.$el.parentNode);
-
-    console.log(this.teleportTarget);
-
+    this.autoready = true;
     this.ready = true;
     this.showMobile = false;
-    if (!this.allowTeleportToMobile)
-      this.$nextTick(() => this.$refs.idpAutocomplete.focus());
+    /* if (!this.allowTeleportToMobile)
+      this.$nextTick(() => this.$refs.idpAutocomplete.focus()); */
     this.switchToMobile();
   },
   computed: {

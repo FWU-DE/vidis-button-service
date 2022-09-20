@@ -3,6 +3,7 @@
     v-model:visible="showDialog"
     class="p-dialog-maximized"
     :closable="false"
+    :appendTo="teleportTarget"
   >
     <template #header="">
       <helpHeader @closeDialog="showDialog = false" />
@@ -34,6 +35,10 @@ export default defineComponent({
       showButton: false,
       loading: false,
     };
+  },
+  mounted() {
+    this.teleportTarget = this.$el.parentNode.children[0];
+    this.ready = true;
   },
   computed: {
     loginurl() {

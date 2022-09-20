@@ -41,7 +41,7 @@ vidis-login *,
 .standard-padding {
     padding: 1.5rem;
 }
-
+@import "@/assets/scss/primvueMissingCss.scss";
 @import "@/components/layoutElements/vbtnHeader.scss";
 @import "@/components/layoutElements/vbtnFooter.scss";
 @import "@/components/entrance/entranceStyles.scss";

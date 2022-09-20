@@ -4,7 +4,7 @@
     v-model:visible="showDialog"
     class="p-dialog-maximized"
     :closable="false"
-    :appendTo="'div'"
+    :appendTo="teleportTarget"
     ref="vidis-dialog"
   >
     <template #header="">
@@ -86,8 +86,6 @@ export default defineComponent({
     };
   },
   mounted() {
-    console.log("-------", this.$el.parentNode.children[0]);
-
     this.teleportTarget = this.$el.parentNode.children[0];
     this.ready = true;
   },
