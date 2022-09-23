@@ -1,10 +1,16 @@
 # Changelog Vidis-Button
 
-## Version 1.6.1
+## Version 1.6.2
 
 ### Added
 
 - VBTN-3: Added selenium tests.
+
+## Version 1.6.1
+
+### Fixed
+
+- VBTN-106: Fixed not finding idps after clicking go-back button
 
 ## Version 1.6.0
 
