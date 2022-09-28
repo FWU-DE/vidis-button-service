@@ -56,6 +56,11 @@ module.exports.click_entranceButton = async function(mydriver) {
   await mydriver.findElement(By.css("vidis-login button.entrance-button")).click();
 }
 
+module.exports.click_help = async function(mydriver) {
+  await sleep(250);
+  await mydriver.findElement(By.css(".p-dialog-footer > div > div > div > div > button")).click();
+}
+
 module.exports.click_firstResult_droplist = async function(mydriver) {
   await sleep(250);
   await mydriver.findElement(By.css(".p-autocomplete-panel .p-autocomplete-item")).click();
