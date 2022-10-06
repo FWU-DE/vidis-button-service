@@ -14,7 +14,6 @@ const tests = [
     async () => loginWithOtherIdp()
 ]
 
-
 const parallelTests = async function() {
     Promise.all(tests.map(async (test) => { test() }));
 }
@@ -25,4 +24,5 @@ const sequentialTests = async function() {
     }
 }
 
+console.log("> UI TESTS ===============================");
 SEQUENTIAL_TEST ? sequentialTests() : parallelTests();

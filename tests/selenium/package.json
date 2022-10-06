@@ -11,11 +11,18 @@
     "test:firefox": "SEQUENTIAL_TEST=false BROWSER=firefox HEADLESS=true node src/main.js",
     "test:firefox:browser": "SEQUENTIAL_TEST=false BROWSER=firefox HEADLESS=false node src/main.js",
     "test:firefox:sequential": "SEQUENTIAL_TEST=true BROWSER=firefox HEADLESS=true node src/main.js",
-    "test:firefox:sequential:browser": "SEQUENTIAL_TEST=true BROWSER=firefox HEADLESS=false node src/main.js"
+    "test:firefox:sequential:browser": "SEQUENTIAL_TEST=true BROWSER=firefox HEADLESS=false node src/main.js",
+    "accessibility:github": "DISPLAY_ACCESSIBILITY_RESULTS=false SEQUENTIAL_TEST=false BROWSER=chrome HEADLESS=true node src/accessibilityTests.js",
+    "accessibility:chrome": "DISPLAY_ACCESSIBILITY_RESULTS=true SEQUENTIAL_TEST=false BROWSER=chrome HEADLESS=true node src/accessibilityTests.js",
+    "accessibility:chrome:browser": "DISPLAY_ACCESSIBILITY_RESULTS=true SEQUENTIAL_TEST=false BROWSER=chrome HEADLESS=false node src/accessibilityTests.js",
+    "accessibility:chrome:sequential": "DISPLAY_ACCESSIBILITY_RESULTS=true SEQUENTIAL_TEST=true BROWSER=chrome HEADLESS=true node src/accessibilityTests.js",
+    "accessibility:chrome:sequential:browser": "DISPLAY_ACCESSIBILITY_RESULTS=true SEQUENTIAL_TEST=true BROWSER=chrome HEADLESS=false node src/accessibilityTests.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@axe-core/cli": "^4.4.4",
+    "@axe-core/webdriverjs": "^4.4.4",
     "assert": "^2.0.0",
     "chromedriver": "^105.0.0",
     "selenium-webdriver": "^4.4.0"

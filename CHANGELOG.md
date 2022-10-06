@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.6.3
+
+### Added
+
+- VBTN-17: Added Accessability Tests based on Axe and Selenium
+
 ## Version 1.6.2
 
 ### Added
