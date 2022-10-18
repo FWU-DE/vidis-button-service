@@ -336,13 +336,19 @@ export default {
       const overflowRegex = /(auto|scroll)/;
 
       const overflowCheck = (node) => {
-        let styleDeclaration = window["getComputedStyle"](node, null);
+        console.log("DomHandler: getScrollableParents", node, node.toString());
+        if (node.toString() !== "[object ShadowRoot]") {
+          let styleDeclaration = getComputedStyle(node);
+          // window["getComputedStyle"](node, null);
 
-        return (
-          overflowRegex.test(styleDeclaration.getPropertyValue("overflow")) ||
-          overflowRegex.test(styleDeclaration.getPropertyValue("overflowX")) ||
-          overflowRegex.test(styleDeclaration.getPropertyValue("overflowY"))
-        );
+          return (
+            overflowRegex.test(styleDeclaration.getPropertyValue("overflow")) ||
+            overflowRegex.test(
+              styleDeclaration.getPropertyValue("overflowX")
+            ) ||
+            overflowRegex.test(styleDeclaration.getPropertyValue("overflowY"))
+          );
+        } else return true;
       };
 
       for (let parent of parents) {

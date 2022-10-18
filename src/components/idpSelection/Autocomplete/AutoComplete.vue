@@ -46,6 +46,7 @@
         :style="{
           ...panelStyle,
           'max-height': virtualScrollerDisabled ? scrollHeight : '',
+          width: '100%',
         }"
         @click="onOverlayClick"
         @keydown="onOverlayKeyDown"
@@ -87,6 +88,7 @@
                   getOptionRenderKey(option, getOptionIndex(i, getItemOptions))
                 "
               >
+                <!-- {{ option }} -->
                 <li
                   v-if="isOptionGroup(option)"
                   :id="id + '_' + getOptionIndex(i, getItemOptions)"

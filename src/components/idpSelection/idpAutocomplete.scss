@@ -145,3 +145,8 @@ input:hover::placeholder {
   right: 15px !important;
   z-index: 1300 !important;
 }
+
+.p-component-overlay {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  transition-duration: 0.2s;
+}

@@ -1,16 +1,27 @@
 <template>
   <span class="p-fluid">
-    <Sidebar
+    <Dialog
+      v-if="mobileAutoReady"
       v-model:visible="showMobile"
+      id="mobileIDPInput"
       position="top"
       :showCloseIcon="false"
+      :appendTo="mobileTeleportTarget"
+      :modal="true"
+      :dismissableMask="true"
+      :showHeader="false"
       @hide="switchToNormal"
+      style="
+        width: 100%;
+        margin: 0;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+      "
     >
       <div id="mobileAutocompletePlace"></div>
-    </Sidebar>
+    </Dialog>
     <teleport
-      v-if="ready"
-      :to="'#mobileAutocompletePlace'"
+      v-if="mobileAutoReady && ready"
+      :to="teleportIntoMobileDialog"
       :disabled="disableTeleport"
     >
       <div :style="labelStyle">
@@ -36,6 +47,7 @@
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
+        :appendTo="'self'"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
@@ -45,7 +57,6 @@
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
-        type="search"
         forceSelection
       >
         <template #item="{ item }">
@@ -107,7 +118,7 @@ import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
-import Sidebar from "primevue/sidebar";
+import Dialog from "primevue/dialog";
 import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
@@ -119,7 +130,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Sidebar, Button },
+  components: { AutoComplete, Dialog, Button },
   data() {
     return {
       schoolIcon,
@@ -134,10 +145,12 @@ export default defineComponent({
       loadingIdps: false,
       showMobile: true,
       ready: false,
+      mobileAutoReady: false,
       disableTeleport: true,
       autocompleteRef: {},
       focused: false,
-      teleportTarget: null,
+      mobileTeleportTarget: null,
+      teleportIntoMobileDialog: null,
       autoready: false,
     };
   },
@@ -145,21 +158,22 @@ export default defineComponent({
     await this.loadIdps();
   },
 
-  mounted() {
-    console.log(
-      "------------------",
-      this.$el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
-        .parentNode
-    );
+  async mounted() {
     const shadow = document.querySelector("vidis-login")?.shadowRoot;
     console.log("target", shadow?.querySelector("#teleportsTarget"));
-    this.teleportTarget = shadow?.querySelector("#teleportsTarget");
+
+    this.mobileTeleportTarget = shadow?.querySelector("#teleportsTarget");
     //this.$el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-    console.log(getComputedStyle(this.teleportTarget));
-    console.log(this.teleportTarget);
+    // console.log(getComputedStyle(this.mobileTeleportTarget));
+    console.log(this.mobileTeleportTarget);
     this.autoready = true;
-    this.ready = true;
+
+    this.mobileAutoReady = true;
+    console.log("switchToMobile0", shadow?.querySelector("#mobileIDPInput"));
+    await this.$nextTick();
+    console.log("switchToMobile1", shadow?.querySelector("#mobileIDPInput"));
     this.showMobile = false;
+    this.ready = true;
     /* if (!this.allowTeleportToMobile)
       this.$nextTick(() => this.$refs.idpAutocomplete.focus()); */
     this.switchToMobile();
@@ -225,8 +239,19 @@ export default defineComponent({
   },
   methods: {
     async switchToMobile() {
+      const shadow = document.querySelector("vidis-login")?.shadowRoot;
+      console.log(
+        "switchToMobile3",
+        shadow?.querySelector("#mobileAutocompletePlace")
+      );
+      console.log("switchToMobile4", shadow?.querySelector("#mobileIDPInput"));
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
+        await this.$nextTick();
+        this.teleportIntoMobileDialog = shadow?.querySelector(
+          "#mobileAutocompletePlace"
+        );
+        console.log("switchToMobile5", this.teleportIntoMobileDialog);
         this.ready = false;
         await this.$nextTick();
         this.disableTeleport = false;

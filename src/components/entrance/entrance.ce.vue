@@ -11,6 +11,7 @@
     <Button
       class="p-button-link linkButton flex align-content-center"
       @click="toggleHelp(true)"
+      style="margin-top: 8px; height: 100%; padding-top: 0"
     >
       <span class="linkButtonLabel">{{ $t("general.help") }}</span>
       <img class="openArrow" :src="openArrow" />

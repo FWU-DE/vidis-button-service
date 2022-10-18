@@ -105,7 +105,6 @@ export default defineComponent({
   },
   watch: {
     showDialog(newVal: boolean): void {
-      console.log("-------", this.$el.parentNode.children[0], this.$el);
       if (!newVal) this.$emit("closed");
     },
     async visible(newVal: boolean): Promise<void> {

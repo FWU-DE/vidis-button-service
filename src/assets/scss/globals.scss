@@ -2,28 +2,7 @@
 
 /* Component Style should be imported here till https://github.com/vuejs/core/issues/4662 is resolved */
 
-@font-face {
-    font-family: "Barlow";
-    src: local("Barlow"), url(../font/Barlow-Black.ttf) format("truetype");
-}
-@font-face {
-    font-family: "Barlow";
-    src: local("Barlow"), url(../font/Barlow-Light.ttf) format("truetype");
-    font-weight: 400;
-}
-@font-face {
-    font-family: "Barlow";
-    src: local("Barlow"), url(../font/Barlow-SemiBold.ttf) format("truetype");
-    font-weight: 600;
-}
-@font-face {
-    font-family: "Barlow";
-    src: local("Barlow"), url(../font/Barlow-Bold.ttf) format("truetype");
-    font-weight: bold;
-}
-
-vidis-login *,
-.p-component {
+* {
     font-family: "Barlow";
     font-size: 16px;
     line-height: 24px;
@@ -40,6 +19,10 @@ vidis-login *,
 }
 .standard-padding {
     padding: 1.5rem;
+}
+
+:host {
+    display: block;
 }
 @import "@/assets/scss/primvueMissingCss.scss";
 @import "@/components/layoutElements/vbtnHeader.scss";

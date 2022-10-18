@@ -50,7 +50,7 @@ export class VidisLoginShadowApp extends HTMLElement {
   /**
    * This Callback is fired, when the Webcomponent is first loaded into the Browser
    */
-  connectedCallback() {
+  async connectedCallback() {
     try {
       this.attachErrorEventHandlers();
       //this.app.config.performance = true;
@@ -105,6 +105,7 @@ export class VidisLoginShadowApp extends HTMLElement {
     for (const style of internalStyles) {
       this.appendStyle(shadow, style);
     }
+    this.appendFonts();
   }
   /**
    * Add a CSS Style to the WC
@@ -116,6 +117,17 @@ export class VidisLoginShadowApp extends HTMLElement {
     element.innerHTML = style;
     if (!shadow) this.appendChild(element);
     else this.shadowApp?.appendChild(element);
+  }
+
+  appendFonts(shadow = false) {
+    const style = document.createElement("style");
+    style.dataset.description = "Barlow";
+    const fonts = [
+      require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/fonts.scss"),
+    ];
+    style.appendChild(document.createTextNode(fonts[0]));
+    if (!shadow) this.appendChild(style);
+    else this.shadowApp?.appendChild(style);
   }
 
   /**

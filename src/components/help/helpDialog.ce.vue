@@ -1,5 +1,6 @@
 <template>
   <Dialog
+    v-if="helpDialogReady"
     v-model:visible="showDialog"
     class="p-dialog-maximized"
     :closable="false"
@@ -34,10 +35,13 @@ export default defineComponent({
       receivedIdp: "",
       showButton: false,
       loading: false,
+      teleportTarget: null,
+      helpDialogReady: false,
     };
   },
   mounted() {
     this.teleportTarget = this.$el.parentNode.children[0];
+    this.helpDialogReady = true;
     this.ready = true;
   },
   computed: {
