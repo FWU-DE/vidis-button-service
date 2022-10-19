@@ -51,7 +51,7 @@
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
-        @click="switchToMobile"
+        @clicked="switchToMobile"
         @focus="focused = true"
         @blur="focused = false"
         field="name"
@@ -153,7 +153,6 @@ export default defineComponent({
       teleportIntoMobileDialog: null,
       autoready: false,
       elevate: false,
-      blockNextClickEvent: false,
     };
   },
   async created() {
@@ -228,22 +227,16 @@ export default defineComponent({
     },
   },
   methods: {
-    async switchToMobile(event: any) {
+    async switchToMobile() {
       const shadow = document.querySelector("vidis-login")?.shadowRoot;
-      if (this.blockNextClickEvent) {
-        this.blockNextClickEvent = false;
-        return;
-      }
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
+        this.teleportIntoMobileDialog = null;
         await this.$nextTick();
         this.teleportIntoMobileDialog = shadow?.querySelector(
           "#mobileAutocompletePlace"
         );
-        this.ready = false;
-        await this.$nextTick();
         this.disableTeleport = false;
-        this.ready = true;
         await this.$nextTick();
         this.elevate = false;
 
@@ -256,7 +249,6 @@ export default defineComponent({
     switchToNormal() {
       this.elevate = true;
       this.showMobile = false;
-      this.blockNextClickEvent = true;
     },
     async loadIdps(): Promise<void> {
       if (IdP.all().length === 0) {
@@ -278,8 +270,9 @@ export default defineComponent({
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
-    emitToParent(): void {
-      this.switchToNormal();
+    async emitToParent(): Promise<void> {
+      this.switchToNormal(true);
+      await this.$nextTick();
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
     searchGroupedIdps({ query }: { query: string }): void {

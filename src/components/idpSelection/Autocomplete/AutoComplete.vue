@@ -20,6 +20,7 @@
       :aria-expanded="overlayVisible"
       :aria-controls="id + '_list'"
       :aria-activedescendant="focused ? focusedOptionId : undefined"
+      @click="$emit('clicked')"
       @focus="onFocus"
       @blur="onBlur"
       @keydown="onKeyDown"
