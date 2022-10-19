@@ -47,6 +47,9 @@
           ...panelStyle,
           'max-height': virtualScrollerDisabled ? scrollHeight : '',
           width: '100%',
+          'box-shadow': elevate
+            ? '0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);'
+            : 'initial !important',
         }"
         @click="onOverlayClick"
         @keydown="onOverlayKeyDown"
@@ -199,10 +202,7 @@ export default {
   ],
   props: {
     modelValue: null,
-    suggestions: {
-      type: Array,
-      default: null,
-    },
+    suggestions: { type: Array, default: null },
     field: {
       // TODO: Deprecated since v3.16.0
       type: [String, Function],
@@ -212,131 +212,42 @@ export default {
     optionDisabled: null,
     optionGroupLabel: null,
     optionGroupChildren: null,
-    scrollHeight: {
-      type: String,
-      default: "200px",
-    },
-    dropdown: {
-      type: Boolean,
-      default: false,
-    },
-    dropdownMode: {
-      type: String,
-      default: "blank",
-    },
+    scrollHeight: { type: String, default: "200px" },
+    dropdown: { type: Boolean, default: false },
+    dropdownMode: { type: String, default: "blank" },
     autoHighlight: {
       // TODO: Deprecated since v3.16.0. Use selectOnFocus property instead.
       type: Boolean,
       default: false,
     },
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    dataKey: {
-      type: String,
-      default: null,
-    },
-    minLength: {
-      type: Number,
-      default: 1,
-    },
-    delay: {
-      type: Number,
-      default: 300,
-    },
-    forceSelection: {
-      type: Boolean,
-      default: false,
-    },
-    completeOnFocus: {
-      type: Boolean,
-      default: false,
-    },
-    inputId: {
-      type: String,
-      default: null,
-    },
-    inputStyle: {
-      type: null,
-      default: null,
-    },
-    inputClass: {
-      type: String,
-      default: null,
-    },
-    inputProps: {
-      type: null,
-      default: null,
-    },
-    panelStyle: {
-      type: null,
-      default: null,
-    },
-    panelClass: {
-      type: String,
-      default: null,
-    },
-    panelProps: {
-      type: null,
-      default: null,
-    },
-    loadingIcon: {
-      type: String,
-      default: "pi pi-spinner",
-    },
-    virtualScrollerOptions: {
-      type: Object,
-      default: null,
-    },
-    autoOptionFocus: {
-      type: Boolean,
-      default: true,
-    },
-    selectOnFocus: {
-      type: Boolean,
-      default: false,
-    },
-    searchLocale: {
-      type: String,
-      default: undefined,
-    },
-    searchMessage: {
-      type: String,
-      default: null,
-    },
-    selectionMessage: {
-      type: String,
-      default: null,
-    },
-    emptySelectionMessage: {
-      type: String,
-      default: null,
-    },
-    emptySearchMessage: {
-      type: String,
-      default: null,
-    },
-    tabindex: {
-      type: Number,
-      default: 0,
-    },
-    "aria-label": {
-      type: String,
-      default: null,
-    },
-    "aria-labelledby": {
-      type: String,
-      default: null,
-    },
+    multiple: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    placeholder: { type: String, default: null },
+    dataKey: { type: String, default: null },
+    minLength: { type: Number, default: 1 },
+    delay: { type: Number, default: 300 },
+    forceSelection: { type: Boolean, default: false },
+    completeOnFocus: { type: Boolean, default: false },
+    inputId: { type: String, default: null },
+    inputStyle: { type: null, default: null },
+    inputClass: { type: [String, Object], default: null },
+    inputProps: { type: null, default: null },
+    panelStyle: { type: null, default: null },
+    panelClass: { type: String, default: null },
+    panelProps: { type: null, default: null },
+    loadingIcon: { type: String, default: "pi pi-spinner" },
+    virtualScrollerOptions: { type: Object, default: null },
+    autoOptionFocus: { type: Boolean, default: true },
+    selectOnFocus: { type: Boolean, default: false },
+    searchLocale: { type: String, default: undefined },
+    searchMessage: { type: String, default: null },
+    selectionMessage: { type: String, default: null },
+    emptySelectionMessage: { type: String, default: null },
+    emptySearchMessage: { type: String, default: null },
+    tabindex: { type: Number, default: 0 },
+    "aria-label": { type: String, default: null },
+    "aria-labelledby": { type: String, default: null },
+    elevate: { type: Boolean, default: true },
   },
   outsideClickListener: null,
   resizeListener: null,
@@ -491,56 +402,43 @@ export default {
         case "ArrowDown":
           this.onArrowDownKey(event);
           break;
-
         case "ArrowUp":
           this.onArrowUpKey(event);
           break;
-
         case "ArrowLeft":
           this.onArrowLeftKey(event);
           break;
-
         case "ArrowRight":
           this.onArrowRightKey(event);
           break;
-
         case "Home":
           this.onHomeKey(event);
           break;
-
         case "End":
           this.onEndKey(event);
           break;
-
         case "PageDown":
           this.onPageDownKey(event);
           break;
-
         case "PageUp":
           this.onPageUpKey(event);
           break;
-
         case "Enter":
           this.onEnterKey(event);
           break;
-
         case "Escape":
           this.onEscapeKey(event);
           break;
-
         case "Tab":
           this.onTabKey(event);
           break;
-
         case "Backspace":
           this.onBackspaceKey(event);
           break;
-
         case "ShiftLeft":
         case "ShiftRight":
           //NOOP
           break;
-
         default:
           break;
       }
@@ -549,13 +447,10 @@ export default {
       if (this.searchTimeout) {
         clearTimeout(this.searchTimeout);
       }
-
       let query = event.target.value;
-
       if (!this.multiple) {
         this.updateModel(event, query);
       }
-
       if (query.length === 0) {
         this.hide();
         this.$emit("clear");
@@ -574,19 +469,16 @@ export default {
     onChange(event) {
       if (this.forceSelection) {
         let valid = false;
-
         if (this.visibleOptions) {
           const matchedValue = this.visibleOptions.find((option) =>
             this.isOptionMatched(option, event.target.value)
           );
-
           if (matchedValue !== undefined) {
             valid = true;
             !this.isSelected(matchedValue) &&
               this.onOptionSelect(event, matchedValue);
           }
         }
-
         if (!valid) {
           this.$refs.focusInput.value = "";
           this.$emit("clear");
@@ -606,15 +498,12 @@ export default {
         case "ArrowLeft":
           this.onArrowLeftKeyOnMultiple(event);
           break;
-
         case "ArrowRight":
           this.onArrowRightKeyOnMultiple(event);
           break;
-
         case "Backspace":
           this.onBackspaceKeyOnMultiple(event);
           break;
-
         default:
           break;
       }
@@ -646,7 +535,6 @@ export default {
         else if (this.dropdownMode === "current")
           this.search(event, query, "dropdown");
       }
-
       this.$emit("dropdown-click", { originalEvent: event, query });
     },
     onOptionSelect(event, option, isHide = true) {
@@ -661,9 +549,7 @@ export default {
       } else {
         this.updateModel(event, value);
       }
-
       this.$emit("item-select", { originalEvent: event, value: option });
-
       isHide && this.hide(true);
     },
     onOptionMouseMove(event, index) {
@@ -682,7 +568,6 @@ export default {
         case "Escape":
           this.onEscapeKey(event);
           break;
-
         default:
           break;
       }
@@ -691,21 +576,16 @@ export default {
       if (!this.overlayVisible) {
         return;
       }
-
       const optionIndex =
         this.focusedOptionIndex !== -1
           ? this.findNextOptionIndex(this.focusedOptionIndex)
           : this.findFirstFocusedOptionIndex();
 
       this.changeFocusedOptionIndex(event, optionIndex);
-
       event.preventDefault();
     },
     onArrowUpKey(event) {
-      if (!this.overlayVisible) {
-        return;
-      }
-
+      if (!this.overlayVisible) return;
       if (event.altKey) {
         if (this.focusedOptionIndex !== -1) {
           this.onOptionSelect(
@@ -713,7 +593,6 @@ export default {
             this.visibleOptions[this.focusedOptionIndex]
           );
         }
-
         this.overlayVisible && this.hide();
         event.preventDefault();
       } else {
@@ -729,9 +608,7 @@ export default {
     },
     onArrowLeftKey(event) {
       const target = event.currentTarget;
-
       this.focusedOptionIndex = -1;
-
       if (this.multiple) {
         if (ObjectUtils.isEmpty(target.value) && this.hasSelectedOption) {
           DomHandler.focus(this.$refs.multiContainer);
@@ -743,22 +620,18 @@ export default {
     },
     onArrowRightKey(event) {
       this.focusedOptionIndex = -1;
-
       this.multiple && event.stopPropagation(); // To prevent onArrowRightKeyOnMultiple method
     },
     onHomeKey(event) {
       event.currentTarget.setSelectionRange(0, 0);
       this.focusedOptionIndex = -1;
-
       event.preventDefault();
     },
     onEndKey(event) {
       const target = event.currentTarget;
       const len = target.value.length;
-
       target.setSelectionRange(len, len);
       this.focusedOptionIndex = -1;
-
       event.preventDefault();
     },
     onPageUpKey(event) {
@@ -779,10 +652,8 @@ export default {
             this.visibleOptions[this.focusedOptionIndex]
           );
         }
-
         this.hide();
       }
-
       event.preventDefault();
     },
     onEscapeKey(event) {
@@ -796,7 +667,6 @@ export default {
           this.visibleOptions[this.focusedOptionIndex]
         );
       }
-
       this.overlayVisible && this.hide();
     },
     onBackspaceKey(event) {
@@ -814,7 +684,6 @@ export default {
             value: removedValue,
           });
         }
-
         event.stopPropagation(); // To prevent onBackspaceKeyOnMultiple method
       }
     },
@@ -845,14 +714,12 @@ export default {
       this.bindOutsideClickListener();
       this.bindScrollListener();
       this.bindResizeListener();
-
       this.$emit("show");
     },
     onOverlayLeave() {
       this.unbindOutsideClickListener();
       this.unbindScrollListener();
       this.unbindResizeListener();
-
       this.$emit("hide");
       this.overlay = null;
     },
@@ -861,7 +728,6 @@ export default {
     },
     alignOverlay() {
       let target = this.$refs.focusInput;
-
       DomHandler.relativePosition(this.overlay, target);
     },
     bindOutsideClickListener() {
@@ -875,7 +741,6 @@ export default {
             this.hide();
           }
         };
-
         document.addEventListener("click", this.outsideClickListener);
       }
     },
@@ -896,7 +761,6 @@ export default {
           }
         );
       }
-
       this.scrollHandler.bindScrollListener();
     },
     unbindScrollListener() {
@@ -911,7 +775,6 @@ export default {
             this.hide();
           }
         };
-
         window.addEventListener("resize", this.resizeListener);
       }
     },
@@ -1004,25 +867,17 @@ export default {
     },
     findFirstFocusedOptionIndex() {
       const selectedIndex = this.findSelectedOptionIndex();
-
       return selectedIndex < 0 ? this.findFirstOptionIndex() : selectedIndex;
     },
     findLastFocusedOptionIndex() {
       const selectedIndex = this.findSelectedOptionIndex();
-
       return selectedIndex < 0 ? this.findLastOptionIndex() : selectedIndex;
     },
     search(event, query, source) {
       //allow empty string but not undefined or null
-      if (query === undefined || query === null) {
-        return;
-      }
-
+      if (query === undefined || query === null) return;
       //do not search blank values on input change
-      if (source === "input" && query.trim().length === 0) {
-        return;
-      }
-
+      if (source === "input" && query.trim().length === 0) return;
       this.searching = true;
       this.$emit("complete", { originalEvent: event, query });
     },
@@ -1087,12 +942,9 @@ export default {
     flatOptions(options) {
       return (options || []).reduce((result, option, index) => {
         result.push({ optionGroup: option, group: true, index });
-
         const optionGroupChildren = this.getOptionGroupChildren(option);
-
         optionGroupChildren &&
           optionGroupChildren.forEach((o) => result.push(o));
-
         return result;
       }, []);
     },
@@ -1149,12 +1001,6 @@ export default {
       return ["p-autocomplete-loader pi-spin", this.loadingIcon];
     },
     visibleOptions() {
-      console.log(
-        "visibleOptions",
-        this.optionGroupLabel
-          ? this.flatOptions(this.suggestions)
-          : this.suggestions || []
-      );
       return this.optionGroupLabel
         ? this.flatOptions(this.suggestions)
         : this.suggestions || [];

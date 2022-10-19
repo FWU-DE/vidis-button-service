@@ -108,13 +108,6 @@ export default defineComponent({
       if (!newVal) this.$emit("closed");
     },
     async visible(newVal: boolean): Promise<void> {
-      /*   await this.$nextTick();
-      const shadow = document.querySelector("#vidislogin")?.shadowRoot;
-      this.teleportTarget = shadow?.querySelector(".entrance-overLine");
-      console.log(this.teleportTarget);
-      console.log(shadow);
-
-      console.log(this.teleportTarget); */
       this.showDialog = newVal;
     },
   },

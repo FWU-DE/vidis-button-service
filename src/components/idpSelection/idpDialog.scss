@@ -13,7 +13,7 @@
 .idp-choice-button {
     position: relative;
     width: 100%;
-    height: 56px;
+    min-height: 64px;
     margin-top: 20px;
     color: white;
     background: #0000c4;
@@ -30,6 +30,8 @@
     background: #0032c4 !important;
     background-color: #0032c4 !important;
     fill: #0032c4 !important;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .idp-choice-button-loading {
@@ -57,10 +59,16 @@
 
 .idp-button-label {
     text-align: center;
-    position: absolute;
+    /* position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .p-progress-circle {

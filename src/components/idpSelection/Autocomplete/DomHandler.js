@@ -336,7 +336,6 @@ export default {
       const overflowRegex = /(auto|scroll)/;
 
       const overflowCheck = (node) => {
-        console.log("DomHandler: getScrollableParents", node, node.toString());
         if (node.toString() !== "[object ShadowRoot]") {
           let styleDeclaration = getComputedStyle(node);
           // window["getComputedStyle"](node, null);

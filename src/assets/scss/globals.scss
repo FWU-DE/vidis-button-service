@@ -2,7 +2,8 @@
 
 /* Component Style should be imported here till https://github.com/vuejs/core/issues/4662 is resolved */
 
-* {
+*,
+.p-component {
     font-family: "Barlow";
     font-size: 16px;
     line-height: 24px;

@@ -6,7 +6,7 @@
       id="mobileIDPInput"
       position="top"
       :showCloseIcon="false"
-      :appendTo="mobileTeleportTarget"
+      :appendTo="globalTeleportTarget"
       :modal="true"
       :dismissableMask="true"
       :showHeader="false"
@@ -17,7 +17,7 @@
         background-color: rgba(0, 0, 0, 0.4) !important;
       "
     >
-      <div id="mobileAutocompletePlace"></div>
+      <div id="mobileAutocompletePlace" style="height: 300px"></div>
     </Dialog>
     <teleport
       v-if="mobileAutoReady && ready"
@@ -47,7 +47,7 @@
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
-        :appendTo="'self'"
+        :elevate="elevate"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
@@ -149,33 +149,23 @@ export default defineComponent({
       disableTeleport: true,
       autocompleteRef: {},
       focused: false,
-      mobileTeleportTarget: null,
+      globalTeleportTarget: null,
       teleportIntoMobileDialog: null,
       autoready: false,
+      elevate: false,
+      blockNextClickEvent: false,
     };
   },
   async created() {
     await this.loadIdps();
   },
-
-  async mounted() {
+  mounted() {
     const shadow = document.querySelector("vidis-login")?.shadowRoot;
-    console.log("target", shadow?.querySelector("#teleportsTarget"));
-
-    this.mobileTeleportTarget = shadow?.querySelector("#teleportsTarget");
-    //this.$el.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-    // console.log(getComputedStyle(this.mobileTeleportTarget));
-    console.log(this.mobileTeleportTarget);
+    this.globalTeleportTarget = shadow?.querySelector("#teleportsTarget");
     this.autoready = true;
-
     this.mobileAutoReady = true;
-    console.log("switchToMobile0", shadow?.querySelector("#mobileIDPInput"));
-    await this.$nextTick();
-    console.log("switchToMobile1", shadow?.querySelector("#mobileIDPInput"));
     this.showMobile = false;
     this.ready = true;
-    /* if (!this.allowTeleportToMobile)
-      this.$nextTick(() => this.$refs.idpAutocomplete.focus()); */
     this.switchToMobile();
   },
   computed: {
@@ -238,31 +228,35 @@ export default defineComponent({
     },
   },
   methods: {
-    async switchToMobile() {
+    async switchToMobile(event: any) {
       const shadow = document.querySelector("vidis-login")?.shadowRoot;
-      console.log(
-        "switchToMobile3",
-        shadow?.querySelector("#mobileAutocompletePlace")
-      );
-      console.log("switchToMobile4", shadow?.querySelector("#mobileIDPInput"));
+      if (this.blockNextClickEvent) {
+        this.blockNextClickEvent = false;
+        return;
+      }
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
         await this.$nextTick();
         this.teleportIntoMobileDialog = shadow?.querySelector(
           "#mobileAutocompletePlace"
         );
-        console.log("switchToMobile5", this.teleportIntoMobileDialog);
         this.ready = false;
         await this.$nextTick();
         this.disableTeleport = false;
         this.ready = true;
         await this.$nextTick();
-        console.log(this.$refs);
-        // this.$refs.idpAutocomplete.focus();
+        this.elevate = false;
+
+        let elementToFocus = shadow?.querySelector(
+          ".p-autocomplete-input"
+        ) as any;
+        elementToFocus?.focus();
       }
     },
     switchToNormal() {
+      this.elevate = true;
       this.showMobile = false;
+      this.blockNextClickEvent = true;
     },
     async loadIdps(): Promise<void> {
       if (IdP.all().length === 0) {
