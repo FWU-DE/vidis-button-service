@@ -10,41 +10,40 @@
     <template #header="">
       <vbtnHeader @closeDialog="showDialog = false" />
     </template>
-    <div
-      style="width: 100%; height: 100%"
-      class="blue-background standard-padding"
-    >
-      <div class="grid-nogutter flex justify-content-center blue-background">
-        <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
-          <IdpAutoComplete
-            class="idp-autocomplete"
-            @emitSelectedIdp="onIdpSelected"
-          />
+    <div class="layout blue-background">
+      <div style="width: 100%" class="blue-background standard-padding">
+        <div class="grid-nogutter flex justify-content-center blue-background">
+          <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
+            <IdpAutoComplete
+              class="idp-autocomplete"
+              @emitSelectedIdp="onIdpSelected"
+            />
+          </div>
         </div>
-      </div>
-      <div class="grid-nogutter flex justify-content-center blue-background">
-        <div
-          class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6"
-          v-if="showButton"
-        >
-          <Button
+        <div class="grid-nogutter flex justify-content-center blue-background">
+          <div
+            class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6"
             v-if="showButton"
-            class="idp-choice-button"
-            :class="{ 'idp-choice-button-loading': loading }"
-            :label="$t('idp.button')"
-            :alt="$t('idp.button')"
-            :disabled="loading"
-            @click="redirectToIdpLogin()"
           >
-            <ProgressSpinner v-if="loading" class="idp-button-spinner" />
-            <div class="idp-button-label font-semibold">
-              {{ $t("idp.button") }} {{ this.receivedIdp.name }}
-            </div>
-          </Button>
+            <Button
+              v-if="showButton"
+              class="idp-choice-button"
+              :class="{ 'idp-choice-button-loading': loading }"
+              :label="$t('idp.button')"
+              :alt="$t('idp.button')"
+              :disabled="loading"
+              @click="redirectToIdpLogin()"
+            >
+              <ProgressSpinner v-if="loading" class="idp-button-spinner" />
+              <div class="idp-button-label font-semibold">
+                {{ $t("idp.button") }} {{ this.receivedIdp.name }}
+              </div>
+            </Button>
+          </div>
         </div>
       </div>
+      <vbtnFooter />
     </div>
-    <template #footer=""><vbtnFooter /></template>
   </Dialog>
 </template>
 

@@ -100,3 +100,10 @@
         stroke: #0032c4;
     }
 }
+
+.layout {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
