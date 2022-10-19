@@ -1,6 +1,6 @@
 {
   "name": "vidis-button-service",
-  "version": "1.6.3",
+  "version": "1.7.1",
   "private": false,
   "files": [
     "dist"
