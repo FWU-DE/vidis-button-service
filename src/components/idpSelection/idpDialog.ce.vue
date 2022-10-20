@@ -1,47 +1,49 @@
 <template>
   <Dialog
+    v-if="ready"
     v-model:visible="showDialog"
     class="p-dialog-maximized"
     :closable="false"
+    :appendTo="teleportTarget"
+    ref="vidis-dialog"
   >
     <template #header="">
       <vbtnHeader @closeDialog="showDialog = false" />
     </template>
-    <div
-      style="width: 100%; height: 100%"
-      class="blue-background standard-padding"
-    >
-      <div class="grid-nogutter flex justify-content-center blue-background">
-        <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
-          <IdpAutoComplete
-            class="idp-autocomplete"
-            @emitSelectedIdp="onIdpSelected"
-          />
+    <div class="layout blue-background">
+      <div style="width: 100%" class="blue-background standard-padding">
+        <div class="grid-nogutter flex justify-content-center blue-background">
+          <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
+            <IdpAutoComplete
+              class="idp-autocomplete"
+              @emitSelectedIdp="onIdpSelected"
+            />
+          </div>
         </div>
-      </div>
-      <div class="grid-nogutter flex justify-content-center blue-background">
-        <div
-          class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6"
-          v-if="showButton"
-        >
-          <Button
+        <div class="grid-nogutter flex justify-content-center blue-background">
+          <div
+            class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6"
             v-if="showButton"
-            class="idp-choice-button"
-            :class="{ 'idp-choice-button-loading': loading }"
-            :label="$t('idp.button')"
-            :alt="$t('idp.button')"
-            :disabled="loading"
-            @click="redirectToIdpLogin()"
           >
-            <ProgressSpinner v-if="loading" class="idp-button-spinner" />
-            <div class="idp-button-label font-semibold">
-              {{ $t("idp.button") }} {{ this.receivedIdp.name }}
-            </div>
-          </Button>
+            <Button
+              v-if="showButton"
+              class="idp-choice-button"
+              :class="{ 'idp-choice-button-loading': loading }"
+              :label="$t('idp.button')"
+              :alt="$t('idp.button')"
+              :disabled="loading"
+              @click="redirectToIdpLogin()"
+            >
+              <ProgressSpinner v-if="loading" class="idp-button-spinner" />
+              <div class="idp-button-label font-semibold">
+                {{ $t("idp.button") }} {{ this.receivedIdp.name }}
+              </div>
+            </Button>
+          </div>
         </div>
       </div>
+      <vbtnFooter />
     </div>
-    <template #footer=""><vbtnFooter /></template>
   </Dialog>
 </template>
 
@@ -71,13 +73,20 @@ export default defineComponent({
     vbtnHeader,
     vbtnFooter,
   },
+
   data() {
     return {
       showDialog: false,
       receivedIdp: "",
       showButton: false,
       loading: false,
+      teleportTarget: null,
+      ready: false,
     };
+  },
+  mounted() {
+    this.teleportTarget = this.$el.parentNode.children[0];
+    this.ready = true;
   },
   computed: {
     loginurl() {
@@ -97,7 +106,7 @@ export default defineComponent({
     showDialog(newVal: boolean): void {
       if (!newVal) this.$emit("closed");
     },
-    visible(newVal: boolean): void {
+    async visible(newVal: boolean): Promise<void> {
       this.showDialog = newVal;
     },
   },

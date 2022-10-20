@@ -1,9 +1,9 @@
 import * as vue from "vue";
-import { VidisLoginApp } from "@/Webcomponent";
+import { VidisLoginShadowApp } from "@/Webcomponent";
 
 describe("Webcomponent", () => {
   beforeAll(() => {
-    customElements.define("vidis-login", VidisLoginApp);
+    customElements.define("vidis-login", VidisLoginShadowApp);
   });
   describe("Initialization", () => {
     test("that all necessary methods are called", () => {
