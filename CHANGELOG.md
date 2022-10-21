@@ -1,5 +1,15 @@
 # Changelog Vidis-Button
 
+## Version 1.7.1
+
+### Added
+
+- VBTN-90: Encapseling of the VBTN from the host page
+
+### Fixed
+
+- VBTN-110: Fix that the footer covering the page on small sizes
+
 ## Version 1.6.3
 
 ### Added
