@@ -10,9 +10,9 @@ const {
   take_screenshot,
   get_browser_logs,
   done,
-} = require('../helpers.js');
+} = require("../helpers.js");
 
-module.exports = async function() {
+module.exports = async () => {
   const driver = await getDriver();
 
   try {
@@ -20,15 +20,15 @@ module.exports = async function() {
     await write_idp(driver, "rp-schulcampus-s");
     await click_log_in_with_another_idp(driver);
     await delete_preselected_idp(driver, "Schulcampus RLP");
-    await write_searchbox_and_wait_for_droplist(driver, "newIdp")
+    await write_searchbox_and_wait_for_droplist(driver, "newIdp");
 
     console.log("• PASS - " + testName);
-  } catch(error) {
+  } catch (error) {
     console.log("• FAIL - " + testName);
     await get_browser_logs(driver);
     await take_screenshot(driver);
-    throw(error);
+    throw error;
   } finally {
     done(driver);
   }
-}
+};

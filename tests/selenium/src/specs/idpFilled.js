@@ -10,9 +10,9 @@ const {
   take_screenshot,
   get_browser_logs,
   done,
-} = require('../helpers.js');
+} = require("../helpers.js");
 
-module.exports = async function() {
+module.exports = async () => {
   const driver = await getDriver();
 
   try {
@@ -25,12 +25,12 @@ module.exports = async function() {
     await check_if_redirected(driver);
 
     console.log("• PASS - " + testName);
-  } catch(error) {
+  } catch (error) {
     console.log("• FAIL - " + testName);
     await get_browser_logs(driver);
     await take_screenshot(driver);
-    throw(error);
+    throw error;
   } finally {
     done(driver);
   }
-}
+};

@@ -1,16 +1,27 @@
 <template>
   <span class="p-fluid">
-    <Sidebar
+    <Dialog
+      v-if="mobileAutoReady"
       v-model:visible="showMobile"
+      id="mobileIDPInput"
       position="top"
       :showCloseIcon="false"
+      :appendTo="globalTeleportTarget"
+      :modal="true"
+      :dismissableMask="true"
+      :showHeader="false"
       @hide="switchToNormal"
+      style="
+        width: 100%;
+        margin: 0;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+      "
     >
-      <div id="mobileAutocompletePlace"></div>
-    </Sidebar>
+      <div id="mobileAutocompletePlace" style="height: 300px"></div>
+    </Dialog>
     <teleport
-      v-if="ready"
-      to="#mobileAutocompletePlace"
+      v-if="mobileAutoReady && ready"
+      :to="teleportIntoMobileDialog"
       :disabled="disableTeleport"
     >
       <div :style="labelStyle">
@@ -27,6 +38,7 @@
       </div>
 
       <AutoComplete
+        v-if="autoready"
         v-model="selectedIdP"
         ref="idpAutocomplete"
         :modelValue="selectedIdP"
@@ -35,16 +47,16 @@
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
+        :elevate="elevate"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
-        @click="switchToMobile"
+        @clicked="switchToMobile"
         @focus="focused = true"
         @blur="focused = false"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
-        type="search"
         forceSelection
       >
         <template #item="{ item }">
@@ -106,8 +118,8 @@ import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
-import Sidebar from "primevue/sidebar";
-import AutoComplete from "primevue/autocomplete";
+import Dialog from "primevue/dialog";
+import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
@@ -118,7 +130,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Sidebar, Button },
+  components: { AutoComplete, Dialog, Button },
   data() {
     return {
       schoolIcon,
@@ -133,19 +145,26 @@ export default defineComponent({
       loadingIdps: false,
       showMobile: true,
       ready: false,
+      mobileAutoReady: false,
       disableTeleport: true,
       autocompleteRef: {},
       focused: false,
+      globalTeleportTarget: null,
+      teleportIntoMobileDialog: null,
+      autoready: false,
+      elevate: false,
     };
   },
   async created() {
     await this.loadIdps();
   },
   mounted() {
-    this.ready = true;
+    const shadow = document.querySelector("vidis-login")?.shadowRoot;
+    this.globalTeleportTarget = shadow?.querySelector("#teleportsTarget");
+    this.autoready = true;
+    this.mobileAutoReady = true;
     this.showMobile = false;
-    if (!this.allowTeleportToMobile)
-      this.$nextTick(() => this.$refs.idpAutocomplete.focus());
+    this.ready = true;
     this.switchToMobile();
   },
   computed: {
@@ -209,17 +228,26 @@ export default defineComponent({
   },
   methods: {
     async switchToMobile() {
+      const shadow = document.querySelector("vidis-login")?.shadowRoot;
       if (this.allowTeleportToMobile && !this.showMobile) {
         this.showMobile = true;
-        this.ready = false;
+        this.teleportIntoMobileDialog = null;
         await this.$nextTick();
+        this.teleportIntoMobileDialog = shadow?.querySelector(
+          "#mobileAutocompletePlace"
+        );
         this.disableTeleport = false;
-        this.ready = true;
         await this.$nextTick();
-        this.$refs.idpAutocomplete.focus();
+        this.elevate = false;
+
+        let elementToFocus = shadow?.querySelector(
+          ".p-autocomplete-input"
+        ) as any;
+        elementToFocus?.focus();
       }
     },
     switchToNormal() {
+      this.elevate = true;
       this.showMobile = false;
     },
     async loadIdps(): Promise<void> {
@@ -242,8 +270,9 @@ export default defineComponent({
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
-    emitToParent(): void {
-      this.switchToNormal();
+    async emitToParent(): Promise<void> {
+      this.switchToNormal(true);
+      await this.$nextTick();
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
     searchGroupedIdps({ query }: { query: string }): void {
