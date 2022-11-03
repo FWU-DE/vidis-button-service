@@ -1,5 +1,15 @@
 # Changelog Vidis-Button
 
+## Version 1.8.1
+
+### Added
+
+- VBTN-111: Changed Url of a link in the help view and removed another Link
+
+### Fixed:
+
+- VBTN-109: Fixed a visual Bug for the Entry Button in small views
+
 ## Version 1.7.1
 
 ### Added
