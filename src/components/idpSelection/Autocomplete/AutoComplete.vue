@@ -28,6 +28,13 @@
       @change="onChange"
       v-bind="inputProps"
     />
+    <Button :class="resetSelectionIconClass" @click="resetSelection">
+      <img
+        :src="cross"
+        :alt="$t('idp.resetSelection')"
+        :title="$t('idp.resetSelection')"
+      />
+    </Button>
     <i v-if="searching" :class="loadingIconClass" aria-hidden="true"></i>
     <span role="status" aria-live="polite" class="p-hidden-accessible">
       {{ searchResultMessageText }}
@@ -173,6 +180,7 @@
 </template>
 
 <script>
+import cross from "@/assets/svgs/cross.svg";
 import {
   ConnectedOverlayScrollHandler,
   UniqueComponentId,
@@ -183,6 +191,7 @@ import {
 import OverlayEventBus from "primevue/overlayeventbus";
 import Ripple from "primevue/ripple";
 import VirtualScroller from "primevue/virtualscroller";
+import Button from "primevue/button";
 
 export default {
   name: "AutoComplete",
@@ -249,6 +258,7 @@ export default {
     "aria-label": { type: String, default: null },
     "aria-labelledby": { type: String, default: null },
     elevate: { type: Boolean, default: true },
+    mobileMode: { type: Boolean, default: false },
   },
   outsideClickListener: null,
   resizeListener: null,
@@ -265,6 +275,7 @@ export default {
       focusedMultipleOptionIndex: -1,
       overlayVisible: false,
       searching: false,
+      cross,
     };
   },
   watch: {
@@ -961,6 +972,11 @@ export default {
     },
   },
   computed: {
+    resetSelectionIconClass() {
+      return this.mobileMode
+        ? "resetSelectionIcon-mobile"
+        : "resetSelectionIcon";
+    },
     containerClass() {
       return [
         "p-autocomplete p-component p-inputwrapper",
@@ -1079,7 +1095,8 @@ export default {
     },
   },
   components: {
-    VirtualScroller: VirtualScroller,
+    VirtualScroller,
+    Button,
   },
   directives: {
     ripple: Ripple,

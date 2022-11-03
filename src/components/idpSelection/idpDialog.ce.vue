@@ -90,6 +90,11 @@ export default defineComponent({
     this.ready = true;
   },
   computed: {
+    resetSelectionIconClass() {
+      return this.showMobile && this.allowTeleportToMobile
+        ? "resetSelectionIcon-mobile"
+        : "resetSelectionIcon";
+    },
     loginurl() {
       return this.$store.getters.loginurl;
     },

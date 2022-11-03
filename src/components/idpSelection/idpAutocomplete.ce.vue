@@ -11,11 +11,11 @@
       :dismissableMask="true"
       :showHeader="false"
       @hide="switchToNormal"
-      style="
-        width: 100%;
-        margin: 0;
-        background-color: rgba(0, 0, 0, 0.4) !important;
-      "
+      :style="{
+        width: this.viewportWidth || '100%',
+        margin: 0,
+        'background-color': 'rgba(0, 0, 0, 0.4) !important',
+      }"
     >
       <div id="mobileAutocompletePlace" style="height: 300px"></div>
     </Dialog>
@@ -28,13 +28,6 @@
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
         </span>
-        <Button :class="resetSelectionIconClass" @click="resetSelection">
-          <img
-            :src="cross"
-            :alt="$t('idp.resetSelection')"
-            :title="$t('idp.resetSelection')"
-          />
-        </Button>
       </div>
 
       <AutoComplete
@@ -48,12 +41,14 @@
         :inputStyle="'font-size: 18px'"
         :class="{ idpAutocomplete: focused && !showMobile }"
         :elevate="elevate"
+        :mobileMode="mobileMode"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
         @clicked="switchToMobile"
         @focus="focused = true"
         @blur="focused = false"
+        @reset="resetSelection"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
@@ -117,7 +112,6 @@ import { defineComponent } from "vue";
 import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
-import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
@@ -130,7 +124,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Dialog, Button },
+  components: { AutoComplete, Dialog },
   data() {
     return {
       schoolIcon,
@@ -187,10 +181,8 @@ export default defineComponent({
         "padding-left": this.showMobile ? "20px" : "2px",
       };
     },
-    resetSelectionIconClass() {
-      return this.showMobile && this.allowTeleportToMobile
-        ? "resetSelectionIcon-mobile"
-        : "resetSelectionIcon";
+    mobileMode() {
+      return this.showMobile && this.allowTeleportToMobile;
     },
   },
   watch: {
