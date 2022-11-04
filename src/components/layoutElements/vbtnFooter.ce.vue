@@ -176,8 +176,9 @@ export default defineComponent({
   },
   methods: {
     toggleHelp(show: boolean): void {
+      this.handleOverflowOfHostpage(show);
+      this.$emit("helpStatusUpdated", show);
       this.showHelp = show;
-      this.handleOverflowOfHostpage(this.showHelp);
     },
   },
 });
