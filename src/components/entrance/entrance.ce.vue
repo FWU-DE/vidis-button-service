@@ -31,7 +31,7 @@
   <idpDialog
     :visible="showDialog"
     class="p-dialog-maximized"
-    @closed="showDialog = false"
+    @closed="toggleDialog(false)"
     style="background: d2eeff"
   />
   <helpDialog :visible="showHelp" @closed="toggleHelp(false)" />
@@ -52,9 +52,12 @@ import lockIconInverted from "@/assets/svgs/lockIcon_inverted.svg";
 import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 
+import handleOverflow from "@/mixins/handleOverflow";
+
 export default defineComponent({
   name: "entranceButton",
   components: { idpDialog, entryButton, Button, helpDialog },
+  mixins: [handleOverflow],
   data() {
     return {
       showDialog: false,
@@ -65,8 +68,13 @@ export default defineComponent({
       logoNoText_inverted,
       buttonHovered: false,
       showHelp: false,
+      originalOverflowValue: "",
       openArrow,
     };
+  },
+  mounted() {
+    let hostPage = document.getElementsByTagName("body")[0];
+    this.originalOverflowValue = hostPage.style.overflow;
   },
   computed: {
     size() {
@@ -76,9 +84,11 @@ export default defineComponent({
   methods: {
     toggleDialog(mode?: boolean) {
       this.showDialog = mode ?? false;
+      this.handleOverflowOfHostpage(this.showDialog);
     },
     toggleHelp(show: boolean): void {
       this.showHelp = show;
+      this.handleOverflowOfHostpage(this.showHelp);
     },
   },
 });

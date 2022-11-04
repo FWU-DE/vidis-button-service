@@ -5,9 +5,10 @@
     class="p-dialog-maximized"
     :closable="false"
     :appendTo="teleportTarget"
+    :contentStyle="{ overflow: 'hidden' }"
   >
     <template #header="">
-      <helpHeader @closeDialog="showDialog = false" />
+      <helpHeader @closeDialog="toggleDialog(false)" />
     </template>
     <helpContent />
   </Dialog>
@@ -19,6 +20,7 @@ import { defineComponent } from "vue";
 import Dialog from "primevue/dialog";
 import helpHeader from "@/components/help/helpHeader.ce.vue";
 import helpContent from "@/components/help/helpContent.vue";
+
 export default defineComponent({
   name: "idp-dialog",
   props: {
@@ -53,16 +55,17 @@ export default defineComponent({
     },
   },
   watch: {
-    showDialog(newVal: boolean): void {
-      if (!newVal) this.$emit("closed");
-    },
     visible(newVal: boolean): void {
-      this.showDialog = newVal;
+      this.toggleDialog(newVal);
     },
   },
   methods: {
     closeDialog(location: string): void {
-      if (location === "help") this.showDialog = false;
+      if (location === "help") this.toggleDialog(false);
+    },
+    toggleDialog(mode: boolean): void {
+      if (!mode) this.$emit("closed");
+      this.showDialog = mode;
     },
   },
 });

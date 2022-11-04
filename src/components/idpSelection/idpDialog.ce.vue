@@ -6,6 +6,7 @@
     :closable="false"
     :appendTo="teleportTarget"
     ref="vidis-dialog"
+    :contentStyle="{ overflow: _showScrollbars }"
   >
     <template #header="">
       <vbtnHeader @closeDialog="showDialog = false" />
@@ -42,7 +43,7 @@
           </div>
         </div>
       </div>
-      <vbtnFooter />
+      <vbtnFooter @helpStatusUpdated="updateShowScrollbars" />
     </div>
   </Dialog>
 </template>
@@ -82,6 +83,7 @@ export default defineComponent({
       loading: false,
       teleportTarget: null,
       ready: false,
+      showScrollbars: true,
     };
   },
   mounted() {
@@ -101,6 +103,9 @@ export default defineComponent({
     requestmethod() {
       return this.$store.getters.requestmethod;
     },
+    _showScrollbars() {
+      return this.showScrollbars ? "" : "hidden";
+    },
   },
   watch: {
     showDialog(newVal: boolean): void {
@@ -111,6 +116,9 @@ export default defineComponent({
     },
   },
   methods: {
+    updateShowScrollbars(helpStatus: boolean) {
+      this.showScrollbars = !helpStatus;
+    },
     async redirectToIdpLogin(): Promise<void> {
       this.loading = true;
       try {

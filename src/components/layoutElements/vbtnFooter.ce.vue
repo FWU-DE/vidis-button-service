@@ -119,6 +119,7 @@ import { defineComponent } from "vue";
 import breakpoints from "@/mixins/breakpoints";
 import Button from "primevue/button";
 import helpDialog from "@/components/help/helpDialog.ce.vue";
+import handleOverflow from "@/mixins/handleOverflow";
 
 import digitalPakt from "@/assets/img/digitalPakt.png";
 import openArrow from "@/assets/svgs/openArrow.svg";
@@ -141,7 +142,7 @@ import Thuringia from "@/assets/svgs/crests/Thuringia.svg";
 export default defineComponent({
   name: "vbtn-footer",
   props: {},
-  mixins: [breakpoints],
+  mixins: [breakpoints, handleOverflow],
   components: { Button, helpDialog },
   data() {
     return {
@@ -175,6 +176,8 @@ export default defineComponent({
   },
   methods: {
     toggleHelp(show: boolean): void {
+      this.handleOverflowOfHostpage(show);
+      this.$emit("helpStatusUpdated", show);
       this.showHelp = show;
     },
   },
