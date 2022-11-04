@@ -52,9 +52,12 @@ import lockIconInverted from "@/assets/svgs/lockIcon_inverted.svg";
 import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
 
+import handleOverflow from "@/mixins/handleOverflow";
+
 export default defineComponent({
   name: "entranceButton",
   components: { idpDialog, entryButton, Button, helpDialog },
+  mixins: [handleOverflow],
   data() {
     return {
       showDialog: false,
@@ -86,10 +89,6 @@ export default defineComponent({
     toggleHelp(show: boolean): void {
       this.showHelp = show;
       this.handleOverflowOfHostpage(this.showHelp);
-    },
-    handleOverflowOfHostpage(hide: boolean) {
-      let hostPage = document.getElementsByTagName("body")[0];
-      hostPage.style.overflow = hide ? "hidden" : this.originalOverflowValue;
     },
   },
 });

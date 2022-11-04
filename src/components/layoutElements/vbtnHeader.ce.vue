@@ -45,6 +45,8 @@ import Button from "primevue/button";
 import logo from "@/assets/svgs/Logo.svg";
 import shield from "@/assets/svgs/vidis_schield.svg";
 
+import handleOverflow from "@/mixins/handleOverflow";
+
 export default defineComponent({
   name: "vbtnHeader",
   props: {},
