@@ -38,6 +38,7 @@ import lockIcon from "@/assets/svgs/vidis_schield.svg";
 import lockIconInverted from "@/assets/svgs/vidis_schield_inverted.svg";
 import logoNoText from "@/assets/svgs/LogoNoText.svg";
 import logoNoText_inverted from "@/assets/svgs/LogoNoText_inverted.svg";
+
 export default defineComponent({
   name: "entryButton",
   props: {},
