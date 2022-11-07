@@ -89,13 +89,8 @@ describe("IdPAutocomplete", () => {
      * THEN: selectedIdP value is being emitted to parent
      */
     test("emitToParent", async () => {
-      const switchToNormalSpy = jest.spyOn(
-        IdPAutocompleteWrapper.vm,
-        "switchToNormal"
-      );
       IdPAutocompleteWrapper.vm.selectedIdP = IdpsForBremen[0];
       IdPAutocompleteWrapper.vm.emitToParent();
-      expect(switchToNormalSpy).toHaveBeenCalled();
       expect(IdPAutocompleteWrapper.emitted().emitSelectedIdp[0]).toEqual([
         IdpsForBremen[0],
       ]);
