@@ -11,7 +11,9 @@
   >
     <ProgressSpinner v-if="loading" class="idp-button-spinner" />
     <img alt="logo" :src="icon" style="width: 1.5rem" />
-    <span class="ml-2 font-semibold">{{ this.buttonLabel }}</span>
+    <span class="ml-2 font-semibold entry-button-label">
+      {{ this.buttonLabel }}
+    </span>
   </Button>
   <Button
     v-if="idpPreselected"

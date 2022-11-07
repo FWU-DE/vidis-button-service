@@ -86,8 +86,6 @@ export default defineComponent({
         pictureAlt: "help.steps.pictureAlt2",
         title: "help.steps.title2",
         explanation: "help.steps.explanation2",
-        buttonLabel: "help.steps.buttonLabel2",
-        buttonTarget: "https://www.vidis.schule/teilnehmende-idps",
         invert: this.invert,
       };
     },

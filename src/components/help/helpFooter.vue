@@ -13,11 +13,6 @@
     <div
       class="helpFooterLabels col-12 xs:col-12 sm:col-10 md:col-8 lg:col-8 xl:col-8"
     >
-      {{ $t("help.footerPortals") }}
-    </div>
-    <div
-      class="helpFooterLabels col-12 xs:col-12 sm:col-10 md:col-8 lg:col-8 xl:col-8"
-    >
       <Button class="p-button-link helpFooterLink" @click="openLink">
         <span class="helpFooterLabels">
           {{ $t("help.footerPortalRedirect") }}
@@ -83,7 +78,7 @@ export default defineComponent({
   },
   methods: {
     openLink(): void {
-      window.location.href = this.buttonTarget;
+      window.location.href = this.$t("help.footerPortalRedirectTarget");
     },
   },
 });
