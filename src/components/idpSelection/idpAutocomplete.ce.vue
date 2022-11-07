@@ -270,9 +270,7 @@ export default defineComponent({
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
-    async emitToParent(): Promise<void> {
-      this.switchToNormal(true);
-      await this.$nextTick();
+    emitToParent(): void {
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
     searchGroupedIdps({ query }: { query: string }): void {
