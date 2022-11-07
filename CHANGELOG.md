@@ -1,5 +1,13 @@
 # Changelog Vidis-Button
 
+## Version 1.9.2
+
+### Fixed:
+
+- VBTN-109 Fix visual bug with the Entrance Button with long names
+- VBTN-113 Fix Issue with multiple Scrollbars.
+- VBTN-107 Fix showblocking Encapsulation Bugs for Button Size S
+
 ## Version 1.8.1
 
 ### Added
