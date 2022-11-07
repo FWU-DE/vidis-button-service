@@ -1,4 +1,5 @@
 <template>
+  <div id="teleportsTarget" />
   <entryButton @clicked="toggleDialog(true)" />
   <idpDialog
     :visible="showDialog"
