@@ -103,7 +103,6 @@ export class VidisLoginShadowApp extends HTMLElement {
     ];
     internalStyles.concat(styles);
     for (const style of internalStyles) {
-      console.log(style);
       this.appendStyle(shadow, style);
     }
     this.appendFonts();
