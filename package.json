@@ -1,6 +1,6 @@
 {
   "name": "vidis-button-service",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "private": false,
   "files": [
     "dist"
@@ -27,7 +27,6 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "npm-cli-login": "^1.0.0",
     "@types/jest": "^27.5.2",
     "@types/lodash": "^4.14.188",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
@@ -47,7 +46,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^8.7.1",
     "jest": "^27.5.1",
-    "loader-utils": "^3.2.0",
+    "loader-utils": "^1.4.1",
     "prettier": "^2.7.1",
     "sass": "^1.56.0",
     "sass-loader": "^12.6.0",
