@@ -155,8 +155,10 @@ export default defineComponent({
       elevate: false,
     };
   },
-  async mounted() {
+  async created() {
     await this.loadIdps();
+  },
+  async mounted() {
     const shadow = document.querySelector("vidis-login")?.shadowRoot;
     this.globalTeleportTarget = shadow?.querySelector("#teleportsTarget");
     this.autoready = true;

@@ -200,7 +200,6 @@ describe("EntryButton", () => {
         entryButtonWrapper.vm.loadIdpsSelection = jest.fn();
         IdP.deleteAll();
         entryButtonWrapper.vm.$store.commit("update_idp", "foo");
-        console.log(IdP.all());
         expect(entryButtonWrapper.vm.idpPreConfigured).toBe(true);
         await entryButtonWrapper.vm.reloadPreselectedIdp();
         expect(entryButtonWrapper.vm.loadIdpsSelection).toHaveBeenCalled();
