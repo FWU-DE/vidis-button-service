@@ -95,11 +95,11 @@ export class VidisLoginShadowApp extends HTMLElement {
    */
   appendStyles(shadow = false, styles: string[] = []): void {
     const internalStyles = [
-      require("!!css-to-string-loader!css-loader!primevue/resources/primevue.min.css"),
-      require("!!css-to-string-loader!css-loader!/node_modules/primeflex/primeflex.css"),
-      require("!!css-to-string-loader!css-loader!primevue/resources/themes/tailwind-light/theme.css"),
-      require("!!css-to-string-loader!css-loader!sass-loader!primeicons/primeicons.css"),
-      require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/globals.scss"),
+      require("!!./to-string-loader!css-loader!primevue/resources/primevue.min.css"),
+      require("!!./to-string-loader!css-loader!/node_modules/primeflex/primeflex.css"),
+      require("!!./to-string-loader!css-loader!primevue/resources/themes/tailwind-light/theme.css"),
+      require("!!./to-string-loader!css-loader!sass-loader!primeicons/primeicons.css"),
+      require("!!./to-string-loader!css-loader!sass-loader!./assets/scss/globals.scss"),
     ];
     internalStyles.concat(styles);
     for (const style of internalStyles) {
@@ -123,7 +123,7 @@ export class VidisLoginShadowApp extends HTMLElement {
     const style = document.createElement("style");
     style.dataset.description = "Barlow";
     const fonts = [
-      require("!!css-to-string-loader!css-loader!sass-loader!./assets/scss/fonts.scss"),
+      require("!!./to-string-loader!css-loader!sass-loader!./assets/scss/fonts.scss"),
     ];
     style.appendChild(document.createTextNode(fonts[0]));
     if (!shadow) this.appendChild(style);

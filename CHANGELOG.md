@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.9.3
+
+### Fixed:
+
+- VBTN-107 Fix Showblocking Error when using Cookie and Mobile View
+
 ## Version 1.9.2
 
 ### Fixed:

@@ -5,6 +5,9 @@
     :alt="$t('entrance.button')"
     :class="{ 'small-entrance-button': this.size === 'S' }"
     :disabled="loading"
+    :style="{
+      height: this.size === 'S' && !this.idpPreselected ? '40px' : undefined,
+    }"
     @click="clicked"
     @mouseover="buttonHovered = true"
     @mouseleave="buttonHovered = false"
