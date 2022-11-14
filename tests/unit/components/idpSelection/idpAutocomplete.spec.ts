@@ -52,7 +52,10 @@ describe("IdPAutocomplete", () => {
           writable: true,
           value: 500,
         });
-        IdPAutocompleteWrapper.vm.showMobile = true;
+
+        IdPAutocompleteWrapper.vm.windowWidth = 400;
+        await IdPAutocompleteWrapper.vm.$nextTick();
+        IdPAutocompleteWrapper.vm.showMobile = false;
         await IdPAutocompleteWrapper.vm.switchToMobile();
         expect(IdPAutocompleteWrapper.vm.disableTeleport).toBe(false);
         expect(IdPAutocompleteWrapper.vm.ready).toBe(true);

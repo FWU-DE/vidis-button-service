@@ -158,14 +158,14 @@ export default defineComponent({
   async created() {
     await this.loadIdps();
   },
-  mounted() {
+  async mounted() {
     const shadow = document.querySelector("vidis-login")?.shadowRoot;
     this.globalTeleportTarget = shadow?.querySelector("#teleportsTarget");
     this.autoready = true;
     this.mobileAutoReady = true;
     this.showMobile = false;
     this.ready = true;
-    this.switchToMobile();
+    if (!this.selectedIdP) await this.switchToMobile();
   },
   computed: {
     idpdatafile() {
@@ -222,9 +222,6 @@ export default defineComponent({
       },
       immediate: true,
     },
-    showMobile(newShowMobile) {
-      this.disableTeleport = !newShowMobile;
-    },
   },
   methods: {
     async switchToMobile() {
@@ -248,6 +245,8 @@ export default defineComponent({
     },
     switchToNormal() {
       this.elevate = true;
+      this.disableTeleport = true;
+
       this.showMobile = false;
     },
     async loadIdps(): Promise<void> {
@@ -270,9 +269,8 @@ export default defineComponent({
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
     },
-    async emitToParent(): Promise<void> {
-      this.switchToNormal(true);
-      await this.$nextTick();
+    emitToParent(): void {
+      this.switchToNormal();
       this.$emit("emitSelectedIdp", this.selectedIdP);
     },
     searchGroupedIdps({ query }: { query: string }): void {
