@@ -52,7 +52,6 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import Cookie from "@/mixins/cookie";
-
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import IdpAutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
