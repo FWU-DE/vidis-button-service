@@ -43,10 +43,6 @@ export default {
         document.documentElement.clientHeight || 0,
         window.innerHeight || 0
       );
-
-      console.log(
-        `size wdith: ${this.viewportWidth}; height: ${this.viewportHeight}`
-      );
     },
   },
 };

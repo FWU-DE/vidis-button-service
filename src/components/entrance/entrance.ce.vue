@@ -68,13 +68,8 @@ export default defineComponent({
       logoNoText_inverted,
       buttonHovered: false,
       showHelp: false,
-      originalOverflowValue: "",
       openArrow,
     };
-  },
-  mounted() {
-    let hostPage = document.getElementsByTagName("body")[0];
-    this.originalOverflowValue = hostPage.style.overflow;
   },
   computed: {
     size() {

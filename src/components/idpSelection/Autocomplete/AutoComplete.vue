@@ -315,6 +315,11 @@ export default {
     }
   },
   methods: {
+    resetSelection() {
+      this.updateModel("Reset");
+      this.$emit("reset");
+    },
+
     getOptionIndex(index, fn) {
       return this.virtualScrollerDisabled ? index : fn && fn(index)["index"];
     },

@@ -11,13 +11,18 @@
       :dismissableMask="true"
       :showHeader="false"
       @hide="switchToNormal"
-      :style="{
-        width: this.viewportWidth || '100%',
-        margin: 0,
-        'background-color': 'rgba(0, 0, 0, 0.4) !important',
-      }"
+      :style="mobileInputStyle"
     >
-      <div id="mobileAutocompletePlace" style="height: 300px"></div>
+      <div
+        class="flex justify-content-center grid-nogutter"
+        style="width: 100%"
+      >
+        <div
+          id="mobileAutocompletePlace"
+          style="height: 300px"
+          class="col-12"
+        />
+      </div>
     </Dialog>
     <teleport
       v-if="mobileAutoReady && ready"
@@ -38,7 +43,12 @@
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
-        :inputStyle="'font-size: 18px'"
+        :inputStyle="{
+          'font-size': '18px',
+          'padding-right': '0px',
+          width: 'unset',
+          'flex-grow': 1,
+        }"
         :class="{ idpAutocomplete: focused && !showMobile }"
         :elevate="elevate"
         :mobileMode="mobileMode"
@@ -162,6 +172,16 @@ export default defineComponent({
     if (!this.selectedIdP) await this.switchToMobile();
   },
   computed: {
+    mobileInputStyle() {
+      let styles = {
+        width: `${this.viewportWidth}px` || "100%",
+        margin: 0,
+        "background-color": "rgba(0, 0, 0, 0.4) !important",
+        position: "inherit",
+        left: "0px",
+      };
+      return styles;
+    },
     idpdatafile() {
       return this.$store.getters.idpdatafile;
     },
