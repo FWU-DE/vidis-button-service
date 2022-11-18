@@ -1,10 +1,17 @@
 <template>
-  <div ref="container" :class="containerClass" @click="onContainerClick">
+  <div
+    ref="container"
+    :class="containerClass"
+    @click="onContainerClick"
+    class="flex"
+  >
+    <slot name="preppend"></slot>
     <input
       v-if="!multiple"
       ref="focusInput"
       :id="inputId"
       type="text"
+      class="flex-grow-1"
       :style="inputStyle"
       :class="inputStyleClass"
       :value="inputValue"
@@ -28,7 +35,11 @@
       @change="onChange"
       v-bind="inputProps"
     />
-    <Button :class="resetSelectionIconClass" @click="resetSelection">
+    <Button
+      class="flex-none"
+      :class="resetSelectionIconClass"
+      @click="resetSelection"
+    >
       <img
         :src="cross"
         :alt="$t('idp.resetSelection')"
@@ -59,6 +70,7 @@
             ? '0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);'
             : 'initial !important',
         }"
+        style="left: '0 !important'"
         @click="onOverlayClick"
         @keydown="onOverlayKeyDown"
         v-bind="panelProps"
@@ -71,7 +83,7 @@
         <VirtualScroller
           :ref="virtualScrollerRef"
           v-bind="virtualScrollerOptions"
-          :style="{ height: scrollHeight }"
+          :style="{ height: scrollHeight, left: '0 !important' }"
           :items="visibleOptions"
           :tabindex="-1"
           :disabled="virtualScrollerDisabled"

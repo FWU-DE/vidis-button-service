@@ -46,8 +46,7 @@
         :inputStyle="{
           'font-size': '18px',
           'padding-right': '0px',
-          width: 'unset',
-          'flex-grow': 1,
+          'padding-left': '0px',
         }"
         :class="{ idpAutocomplete: focused && !showMobile }"
         :elevate="elevate"
@@ -64,6 +63,9 @@
         optionGroupChildren="items"
         forceSelection
       >
+        <template #preppend>
+          <img :src="searchIcon" class="preppendIcon flex-none" />
+        </template>
         <template #item="{ item }">
           <div
             v-if="!item.noResult"
@@ -129,6 +131,7 @@ import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
 import schoolIcon from "@/assets/svgs/school_icon.svg";
 import WarningIcon from "@/assets/svgs/Warning.svg";
+import searchIcon from "@/assets/svgs/search.svg";
 
 export default defineComponent({
   name: "idp-autocomplete",
@@ -140,6 +143,7 @@ export default defineComponent({
       schoolIcon,
       cross,
       WarningIcon,
+      searchIcon,
       idps: null,
       suggestions: [],
       availableIdps: [],
