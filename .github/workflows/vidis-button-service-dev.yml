@@ -82,6 +82,11 @@ jobs:
   run-selenium-tests-with-chrome:
     needs: build-and-publish
     runs-on: ubuntu-latest
+    env:
+      TEST_CICD: "true"
+      ENVIRONMENT: "DEV"
+      TESTPAGE_HOST: ${{ secrets.TESTPAGE_HOST }}
+      TAKE_SCREENSHOTS: "true"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -100,6 +105,11 @@ jobs:
   run-accessibility-tests-with-chrome:
     needs: build-and-publish
     runs-on: ubuntu-latest
+    env:
+      TEST_CICD: "true"
+      ENVIRONMENT: "DEV"
+      TESTPAGE_HOST: ${{ secrets.TESTPAGE_HOST }}
+      TAKE_SCREENSHOTS: "false"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
