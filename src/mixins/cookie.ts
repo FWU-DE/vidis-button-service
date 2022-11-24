@@ -16,7 +16,7 @@ export default {
   methods: {
     setCookie(idp: string): void {
       if (this.cookie) {
-        document.cookie = `vbtn=${encodeURIComponent(idp)};path=/`;
+        document.cookie = `vbtn=${encodeURIComponent(idp)};path=/;Secure`;
         this.reloadCookie = !this.reloadCookie;
       }
     },
