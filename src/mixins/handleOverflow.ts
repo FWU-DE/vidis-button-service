@@ -13,6 +13,13 @@ export default {
     this.originalOverflowValueHtml = hostHtml.style.overflow;
     const viewportMeta = document.querySelector('meta[name="viewport"]');
     this.originalViewportMetaContent = viewportMeta?.getAttribute("content");
+    console.log("Body Start", this.originalOverflowValueBody, hostBody);
+    console.log("HTMl Start", this.originalOverflowValueHtml, hostHtml);
+    console.log(
+      "VIEWPORT Start",
+      this.originalViewportMetaContent,
+      viewportMeta
+    );
   },
   methods: {
     handleOverflowOfHostpage(hide: boolean) {
@@ -40,6 +47,9 @@ export default {
       } else if (!hide && this.originalViewportMetaContent && viewportMeta) {
         viewportMeta.setAttribute("content", viewportMetaContent);
       }
+      console.log("Body End", hostBody);
+      console.log("HTMl End", hostHtml);
+      console.log("VIEWPORT End", viewportMeta);
     },
   },
 };
