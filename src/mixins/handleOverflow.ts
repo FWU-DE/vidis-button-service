@@ -33,7 +33,7 @@ export default {
       else if (!viewportMeta && hide) {
         const meta = document.createElement("meta");
         meta.name = "viewport";
-        meta.content = "viewportMetaContent";
+        meta.content = viewportMetaContent;
         document.getElementsByTagName("head")[0].appendChild(meta);
       } else if (!hide && !this.originalViewportMetaContent && viewportMeta) {
         viewportMeta.remove();
