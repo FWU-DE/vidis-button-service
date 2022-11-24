@@ -10,13 +10,16 @@ export default {
     },
     cookieIdp() {
       this.reloadCookie;
+      console.log("------>", this.getCookie());
       return this.getCookie();
     },
   },
   methods: {
     setCookie(idp: string): void {
       if (this.cookie) {
-        document.cookie = `vbtn=${encodeURIComponent(idp)};path=/;Secure`;
+        document.cookie = `vbtn=${encodeURIComponent(
+          idp
+        )};path=/;SameSite=Strict;Secure`;
         this.reloadCookie = !this.reloadCookie;
       }
     },
