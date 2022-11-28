@@ -28,25 +28,21 @@ describe("EntryButton", () => {
         cookieWrapper.vm.$store.commit("update_cookie", true);
         cookieWrapper.vm.setCookie("test");
         expect(cookieWrapper.vm.getCookie()).toBe(
-          "test;path=/;SameSite=Strict;Secure"
+          "test;path=/;SameSite=Lax;Secure"
         );
         expect(cookieWrapper.vm.cookieIdp).toBe(
-          "test;path=/;SameSite=Strict;Secure"
+          "test;path=/;SameSite=Lax;Secure"
         );
         cookieWrapper.vm.setCookie("test2");
         expect(cookieWrapper.vm.getCookie()).toBe(
-          "test2;path=/;SameSite=Strict;Secure"
+          "test2;path=/;SameSite=Lax;Secure"
         );
         expect(cookieWrapper.vm.cookieIdp).toBe(
-          "test2;path=/;SameSite=Strict;Secure"
+          "test2;path=/;SameSite=Lax;Secure"
         );
         cookieWrapper.vm.setCookie("test2", "");
-        expect(cookieWrapper.vm.getCookie()).toBe(
-          "test2;path=/;SameSite=Strict;"
-        );
-        expect(cookieWrapper.vm.cookieIdp).toBe(
-          "test2;path=/;SameSite=Strict;"
-        );
+        expect(cookieWrapper.vm.getCookie()).toBe("test2;path=/;SameSite=Lax;");
+        expect(cookieWrapper.vm.cookieIdp).toBe("test2;path=/;SameSite=Lax;");
       });
     });
   });
