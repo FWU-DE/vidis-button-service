@@ -18,7 +18,7 @@ export default {
       if (this.cookie) {
         document.cookie = `vbtn=${encodeURIComponent(
           idp
-        )};path=/;SameSite=Lax;${secure}`;
+        )};path=/;SameSite=Strict;${secure}`;
         this.reloadCookie = !this.reloadCookie;
       }
     },
