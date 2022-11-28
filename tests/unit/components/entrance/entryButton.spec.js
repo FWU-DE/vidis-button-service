@@ -231,7 +231,7 @@ describe("EntryButton", () => {
       test("that text of button is 'Weiter mit ' when run with selected idp in cookie", async () => {
         entryButtonWrapper.vm.$store.commit("update_cookie", false);
         entryButtonWrapper.vm.$store.commit("update_cookie", true);
-        entryButtonWrapper.vm.setCookie(1);
+        entryButtonWrapper.vm.setCookie(1, "");
         await entryButtonWrapper.vm.loadIdpsSelection();
         expect(entryButtonWrapper.vm.buttonLabel).toBe(
           "Weiter mit SuBITI Bremen"

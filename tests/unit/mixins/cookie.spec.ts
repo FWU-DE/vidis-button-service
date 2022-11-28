@@ -40,6 +40,13 @@ describe("EntryButton", () => {
         expect(cookieWrapper.vm.cookieIdp).toBe(
           "test2;path=/;SameSite=Strict;Secure"
         );
+        cookieWrapper.vm.setCookie("test2", "");
+        expect(cookieWrapper.vm.getCookie()).toBe(
+          "test2;path=/;SameSite=Strict;"
+        );
+        expect(cookieWrapper.vm.cookieIdp).toBe(
+          "test2;path=/;SameSite=Strict;"
+        );
       });
     });
   });

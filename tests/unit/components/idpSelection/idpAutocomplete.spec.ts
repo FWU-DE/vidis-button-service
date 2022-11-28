@@ -80,7 +80,7 @@ describe("IdPAutocomplete", () => {
         );
         IdPAutocompleteWrapper.vm.$store.commit("update_cookie", false);
         IdPAutocompleteWrapper.vm.$store.commit("update_cookie", true);
-        IdPAutocompleteWrapper.vm.setCookie(1);
+        IdPAutocompleteWrapper.vm.setCookie(1, "");
         await IdPAutocompleteWrapper.vm.loadIdps();
         expect(IdPAutocompleteWrapper.vm.idpsInStore).toEqual(idpsInStore);
         expect(emitToParentSpy).toHaveBeenCalled();
