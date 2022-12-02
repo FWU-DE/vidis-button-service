@@ -199,10 +199,8 @@ const droplist_contains = async function (mydriver, expectedString) {
 };
 
 const enable_cookies = async function (mydriver) {
-  sleep(250);
+  await sleep(250);
   const elem = await mydriver.findElement(By.css("input#cookie"));
-  elem.click();
-  elem.click();
   elem.click();
 };
 
