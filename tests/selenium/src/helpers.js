@@ -202,6 +202,8 @@ const enable_cookies = async function (mydriver) {
   sleep(250);
   const elem = await mydriver.findElement(By.css("input#cookie"));
   elem.click();
+  elem.click();
+  elem.click();
 };
 
 const write_idpdatafile = async function (mydriver, text) {
