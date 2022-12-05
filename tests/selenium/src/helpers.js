@@ -199,15 +199,16 @@ const droplist_contains = async function (mydriver, expectedString) {
 };
 
 const enable_cookies = async function (mydriver) {
-  sleep(250);
+  await sleep(250);
   const elem = await mydriver.findElement(By.css("input#cookie"));
   elem.click();
 };
 
 const write_idpdatafile = async function (mydriver, text) {
+  await sleep(250);
   const elem = await mydriver.findElement(By.css("input#idpdatafile"));
-  elem.clear();
-  elem.sendKeys(text);
+  await elem.clear();
+  await elem.sendKeys(text);
 };
 
 const write_idpincookie = async function (mydriver, text) {
