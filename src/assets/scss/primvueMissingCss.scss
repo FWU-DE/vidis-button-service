@@ -116,11 +116,12 @@
 }
 /* Maximize */
 .p-dialog-maximized {
+    position: inherit;
     -webkit-transition: none;
     transition: none;
     transform: none;
-    width: 100vw !important;
-    height: 100vh !important;
+    width: 100vw;
+    height: 100vh;
     top: 0px !important;
     left: 0px !important;
     max-height: 100%;

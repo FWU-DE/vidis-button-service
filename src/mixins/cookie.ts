@@ -14,9 +14,11 @@ export default {
     },
   },
   methods: {
-    setCookie(idp: string): void {
+    setCookie(idp: string, secure = "Secure"): void {
       if (this.cookie) {
-        document.cookie = `vbtn=${encodeURIComponent(idp)};path=/`;
+        document.cookie = `vbtn=${encodeURIComponent(
+          idp
+        )};path=/;SameSite=Strict;${secure}`;
         this.reloadCookie = !this.reloadCookie;
       }
     },

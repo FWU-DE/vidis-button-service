@@ -3,6 +3,7 @@
     v-if="ready"
     v-model:visible="showDialog"
     class="p-dialog-maximized"
+    :style="dialogStyles"
     :closable="false"
     :appendTo="teleportTarget"
     ref="vidis-dialog"
@@ -52,13 +53,13 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import Cookie from "@/mixins/cookie";
-
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
 import IdpAutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 import ProgressSpinner from "primevue/progressspinner";
 import vbtnHeader from "@/components/layoutElements/vbtnHeader.ce.vue";
 import vbtnFooter from "@/components/layoutElements/vbtnFooter.ce.vue";
+import breakpoints from "@/mixins/breakpoints";
 
 export default defineComponent({
   name: "idp-dialog",
@@ -91,6 +92,17 @@ export default defineComponent({
     this.ready = true;
   },
   computed: {
+    dialogStyles() {
+      let styles = {
+        width: `${this.viewportWidth}px` || "100%",
+      };
+      return styles;
+    },
+    resetSelectionIconClass() {
+      return this.showMobile && this.allowTeleportToMobile
+        ? "resetSelectionIcon-mobile"
+        : "resetSelectionIcon";
+    },
     loginurl() {
       return this.$store.getters.loginurl;
     },

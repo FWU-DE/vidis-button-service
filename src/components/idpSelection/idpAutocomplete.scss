@@ -1,13 +1,17 @@
 .p-autocomplete-input {
-  background-image: url("../../assets/svgs/search.svg");
-  background-size: 1.5em;
-  background-position: left 22px top 20px;
-  background-repeat: no-repeat;
-  text-indent: 40px;
+  /*  background-image: url("../../assets/svgs/search.svg");
+  background-size: 1.5em; */
+  /*   background-position: left 22px top 20px;
+  background-repeat: no-repeat; */
+  /*  text-indent: 40px; */
   padding: 20px;
   color: #0000c4;
   width: 100%;
   border: 0px;
+}
+.preppendIcon {
+  padding: 26px;
+  padding-right: 18px;
 }
 
 .p-autocomplete-input:enabled:focus {
@@ -34,6 +38,7 @@
 .p-autocomplete-panel {
   border-radius: 0px 0px 8px 8px;
   margin-top: -10px;
+  left: 0 !important;
 }
 
 .idp-item-icon {
@@ -121,28 +126,6 @@ input:hover::placeholder {
 .p-autocomplete-item:hover {
   color: inherit !important;
   background: inherit !important;
-}
-.resetSelectionIcon {
-  width: 10px !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  float: right !important;
-  position: relative !important;
-  top: 56px !important;
-  right: 15px !important;
-  z-index: 1 !important;
-}
-.resetSelectionIcon-mobile {
-  width: 10px !important;
-  background: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  float: right !important;
-  position: fixed !important;
-  top: 60px !important;
-  right: 15px !important;
-  z-index: 1300 !important;
 }
 
 .p-component-overlay {

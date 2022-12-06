@@ -11,13 +11,18 @@
       :dismissableMask="true"
       :showHeader="false"
       @hide="switchToNormal"
-      style="
-        width: 100%;
-        margin: 0;
-        background-color: rgba(0, 0, 0, 0.4) !important;
-      "
+      :style="mobileInputStyle"
     >
-      <div id="mobileAutocompletePlace" style="height: 300px"></div>
+      <div
+        class="flex justify-content-center grid-nogutter"
+        style="width: 100%"
+      >
+        <div
+          id="mobileAutocompletePlace"
+          style="height: 300px"
+          class="col-12"
+        />
+      </div>
     </Dialog>
     <teleport
       v-if="mobileAutoReady && ready"
@@ -28,13 +33,6 @@
         <span class="idpAutocompleteLabel">
           {{ $t("idp.label") }}
         </span>
-        <Button :class="resetSelectionIconClass" @click="resetSelection">
-          <img
-            :src="cross"
-            :alt="$t('idp.resetSelection')"
-            :title="$t('idp.resetSelection')"
-          />
-        </Button>
       </div>
 
       <AutoComplete
@@ -45,20 +43,29 @@
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
-        :inputStyle="'font-size: 18px'"
+        :inputStyle="{
+          'font-size': '18px',
+          'padding-right': '0px',
+          'padding-left': '0px',
+        }"
         :class="{ idpAutocomplete: focused && !showMobile }"
         :elevate="elevate"
+        :mobileMode="mobileMode"
         style="width: 100%"
         @item-select="emitToParent"
         @complete="searchGroupedIdps($event)"
         @clicked="switchToMobile"
         @focus="focused = true"
         @blur="focused = false"
+        @reset="resetSelection"
         field="name"
         optionGroupLabel="label"
         optionGroupChildren="items"
         forceSelection
       >
+        <template #preppend>
+          <img :src="searchIcon" class="preppendIcon flex-none" />
+        </template>
         <template #item="{ item }">
           <div
             v-if="!item.noResult"
@@ -117,7 +124,6 @@ import { defineComponent } from "vue";
 import _ from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
-import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
@@ -125,17 +131,19 @@ import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
 import schoolIcon from "@/assets/svgs/school_icon.svg";
 import WarningIcon from "@/assets/svgs/Warning.svg";
+import searchIcon from "@/assets/svgs/search.svg";
 
 export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Dialog, Button },
+  components: { AutoComplete, Dialog },
   data() {
     return {
       schoolIcon,
       cross,
       WarningIcon,
+      searchIcon,
       idps: null,
       suggestions: [],
       availableIdps: [],
@@ -168,6 +176,16 @@ export default defineComponent({
     if (!this.selectedIdP) await this.switchToMobile();
   },
   computed: {
+    mobileInputStyle() {
+      let styles = {
+        width: `${this.viewportWidth}px` || "100%",
+        margin: 0,
+        "background-color": "rgba(0, 0, 0, 0.4) !important",
+        position: "inherit",
+        left: "0px",
+      };
+      return styles;
+    },
     idpdatafile() {
       return this.$store.getters.idpdatafile;
     },
@@ -187,10 +205,8 @@ export default defineComponent({
         "padding-left": this.showMobile ? "20px" : "2px",
       };
     },
-    resetSelectionIconClass() {
-      return this.showMobile && this.allowTeleportToMobile
-        ? "resetSelectionIcon-mobile"
-        : "resetSelectionIcon";
+    mobileMode() {
+      return this.showMobile && this.allowTeleportToMobile;
     },
   },
   watch: {

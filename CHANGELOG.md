@@ -1,5 +1,16 @@
 # Changelog Vidis-Button
 
+## Version 1.9.7
+
+### Added:
+
+- VBTN-114 improved Security of Cookies
+
+### Fixed:
+
+- VBTN-104 Fixed visual Bugs in various Mobile Sizes
+- VBTN-113 Fixed Scrolling Behavior
+
 ## Version 1.9.3
 
 ### Fixed:

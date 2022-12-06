@@ -4,7 +4,7 @@
   <idpDialog
     :visible="showDialog"
     class="p-dialog-maximized"
-    @closed="showDialog = false"
+    @closed="toggleDialog(false)"
   />
 </template>
 
@@ -13,10 +13,13 @@ import { defineComponent } from "vue";
 
 import idpDialog from "@/components/idpSelection/idpDialog.ce.vue";
 import entryButton from "@/components/entrance/entryButton.ce.vue";
+import handleOverflow from "@/mixins/handleOverflow";
+
 export default defineComponent({
   name: "smallEntrance",
   props: {},
   components: { entryButton, idpDialog },
+  mixins: [handleOverflow],
   data() {
     return {
       showDialog: false,
@@ -25,6 +28,7 @@ export default defineComponent({
   methods: {
     toggleDialog(mode?: boolean) {
       this.showDialog = mode ?? false;
+      this.handleOverflowOfHostpage(this.showDialog);
     },
   },
 });

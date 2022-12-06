@@ -1,8 +1,19 @@
 export default {
   data() {
-    return { windowWidth: window.innerWidth };
+    return {
+      windowWidth: window.innerWidth,
+      viewportWidth: Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      ),
+      viewportHeight: Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0
+      ),
+    };
   },
   mounted() {
+    this.onResize();
     this.$nextTick((): void => {
       window.addEventListener("resize", this.onResize);
     });
@@ -23,6 +34,15 @@ export default {
   methods: {
     onResize(): void {
       this.windowWidth = window.innerWidth;
+
+      this.viewportWidth = Math.max(
+        document.documentElement.clientWidth || 0,
+        window.innerWidth || 0
+      );
+      this.viewportHeight = Math.max(
+        document.documentElement.clientHeight || 0,
+        window.innerHeight || 0
+      );
     },
   },
 };

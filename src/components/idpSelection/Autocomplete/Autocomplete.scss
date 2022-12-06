@@ -1,0 +1,18 @@
+.resetSelectionIcon {
+  padding-right: 27px;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: initial !important;
+}
+.resetSelectionIcon-mobile {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  z-index: 2000;
+}
+
+.p-autocomplete {
+  border-radius: 0.375rem;
+  background-color: white;
+}
