@@ -27,6 +27,8 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/preset-env": "^7.20.2",
     "@types/jest": "^27.5.2",
     "@types/lodash": "^4.14.188",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
@@ -41,6 +43,7 @@
     "@vue/test-utils": "^2.2.1",
     "@vue/vue3-jest": "^27.0.0",
     "babel-jest": "^27.5.1",
+    "babel-plugin-lodash": "^3.3.4",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -51,6 +54,7 @@
     "sass": "^1.56.0",
     "sass-loader": "^12.6.0",
     "ts-jest": "^27.1.5",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "vue-cli-plugin-webpack-bundle-analyzer": "~4.0.0"
   }
 }
