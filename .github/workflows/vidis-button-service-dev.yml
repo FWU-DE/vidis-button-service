@@ -72,7 +72,10 @@ jobs:
           echo "Running build job on branch ${{ github.ref }}."
           npm run build
           echo ${{ github.ref }} | sed 's/.*\///'
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.js
           curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.min.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.min.js
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.min.js.br https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.min.js.br
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file dist/vidisLogin.umd.min.js.gz https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.package-version.outputs.current-version}}-snapshot/vidisLogin.umd.min.js.gz
           echo "Uploading images and fonts..."
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
           echo "Publishing..."
