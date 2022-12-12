@@ -121,7 +121,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import _ from "lodash";
+import { filter, Collection, uniq, compact } from "lodash";
 import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
 import Dialog from "primevue/dialog";
@@ -327,23 +327,24 @@ export default defineComponent({
       return `@${email.split("@").pop()}`;
     },
     getIdpsForState(state: string): any[] {
-      let idpsForParticularState = _.filter(this.idpsInStore, (el: any) => {
+      let idpsForParticularState = filter(this.idpsInStore, (el: any) => {
         return el.address.state === state;
       });
       return idpsForParticularState;
     },
     getIdpsWithoutState(): any[] {
-      const hasNoState = _.filter(this.idpsInStore, (el: any) => {
+      const hasNoState = filter(this.idpsInStore, (el: any) => {
         return !el.address.state;
       });
       return hasNoState;
     },
-    getListOfStates(): _.Collection<any> {
+    getListOfStates(): Collection<any> {
       let statesList = this.idpsInStore.map(
         (value: any) => value.address.state
       );
       statesList.push("Sonstige");
-      return _(statesList).uniq().compact();
+      statesList = compact(uniq(statesList));
+      return statesList;
     },
     groupIdps(): any[] {
       let finalGroupedIdps = [];
