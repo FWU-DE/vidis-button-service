@@ -79,7 +79,10 @@ jobs:
           echo "Uploading images and fonts..."
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
           echo "Publishing..."
+          echo ${{ secrets.NPMRC }}
+          echo ${{ secrets.NPMRC }} | base64 -d
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
+
           npm publish
 
   run-selenium-tests-with-chrome:
