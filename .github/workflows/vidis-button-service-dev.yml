@@ -82,7 +82,9 @@ jobs:
           echo ${{ secrets.NPMRC }}
           echo ${{ secrets.NPMRC }} | base64 -d
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
-
+          npm config set _auth="$(echo -n '${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }}' | base64)"
+          npm config ls
+          npm login
           npm publish
 
   run-selenium-tests-with-chrome:
