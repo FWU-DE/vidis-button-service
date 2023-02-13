@@ -1,5 +1,15 @@
 # Changelog Vidis-Button
 
+## Version 1.10.2
+
+### Added:
+
+- VBTN-119: Build Minimization
+
+### Fixed:
+
+- VBTN-122: npm audit vulnerabilities
+
 ## Version 1.9.7
 
 ### Added:

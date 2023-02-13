@@ -24,7 +24,7 @@
     "@axe-core/cli": "^4.4.4",
     "@axe-core/webdriverjs": "^4.4.4",
     "assert": "^2.0.0",
-    "chromedriver": "^107.0.3",
+    "chromedriver": "^109.0.0",
     "selenium-webdriver": "^4.4.0"
   }
 }
