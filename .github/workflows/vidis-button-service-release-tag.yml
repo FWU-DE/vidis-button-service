@@ -84,14 +84,14 @@ jobs:
         run: |
           echo "Version ${{ steps.tag.outputs.tag }}"
           echo "Getting corresponding release candidate..."
-          curl -OL https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.js
-          curl -OL https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js
-          curl -OL https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js.br
-          curl -OL https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js.gz
-          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.js https://apps.intension.eu/nexus/repository/vidis-cdn/${{ steps.tag.outputs.tag }}/vidisLogin.umd.js
-          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js
-          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js.br https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js.br
-          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js.gz https://apps.intension.eu/nexus/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js.gz
+          curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.js
+          curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js
+          curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js.br
+          curl -OL https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}-rc/vidisLogin.umd.min.js.gz
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.js https://fwu-nexus.intension.eu/repository/vidis-cdn/${{ steps.tag.outputs.tag }}/vidisLogin.umd.js
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js.br https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js.br
+          curl -v -u ${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }} --upload-file vidisLogin.umd.min.js.gz https://fwu-nexus.intension.eu/repository/vidis-cdn-snapshots/${{ steps.tag.outputs.tag }}/vidisLogin.umd.min.js.gz
           rm -rf dist
           echo "Testing downloading images and fonts..."
           sh .github/workflows/scripts/downloadImagesAndFonts.sh
