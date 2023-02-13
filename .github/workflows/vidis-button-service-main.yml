@@ -103,4 +103,5 @@ jobs:
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
           echo "Publishing npm..."
           echo ${{ secrets.NPMRC }} | base64 -d > .npmrc
+          npm config set _auth="$(echo -n '${{ secrets.CDN_UPLOAD_USER }}:${{ secrets.CDN_UPLOAD_SECRET }}' | base64)"
           npm publish
