@@ -88,8 +88,10 @@ export default defineComponent({
     };
   },
   mounted() {
+    console.log("mounted Dia", this.ready);
     this.teleportTarget = this.$el.parentNode.children[0];
     this.ready = true;
+    console.log("mounted Dia2", this.ready);
   },
   computed: {
     dialogStyles() {
@@ -123,8 +125,11 @@ export default defineComponent({
     showDialog(newVal: boolean): void {
       if (!newVal) this.$emit("closed");
     },
-    async visible(newVal: boolean): Promise<void> {
-      this.showDialog = newVal;
+    visible: {
+      handler(newVal: boolean): void {
+        this.showDialog = newVal;
+      },
+      immediate: true,
     },
   },
   methods: {

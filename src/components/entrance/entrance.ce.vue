@@ -82,7 +82,9 @@ export default defineComponent({
   watch: {
     startwithidpselection: {
       handler(startwithidpselectionValue) {
+        console.log("???", startwithidpselectionValue, this.showDialog);
         this.toggleDialog(startwithidpselectionValue);
+        console.log("????", this.showDialog);
       },
       immediate: true,
     },
