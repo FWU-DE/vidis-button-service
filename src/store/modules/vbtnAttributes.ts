@@ -9,6 +9,7 @@ const defaultVbtnAttributes = () => {
     idpdatafile: "idps",
     idp: "",
     requestmethod: "GET",
+    startwithidpselection: false,
   };
 };
 const state = defaultVbtnAttributes();
@@ -23,6 +24,7 @@ const getters = {
   idpdatafile: (state: any) => state.idpdatafile,
   idp: (state: any) => state.idp,
   requestmethod: (state: any) => state.requestmethod,
+  startwithidpselection: (state: any) => state.startwithidpselection,
 };
 
 const mutations = {
@@ -39,6 +41,8 @@ const mutations = {
   update_idphintname: (state: any, idphintname: string) =>
     (state.idphintname = idphintname),
   update_opentab: (state: any, opentab: string) => (state.opentab = opentab),
+  update_startwithidpselection: (state: any, startwithidpselection: boolean) =>
+    (state.startwithidpselection = startwithidpselection),
   update_idpdatafile: (state: any, idpdatafile: string) =>
     (state.idpdatafile = idpdatafile),
   update_idp: (state: any, idp: string) => (state.idp = idp),
