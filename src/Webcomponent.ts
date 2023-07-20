@@ -81,7 +81,6 @@ export class VidisLoginShadowApp extends HTMLElement {
    * @param newVal   New Value of the attribute
    */
   attributeChangedCallback(attrName: string, oldVal: string, newVal: string) {
-    console.log("attributeChangedCallback", attrName, newVal);
     if (attrName === "size") newVal = newVal.toUpperCase();
     if (attrName === "dark") newVal = JSON.parse(newVal);
     if (attrName === "opentab") newVal = JSON.parse(newVal);

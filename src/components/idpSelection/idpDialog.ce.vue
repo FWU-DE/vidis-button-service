@@ -88,10 +88,8 @@ export default defineComponent({
     };
   },
   mounted() {
-    console.log("mounted Dia", this.ready);
     this.teleportTarget = this.$el.parentNode.children[0];
     this.ready = true;
-    console.log("mounted Dia2", this.ready);
   },
   computed: {
     dialogStyles() {
