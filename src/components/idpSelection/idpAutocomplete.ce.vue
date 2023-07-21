@@ -39,7 +39,6 @@
         v-if="autoready"
         v-model="selectedIdP"
         ref="idpAutocomplete"
-        :modelValue="selectedIdP"
         :placeholder="$t('idp.placeholder')"
         :suggestions="filteredIdps"
         :inputClass="{ 'mobile-input': allowTeleportToMobile }"
@@ -148,7 +147,7 @@ export default defineComponent({
       suggestions: [],
       availableIdps: [],
       selectedIdP: null,
-      filteredIdps: null,
+      filteredIdps: [],
       notGroupedIdps: null,
       loadingIdps: false,
       showMobile: true,
@@ -174,6 +173,7 @@ export default defineComponent({
     this.showMobile = false;
     this.ready = true;
     if (!this.selectedIdP) await this.switchToMobile();
+    this.focusAutocomplete();
   },
   computed: {
     mobileInputStyle() {
@@ -252,12 +252,15 @@ export default defineComponent({
         this.disableTeleport = false;
         await this.$nextTick();
         this.elevate = false;
-
-        let elementToFocus = shadow?.querySelector(
-          ".p-autocomplete-input"
-        ) as any;
-        elementToFocus?.focus();
+        this.focusAutocomplete();
       }
+    },
+    focusAutocomplete() {
+      const shadow = document.querySelector("vidis-login")?.shadowRoot;
+      let elementToFocus = shadow?.querySelector(
+        ".p-autocomplete-input"
+      ) as any;
+      elementToFocus?.focus();
     },
     switchToNormal() {
       this.elevate = true;
