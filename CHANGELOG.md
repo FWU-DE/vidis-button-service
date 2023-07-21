@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.11.1
+
+### Fixed:
+
+- FMUV-195 fixed autofocus
+
 ## Version 1.11.0
 
 - FMUV-191 add Option to directly dispĺay the IDP-Selection
