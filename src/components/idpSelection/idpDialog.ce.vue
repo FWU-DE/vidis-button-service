@@ -123,8 +123,11 @@ export default defineComponent({
     showDialog(newVal: boolean): void {
       if (!newVal) this.$emit("closed");
     },
-    async visible(newVal: boolean): Promise<void> {
-      this.showDialog = newVal;
+    visible: {
+      handler(newVal: boolean): void {
+        this.showDialog = newVal;
+      },
+      immediate: true,
     },
   },
   methods: {

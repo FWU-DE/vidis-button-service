@@ -75,6 +75,17 @@ export default defineComponent({
     size() {
       return this.$store.getters.size;
     },
+    startwithidpselection() {
+      return this.$store.getters.startwithidpselection;
+    },
+  },
+  watch: {
+    startwithidpselection: {
+      handler(startwithidpselectionValue) {
+        this.toggleDialog(startwithidpselectionValue);
+      },
+      immediate: true,
+    },
   },
   methods: {
     toggleDialog(mode?: boolean) {

@@ -60,6 +60,10 @@
             <span class="vbtnInputLabels"> opentab:</span>
             <input type="checkbox" id="opentab" checked="true" />
           </li>
+          <li>
+            <span class="vbtnInputLabels"> startwithidpselection:</span>
+            <input type="checkbox" id="startwithidpselection" checked="false" />
+          </li>
         </ul>
       </div>
       <vidis-login
@@ -73,13 +77,14 @@
     function handleInputOf(elem = "") {
       let el = document.getElementById(elem);
       el.addEventListener("input", function (evt) {
-        console.log(evt.data, el.value);
         if (el.type === "text")
           document.getElementById("vidislogin")?.setAttribute(elem, el.value);
-        else if (el.type === "checkbox")
-          document.getElementById("vidislogin")?.setAttribute(elem, el.checked);
+        else if (el.type === "checkbox") {
+          document.getElementById("vidislogin")?.setAttribute(elem, true);
+        }
       });
     }
+
     handleInputOf("size");
     handleInputOf("loginurl");
     handleInputOf("idphintname");
@@ -88,6 +93,7 @@
     handleInputOf("cookie");
     handleInputOf("opentab");
     handleInputOf("requestmethod");
+    handleInputOf("startwithidpselection");
   </script>
   <style>
     .vbtnInputLabels {

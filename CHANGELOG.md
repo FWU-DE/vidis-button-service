@@ -1,5 +1,9 @@
 # Changelog Vidis-Button
 
+## Version 1.11.0
+
+- FMUV-191 add Option to directly dispĺay the IDP-Selection
+
 ## Version 1.10.2
 
 ### Added:

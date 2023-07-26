@@ -44,6 +44,7 @@ export class VidisLoginShadowApp extends HTMLElement {
       "idpdatafile",
       "idp",
       "requestmethod",
+      "startwithidpselection",
     ];
   }
 
@@ -85,6 +86,8 @@ export class VidisLoginShadowApp extends HTMLElement {
     if (attrName === "opentab") newVal = JSON.parse(newVal);
     if (attrName === "cookie") newVal = JSON.parse(newVal);
     if (attrName === "requestmethod") newVal = newVal.toUpperCase();
+
+    if (attrName === "startwithidpselection") newVal = JSON.parse(newVal);
     store.commit(`update_${attrName}`, newVal);
   }
 
