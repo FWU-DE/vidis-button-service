@@ -10,7 +10,7 @@
     :contentStyle="{ overflow: _showScrollbars }"
   >
     <template #header="">
-      <vbtnHeader @closeDialog="showDialog = false" />
+      <vbtnHeader @closeDialog="toggleShowDialog(false)" />
     </template>
     <div class="layout blue-background">
       <div style="width: 100%" class="blue-background standard-padding">
@@ -59,7 +59,6 @@ import IdpAutoComplete from "@/components/idpSelection/idpAutocomplete.ce.vue";
 import ProgressSpinner from "primevue/progressspinner";
 import vbtnHeader from "@/components/layoutElements/vbtnHeader.ce.vue";
 import vbtnFooter from "@/components/layoutElements/vbtnFooter.ce.vue";
-import breakpoints from "@/mixins/breakpoints";
 
 export default defineComponent({
   name: "idp-dialog",
@@ -131,6 +130,9 @@ export default defineComponent({
     },
   },
   methods: {
+    toggleShowDialog(newValue = false): void {
+      this.showDialog = newValue;
+    },
     updateShowScrollbars(helpStatus: boolean) {
       this.showScrollbars = !helpStatus;
     },
