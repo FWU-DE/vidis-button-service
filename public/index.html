@@ -70,6 +70,10 @@
             <span class="vbtnInputLabels"> startwithidpselection:</span>
             <input type="checkbox" id="startwithidpselection" checked="false" />
           </li>
+          <li>
+            <span class="vbtnInputLabels"> hideback:</span>
+            <input type="checkbox" id="hideback" checked="false" />
+          </li>
         </ul>
       </div>
       <vidis-login
@@ -82,12 +86,11 @@
   <script>
     function handleInputOf(elem = "") {
       let el = document.getElementById(elem);
-      console.log("elem", elem, el.value);
       el.addEventListener("input", function (evt) {
         if (el.type === "text")
           document.getElementById("vidislogin")?.setAttribute(elem, el.value);
         else if (el.type === "checkbox") {
-          document.getElementById("vidislogin")?.setAttribute(elem, true);
+          document.getElementById("vidislogin")?.setAttribute(elem, el.checked);
         }
       });
     }
@@ -102,6 +105,7 @@
     handleInputOf("requestmethod");
     handleInputOf("startwithidpselection");
     handleInputOf("idpplaceholder");
+    handleInputOf("hideback");
   </script>
   <style>
     .vbtnInputLabels {

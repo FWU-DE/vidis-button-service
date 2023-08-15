@@ -10,7 +10,7 @@
     :contentStyle="{ overflow: _showScrollbars }"
   >
     <template #header="">
-      <vbtnHeader @closeDialog="toggleShowDialog(false)" />
+      <vbtnHeader @closeDialog="toggleShowDialog" />
     </template>
     <div class="layout blue-background">
       <div style="width: 100%" class="blue-background standard-padding">
@@ -173,8 +173,8 @@ export default defineComponent({
         this.loading = false;
       }
     },
-    onIdpSelected(value: string): void {
-      this.receivedIdp = value;
+    onIdpSelected(value: string | null): void {
+      if (value) this.receivedIdp = value;
       this.showButton = !!this.receivedIdp;
     },
   },

@@ -6,6 +6,7 @@
   >
     <div class="col-12 sm:col-12 md:col-8 lg:col-6 xl:col-6">
       <Button
+        v-if="!hideback"
         name="vbtn"
         class="p-button-link backButton"
         v-esc="closeDialog"
@@ -47,7 +48,6 @@ import shield from "@/assets/svgs/vidis_schield.svg";
 
 export default defineComponent({
   name: "vbtnHeader",
-  props: {},
   mixins: [breakpoints],
   components: { Button },
   data() {
@@ -57,6 +57,9 @@ export default defineComponent({
   computed: {
     size() {
       return this.$store.getters.size;
+    },
+    hideback(): boolean {
+      return this.$store.getters.hideback;
     },
     pushdown(): string {
       return this.breakpoint === "xs" ||

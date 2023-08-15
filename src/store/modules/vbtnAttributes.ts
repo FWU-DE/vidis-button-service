@@ -11,6 +11,7 @@ const defaultVbtnAttributes = () => {
     requestmethod: "GET",
     startwithidpselection: false,
     idpplaceholder: "",
+    hideback: false,
   };
 };
 const state = defaultVbtnAttributes();
@@ -27,6 +28,7 @@ const getters = {
   requestmethod: (state: any) => state.requestmethod,
   startwithidpselection: (state: any) => state.startwithidpselection,
   idpplaceholder: (state: any) => state.idpplaceholder,
+  hideback: (state: any) => state.hideback,
 };
 
 const mutations = {
@@ -52,6 +54,8 @@ const mutations = {
     (state.requestmethod = requestmethod),
   update_idpplaceholder: (state: any, idpplaceholder: string) =>
     (state.idpplaceholder = idpplaceholder),
+  update_hideback: (state: any, hideback: string) =>
+    (state.hideback = hideback),
 };
 
 export default {
