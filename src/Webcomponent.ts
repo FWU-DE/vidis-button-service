@@ -47,6 +47,7 @@ export class VidisLoginShadowApp extends HTMLElement {
       "startwithidpselection",
       "idpplaceholder",
       "hideback",
+      "serviceproviderid",
     ];
   }
 
