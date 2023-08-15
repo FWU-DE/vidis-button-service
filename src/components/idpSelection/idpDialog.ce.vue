@@ -117,6 +117,9 @@ export default defineComponent({
     _showScrollbars() {
       return this.showScrollbars ? "" : "hidden";
     },
+    idpplaceholder() {
+      return this.$store.getters.idpplaceholder;
+    },
   },
   watch: {
     showDialog(newVal: boolean): void {
@@ -139,7 +142,25 @@ export default defineComponent({
     async redirectToIdpLogin(): Promise<void> {
       this.loading = true;
       try {
-        let url = this.loginurl + `?${this.idphintname}=${this.receivedIdp.id}`;
+        let url = this.loginurl;
+        console.log("idpplaceholder", this.idpplaceholder);
+        if (this.idpplaceholder) {
+          url = url.replace(this.idpplaceholder, this.receivedIdp.id);
+          console.log(
+            "redirectToIdpLogin",
+            url,
+            this.idpplaceholder,
+            this.receivedIdp.id
+          );
+        } else {
+          let hasQuerys = url.includes("?");
+          url =
+            url +
+            `${hasQuerys ? "&" : "?"}${this.idphintname}=${
+              this.receivedIdp.id
+            }`;
+        }
+
         this.setCookie(this.receivedIdp.id);
         if (this.requestmethod === "GET") window.location.href = url;
         else if (this.requestmethod !== "GET") {

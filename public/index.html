@@ -53,6 +53,12 @@
             <input class="vbtnInputfields" type="text" id="requestmethod" />
           </li>
           <li>
+            <span class="vbtnInputLabels"
+              >IDP Placeholder for URL (don't use "{}"):
+            </span>
+            <input class="vbtnInputfields" type="text" id="idpplaceholder" />
+          </li>
+          <li>
             <span class="vbtnInputLabels"> cookie:</span>
             <input type="checkbox" id="cookie" />
           </li>
@@ -76,6 +82,7 @@
   <script>
     function handleInputOf(elem = "") {
       let el = document.getElementById(elem);
+      console.log("elem", elem, el.value);
       el.addEventListener("input", function (evt) {
         if (el.type === "text")
           document.getElementById("vidislogin")?.setAttribute(elem, el.value);
@@ -94,6 +101,7 @@
     handleInputOf("opentab");
     handleInputOf("requestmethod");
     handleInputOf("startwithidpselection");
+    handleInputOf("idpplaceholder");
   </script>
   <style>
     .vbtnInputLabels {

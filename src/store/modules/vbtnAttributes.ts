@@ -10,6 +10,7 @@ const defaultVbtnAttributes = () => {
     idp: "",
     requestmethod: "GET",
     startwithidpselection: false,
+    idpplaceholder: "",
   };
 };
 const state = defaultVbtnAttributes();
@@ -25,6 +26,7 @@ const getters = {
   idp: (state: any) => state.idp,
   requestmethod: (state: any) => state.requestmethod,
   startwithidpselection: (state: any) => state.startwithidpselection,
+  idpplaceholder: (state: any) => state.idpplaceholder,
 };
 
 const mutations = {
@@ -48,6 +50,8 @@ const mutations = {
   update_idp: (state: any, idp: string) => (state.idp = idp),
   update_requestmethod: (state: any, requestmethod: string) =>
     (state.requestmethod = requestmethod),
+  update_idpplaceholder: (state: any, idpplaceholder: string) =>
+    (state.idpplaceholder = idpplaceholder),
 };
 
 export default {
