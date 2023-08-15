@@ -295,7 +295,7 @@ export default defineComponent({
     async filterOutIdps(idps = []) {
       if (this.serviceproviderid) {
         if (this.whitelistedIdps.length === 0) {
-          const url = `http://iam-service.fwu-dev.exoscale.intension.eu/v1/iam-adapter/service-provider/${this.serviceproviderid}/idp-assignments`;
+          const url = `https://iam-service.fwu-dev.exoscale.intension.eu/v1/iam-adapter/service-provider/${this.serviceproviderid}/idp-assignments`;
           this.whitelistedIdps = await axios.get(url);
         }
         const filteredIdps = idps.filter((idpElem: any) =>
