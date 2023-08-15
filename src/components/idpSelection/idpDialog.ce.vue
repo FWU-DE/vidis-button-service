@@ -174,7 +174,7 @@ export default defineComponent({
       }
     },
     onIdpSelected(value: string | null): void {
-      if (value) this.receivedIdp = value;
+      if (value !== null) this.receivedIdp = value;
       this.showButton = !!this.receivedIdp;
     },
   },
