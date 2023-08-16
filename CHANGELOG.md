@@ -1,5 +1,12 @@
 # Changelog Vidis-Button
 
+## Version 1.12.0
+
+### Added:
+
+- FMUV-199: Add Placeholder for the login url to insert the selected idp at the desired location in the url
+- FMUV-199: make Backbutton configurable
+
 ## Version 1.11.1
 
 ### Fixed:

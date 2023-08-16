@@ -53,6 +53,12 @@
             <input class="vbtnInputfields" type="text" id="requestmethod" />
           </li>
           <li>
+            <span class="vbtnInputLabels"
+              >IDP Placeholder for URL (don't use "{}"):
+            </span>
+            <input class="vbtnInputfields" type="text" id="idpplaceholder" />
+          </li>
+          <li>
             <span class="vbtnInputLabels"> cookie:</span>
             <input type="checkbox" id="cookie" />
           </li>
@@ -63,6 +69,10 @@
           <li>
             <span class="vbtnInputLabels"> startwithidpselection:</span>
             <input type="checkbox" id="startwithidpselection" checked="false" />
+          </li>
+          <li>
+            <span class="vbtnInputLabels"> hideback:</span>
+            <input type="checkbox" id="hideback" checked="false" />
           </li>
         </ul>
       </div>
@@ -80,7 +90,7 @@
         if (el.type === "text")
           document.getElementById("vidislogin")?.setAttribute(elem, el.value);
         else if (el.type === "checkbox") {
-          document.getElementById("vidislogin")?.setAttribute(elem, true);
+          document.getElementById("vidislogin")?.setAttribute(elem, el.checked);
         }
       });
     }
@@ -94,6 +104,8 @@
     handleInputOf("opentab");
     handleInputOf("requestmethod");
     handleInputOf("startwithidpselection");
+    handleInputOf("idpplaceholder");
+    handleInputOf("hideback");
   </script>
   <style>
     .vbtnInputLabels {

@@ -371,7 +371,7 @@ export default defineComponent({
       this.finalGroupedIdps = finalGroupedIdps;
       return finalGroupedIdps;
     },
-    async resetSelection(): Promise<void> {
+    resetSelection(): void {
       this.selectedIdP = "";
       this.focused = true;
       this.$emit("emitSelectedIdp", this.selectedIdP);
