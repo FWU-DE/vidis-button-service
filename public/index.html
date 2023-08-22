@@ -63,6 +63,17 @@
             <input class="vbtnInputfields" type="text" id="serviceproviderid" />
           </li>
           <li>
+            <span class="vbtnInputLabels"
+              >Url of MS for Filtering based on Service Provider ID:</span
+            >
+            <input
+              class="vbtnInputfields"
+              type="text"
+              id="msfilterurl"
+              value="https://iam-service.fwu-dev.exoscale.intension.eu/v1/iam-adapter"
+            />
+          </li>
+          <li>
             <span class="vbtnInputLabels"> cookie:</span>
             <input type="checkbox" id="cookie" />
           </li>
@@ -83,6 +94,7 @@
       <vidis-login
         id="vidislogin"
         loginurl="https://www.taskcards.de/auth/openid"
+        msfilterurl="https://iam-service.fwu-dev.exoscale.intension.eu/v1/iam-adapter"
       >
       </vidis-login>
     </div>
@@ -111,6 +123,7 @@
     handleInputOf("idpplaceholder");
     handleInputOf("hideback");
     handleInputOf("serviceproviderid");
+    handleInputOf("msfilterurl");
   </script>
   <style>
     .vbtnInputLabels {

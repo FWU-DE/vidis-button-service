@@ -193,6 +193,9 @@ export default defineComponent({
     idp() {
       return this.$store.getters.idp;
     },
+    msfilterurl() {
+      return this.$store.getters.msfilterurl;
+    },
     idpsInStore() {
       return IdP.all();
     },
@@ -295,14 +298,14 @@ export default defineComponent({
     async filterOutIdps(idps = []) {
       if (this.serviceproviderid) {
         if (this.whitelistedIdps.length === 0) {
-          const url = `https://iam-service.fwu-dev.exoscale.intension.eu/v1/iam-adapter/service-provider/${this.serviceproviderid}/idp-assignments`;
-          this.whitelistedIdps = await axios.get(url);
+          const url = `${this.msfilterurl}/service-provider/${this.serviceproviderid}/idp-assignments`;
+          this.whitelistedIdps = (await axios.get(url)).data;
         }
-        const filteredIdps = idps.filter((idpElem: any) =>
-          this.whitelistedIdps.some(
-            (whiteIdp: any) => whiteIdp.id === idpElem.id
-          )
-        );
+        const filteredIdps = idps.filter((idpElem: any) => {
+          return (this.whitelistedIdps || []).some((whiteIdp: any) => {
+            return whiteIdp === idpElem.id;
+          });
+        });
         return filteredIdps;
       } else {
         return idps;

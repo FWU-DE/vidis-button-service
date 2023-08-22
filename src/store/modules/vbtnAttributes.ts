@@ -13,6 +13,7 @@ const defaultVbtnAttributes = () => {
     idpplaceholder: "",
     hideback: false,
     serviceproviderid: "",
+    msfilterurl: "",
   };
 };
 const state = defaultVbtnAttributes();
@@ -31,6 +32,7 @@ const getters = {
   idpplaceholder: (state: any) => state.idpplaceholder,
   hideback: (state: any) => state.hideback,
   serviceproviderid: (state: any) => state.serviceproviderid,
+  msfilterurl: (state: any) => state.msfilterurl,
 };
 
 const mutations = {
@@ -60,6 +62,8 @@ const mutations = {
     (state.hideback = hideback),
   update_serviceproviderid: (state: any, serviceproviderid: string) =>
     (state.serviceproviderid = serviceproviderid),
+  update_msfilterurl: (state: any, msfilterurl: string) =>
+    (state.msfilterurl = msfilterurl),
 };
 
 export default {
