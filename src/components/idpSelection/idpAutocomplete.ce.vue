@@ -160,6 +160,7 @@ export default defineComponent({
       teleportIntoMobileDialog: null,
       autoready: false,
       elevate: false,
+      whitelistedIdps: [],
     };
   },
   async created() {
@@ -192,6 +193,9 @@ export default defineComponent({
     idp() {
       return this.$store.getters.idp;
     },
+    msfilterurl() {
+      return this.$store.getters.msfilterurl;
+    },
     idpsInStore() {
       return IdP.all();
     },
@@ -207,6 +211,9 @@ export default defineComponent({
     },
     mobileMode() {
       return this.showMobile && this.allowTeleportToMobile;
+    },
+    serviceproviderid() {
+      return this.$store.getters.serviceproviderid;
     },
   },
   watch: {
@@ -274,7 +281,7 @@ export default defineComponent({
           this.loadingIdps = true;
           let url = `https://repo.vidis.schule/repository/vidis-cdn/data/${this.idpdatafile}.json`;
           let res = await axios.get(url);
-          this.availableIdps = res.data;
+          this.availableIdps = await this.filterOutIdps(res.data);
           IdP.insert({
             data: this.availableIdps,
           });
@@ -287,6 +294,22 @@ export default defineComponent({
       } else this.groupIdps();
       this.selectedIdP = IdP.find(this.cookieIdp || this.idp);
       if (this.selectedIdP) this.emitToParent();
+    },
+    async filterOutIdps(idps = []) {
+      if (this.serviceproviderid) {
+        if (this.whitelistedIdps.length === 0) {
+          const url = `${this.msfilterurl}/service-provider/${this.serviceproviderid}/idp-assignments`;
+          this.whitelistedIdps = (await axios.get(url)).data;
+        }
+        const filteredIdps = idps.filter((idpElem: any) => {
+          return (this.whitelistedIdps || []).some((whiteIdp: any) => {
+            return whiteIdp === idpElem.id;
+          });
+        });
+        return filteredIdps;
+      } else {
+        return idps;
+      }
     },
     emitToParent(): void {
       this.switchToNormal();

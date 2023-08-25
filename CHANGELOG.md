@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.13.0
+
+### Added:
+
+- FMUV-191: Add Filtering by Service Provider ID via a MS
+
 ## Version 1.12.0
 
 ### Added:
