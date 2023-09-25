@@ -52,4 +52,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Styleguide 
 
-Stylehinweise für das Einbinden des VIDIS Button: vidis-button-styleguide.pdf
+Stylehinweise für das Einbinden des VIDIS Button: [vidis-button-styleguide.pdf](https://github.com/FWU-DE/vidis-button-service/blob/snfwu-patch-1/vidis-button-styleguide.pdf)https://github.com/FWU-DE/vidis-button-service/blob/snfwu-patch-1/vidis-button-styleguide.pdf
