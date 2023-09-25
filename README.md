@@ -49,3 +49,8 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Styleguide 
+
+Stylehinweise für das Einbinden des VIDIS Button: <https://github.com/FWU-DE/vidis-button-service/blob/main/vidis-button-styleguide.pdf>
+
