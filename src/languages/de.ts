@@ -24,6 +24,9 @@ export default {
     noResult2: "keine passenden Ergebnisse gefunden.",
     label: "Bitte wähle Dein Landesportal / Schulportal",
     resetSelection: "Auswahl zurücksetzen",
+    noIdpFound: "Wählen Sie Ihren Direkteinstieg",
+    showAll: "Alle anzeigen",
+    showLess: "Weniger anzeigen",
   },
   help: {
     closeAlt: "Hilfe Schließen",
