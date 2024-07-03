@@ -20,8 +20,8 @@ export default {
     button: "Sichere Anmeldung über ",
     placeholder: "z. B. Bundesland, Stadt, E-Mail, Schule, ...",
     other: "Sonstige",
-    noResult: "Leider haben wir zu Ihren Suchkriterien",
-    noResult2: "keine passenden Ergebnisse gefunden.",
+    noResult:
+      "Leider haben wir zu Ihren Suchkriterien keine passenden Ergebnisse gefunden.",
     label: "Bitte wähle Dein Landesportal / Schulportal",
     resetSelection: "Auswahl zurücksetzen",
     noIdpFound: "Wählen Sie Ihren Direkteinstieg",

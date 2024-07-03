@@ -98,22 +98,19 @@
             @click.prevent=""
           >
             <div class="grid">
-              <img
-                :src="WarningIcon"
-                class="idp-item-icon"
-                style="height: auto"
-              />
-              <div class="">
+              <div class="col-1 flex align-items-center justify-content-center">
+                <img :src="WarningIcon" style="height: 20px" />
+              </div>
+              <div class="col-11">
                 <div class="idp-item-label idp-noResult-label">
                   {{ $t("idp.noResult") }}
                 </div>
-                <br />
-                <div class="idp-item-label idp-noResult-label">
-                  {{ $t("idp.noResult2") }}
-                </div>
               </div>
-              <div class="col-12 no-left-margin">
+              <div class="col-12">
                 <hr class="divider" />
+              </div>
+              <div class="col-12 idp-not-found-heading">
+                {{ $t("idp.noIdpFound") }}
               </div>
               <div class="col-12">
                 <ListAllIdp

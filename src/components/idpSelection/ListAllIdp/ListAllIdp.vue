@@ -1,15 +1,12 @@
 <template>
-  <div class="idp-not-found-heading">
-    {{ $t("idp.noIdpFound") }}
-  </div>
   <ScrollPanel>
     <span v-for="(idp, index) in availableIdps" :key="idp.id">
       <button
         v-if="index < idpLengthToBeDisplayed"
-        class="idp-button-link"
+        :class="idpButtonClasses"
         @click="selectIdp(idp)"
       >
-        <span class="idp-button-label">
+        <span class="idp-list-label">
           {{ idp.name }}
         </span>
       </button>
@@ -20,11 +17,11 @@
     >
       <span
         v-if="initialIdpLengthToBeDisplayed == idpLengthToBeDisplayed"
-        class="idp-button-label"
+        class="idp-list-label"
       >
         {{ $t("idp.showAll") }}
       </span>
-      <span v-else class="idp-button-label">
+      <span v-else class="idp-list-label">
         {{ $t("idp.showLess") }}
       </span>
     </button>
@@ -61,6 +58,15 @@ export default defineComponent({
     },
     selectIdp(idp: IdP): void {
       this.$emit("select-idp", idp);
+    },
+  },
+  computed: {
+    idpButtonClasses() {
+      return {
+        "idp-button-link": true,
+        "idp-button-separation":
+          this.idpLengthToBeDisplayed != this.initialIdpLengthToBeDisplayed,
+      };
     },
   },
 });
