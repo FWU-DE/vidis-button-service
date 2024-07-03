@@ -5,16 +5,12 @@ const {
   navigate_to_website,
   click_entranceButton,
   write_searchbox_and_wait_for_droplist,
-  done
-} = require('../../helpers.js');
+  done,
+} = require("../../helpers.js");
 
-const {
-  analyze,
-  printAnalyzerResults
-} = require('../analyzer.js');
+const { analyze, printAnalyzerResults } = require("../analyzer.js");
 
-
-module.exports = async function() {
+module.exports = async function () {
   const driver = await getDriver();
 
   try {
@@ -26,10 +22,10 @@ module.exports = async function() {
 
     console.log("• PASS - " + testName);
     printAnalyzerResults(result);
-  } catch(error) {
+  } catch (error) {
     console.log("• FAIL - " + testName);
     printAnalyzerResults(error);
   } finally {
     done(driver);
   }
-}
+};
