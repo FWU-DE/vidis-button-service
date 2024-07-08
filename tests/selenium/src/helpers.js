@@ -56,10 +56,6 @@ const getDriver = async function () {
     .windowSize(screen)
     .addArguments("disable-web-security");
   const firefoxOptions = new firefox.Options().windowSize(screen);
-  if (HEADLESS) {
-    chromeOptions.headless();
-    firefoxOptions.headless();
-  }
 
   return await new Builder()
     .forBrowser(BROWSER)
