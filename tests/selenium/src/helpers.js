@@ -54,7 +54,8 @@ const getDriver = async function () {
 
   const chromeOptions = new chrome.Options()
     .windowSize(screen)
-    .addArguments("disable-web-security");
+    .addArguments("disable-web-security")
+    .addArguments("disable-dev-shm-usage");
   const firefoxOptions = new firefox.Options().windowSize(screen);
 
   return await new Builder()
