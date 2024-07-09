@@ -38,8 +38,8 @@ jobs:
       - name: Run Audit Level critical
         run: |
           npm install -g npm@8
-          npm audit --audit-level=critical
           npm audit fix
+          npm audit --audit-level=critical
           echo "This job's status is ${{ job.status }}."
 
   create-rc-tag:
