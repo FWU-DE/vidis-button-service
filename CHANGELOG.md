@@ -1,5 +1,11 @@
 # Changelog Vidis-Button
 
+## Version 1.14.0
+
+### Added:
+
+- FMUV-237: Add a dropdown for available list of IDP's when search criteria is not fulfilled
+
 ## Version 1.13.0
 
 ### Added:

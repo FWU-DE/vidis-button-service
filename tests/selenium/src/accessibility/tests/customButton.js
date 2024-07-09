@@ -5,18 +5,17 @@ const {
   navigate_to_website,
   write_idp,
   write_idpdatafile,
-  done
-} = require('../../helpers.js');
+  done,
+} = require("../../helpers.js");
 
 const {
   analyze,
   getAxeBuilder,
   analyze_customAxe,
-  printAnalyzerResults
-} = require('../analyzer.js');
+  printAnalyzerResults,
+} = require("../analyzer.js");
 
-
-module.exports = async function() {
+module.exports = async function () {
   const driver = await getDriver();
 
   try {
@@ -24,15 +23,17 @@ module.exports = async function() {
     await write_idp(driver, "rp-schulcampus-s");
     await write_idpdatafile(driver, "idps-dev");
 
-    const axeBuilder = getAxeBuilder(driver).exclude('html').include('html > body > div > div > vidis-login');
+    const axeBuilder = getAxeBuilder(driver)
+      .exclude("html")
+      .include("html > body > div > div > vidis-login");
     const result = await analyze_customAxe(axeBuilder);
 
     console.log("• PASS - " + testName);
     printAnalyzerResults(result);
-  } catch(error) {
+  } catch (error) {
     console.log("• FAIL - " + testName);
     printAnalyzerResults(error);
   } finally {
     done(driver);
   }
-}
+};

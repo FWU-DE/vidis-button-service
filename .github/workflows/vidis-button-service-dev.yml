@@ -106,6 +106,7 @@ jobs:
         run: |
           cd tests/selenium
           npm install -g npm@8
+          npm install
           npm ci
           npm run test:chrome
 

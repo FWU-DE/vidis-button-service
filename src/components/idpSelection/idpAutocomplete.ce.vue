@@ -97,18 +97,26 @@
             class="flex align-items-center grid-nogutter idp-noResult"
             @click.prevent=""
           >
-            <img
-              :src="WarningIcon"
-              class="idp-item-icon"
-              style="height: 20px"
-            />
-            <div class="">
-              <div class="idp-item-label idp-noResult-label">
-                {{ $t("idp.noResult") }}
+            <div class="grid">
+              <div class="col-1 flex align-items-center justify-content-center">
+                <img :src="WarningIcon" style="height: 20px" />
               </div>
-              <br />
-              <div class="idp-item-label idp-noResult-label">
-                {{ $t("idp.noResult2") }}
+              <div class="col-11">
+                <div class="idp-item-label idp-noResult-label">
+                  {{ $t("idp.noResult") }}
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="divider" />
+              </div>
+              <div class="col-12 idp-not-found-heading">
+                {{ $t("idp.noIdpFound") }}
+              </div>
+              <div class="col-12">
+                <ListAllIdp
+                  :availableIdps="availableIdps"
+                  @select-idp="selectIdp"
+                />
               </div>
             </div>
           </div>
@@ -125,6 +133,7 @@ import cookie from "@/mixins/cookie";
 import breakpoints from "@/mixins/breakpoints";
 import Dialog from "primevue/dialog";
 import AutoComplete from "@/components/idpSelection/Autocomplete/AutoComplete.vue";
+import ListAllIdp from "@/components/idpSelection/ListAllIdp/ListAllIdp.vue";
 import IdP from "@/store/ORM-Stores/models/idps";
 import axios from "axios";
 import cross from "@/assets/svgs/cross.svg";
@@ -136,7 +145,7 @@ export default defineComponent({
   name: "idp-autocomplete",
   props: {},
   mixins: [cookie, breakpoints],
-  components: { AutoComplete, Dialog },
+  components: { AutoComplete, Dialog, ListAllIdp },
   data() {
     return {
       schoolIcon,
@@ -398,6 +407,10 @@ export default defineComponent({
       this.selectedIdP = "";
       this.focused = true;
       this.$emit("emitSelectedIdp", this.selectedIdP);
+    },
+    selectIdp(idp: IdP): void {
+      this.selectedIdP = idp;
+      this.emitToParent();
     },
   },
 });

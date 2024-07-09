@@ -87,6 +87,7 @@ input:hover::placeholder {
   padding-right: 0px;
   padding-bottom: 24px;
   padding-left: 40px;
+  overflow: hidden;
 }
 
 .idp-noResult-label {
@@ -131,4 +132,15 @@ input:hover::placeholder {
 .p-component-overlay {
   background-color: rgba(0, 0, 0, 0.4) !important;
   transition-duration: 0.2s;
+}
+
+.divider {
+  border: none;
+  border-top: 2px solid;
+  color: lightgrey;
+  margin: 20px 0;
+}
+
+.no-left-margin {
+  padding-left: 0px;
 }
