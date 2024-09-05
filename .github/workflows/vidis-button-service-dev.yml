@@ -41,19 +41,6 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - name: Replace CDN_UPLOAD_USER
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_USER"
-          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
-      - name: Replace CDN_UPLOAD_SECRET
-        env:
-          CDN_UPLOAD_USER: ${{ secrets.CDN_UPLOAD_USER }}
-          CDN_UPLOAD_SECRET: ${{ secrets.CDN_UPLOAD_SECRET }}
-        run: |
-          echo "CDN_UPLOAD_USER is set to $CDN_UPLOAD_USER"
-          sh .github/workflows/scripts/uploadImagesAndFonts.sh
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v2
         with:
