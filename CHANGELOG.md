@@ -1,5 +1,12 @@
 # Changelog Vidis-Button
 
+
+## Version 1.14.1
+
+### Fixed:
+
+- Fixed the release pipeline
+
 ## Version 1.14.0
 
 ### Added:
