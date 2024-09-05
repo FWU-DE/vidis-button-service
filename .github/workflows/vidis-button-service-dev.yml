@@ -52,7 +52,7 @@ jobs:
           CDN_UPLOAD_USER: ${{ secrets.CDN_UPLOAD_USER }}
           CDN_UPLOAD_SECRET: ${{ secrets.CDN_UPLOAD_SECRET }}
         run: |
-          echo "Uploading images and fonts for release ..."
+          echo "CDN_UPLOAD_USER is set to $CDN_UPLOAD_USER"
           sh .github/workflows/scripts/uploadImagesAndFonts.sh
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v2
