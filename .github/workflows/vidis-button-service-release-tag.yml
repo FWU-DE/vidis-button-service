@@ -14,36 +14,12 @@ jobs:
       - name: Get git tag
         id: tag
         uses: dawidd6/action-get-tag@v1
-      - name: Replace CDN_UPLOAD_USER
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/downloadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_USER"
-          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
-      - name: Replace CDN_UPLOAD_SECRET
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/downloadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_SECRET"
-          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
       - name: Find and Replace current version
         uses: jacobtomlinson/gha-find-replace@v2
         with:
           find: "current-version"
           replace: ${{ steps.tag.outputs.tag }}
           include: "**downloadImagesAndFonts.sh"
-      - name: Replace CDN_UPLOAD_USER for assets upload
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_USER"
-          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
-      - name: Replace CDN_UPLOAD_SECRET for assets upload
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_SECRET"
-          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
       - name: Find and Replace current version
         uses: jacobtomlinson/gha-find-replace@v2
         with:
@@ -56,18 +32,6 @@ jobs:
           find: "vidis-cdn-snapshots"
           replace: "vidis-cdn"
           include: "**uploadImagesAndFonts.sh"
-      - name: Replace CDN_UPLOAD_USER for latest
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadLatest.sh
-          secret-name: "CDN_UPLOAD_USER"
-          secret-value: ${{ secrets.CDN_UPLOAD_USER }}
-      - name: Replace CDN_UPLOAD_SECRET for latest
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadLatest.sh
-          secret-name: "CDN_UPLOAD_SECRET"
-          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
       - name: Find and Replace current version with latest
         uses: jacobtomlinson/gha-find-replace@v2
         with:
