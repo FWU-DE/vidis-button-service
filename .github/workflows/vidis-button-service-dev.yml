@@ -48,11 +48,12 @@ jobs:
           secret-name: "CDN_UPLOAD_USER"
           secret-value: ${{ secrets.CDN_UPLOAD_USER }}
       - name: Replace CDN_UPLOAD_SECRET
-        uses: jwsi/secret-parser@v1
-        with:
-          filename: .github/workflows/scripts/uploadImagesAndFonts.sh
-          secret-name: "CDN_UPLOAD_SECRET"
-          secret-value: ${{ secrets.CDN_UPLOAD_SECRET }}
+        env:
+          CDN_UPLOAD_USER: ${{ secrets.CDN_UPLOAD_USER }}
+          CDN_UPLOAD_SECRET: ${{ secrets.CDN_UPLOAD_SECRET }}
+        run: |
+          echo "Uploading images and fonts for release ..."
+          sh .github/workflows/scripts/uploadImagesAndFonts.sh
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v2
         with:
@@ -66,6 +67,9 @@ jobs:
           replace: "-snapshot"
           include: "**uploadImagesAndFonts.sh"
       - name: Publish npm and CDN
+        env:
+          CDN_UPLOAD_USER: ${{ secrets.CDN_UPLOAD_USER }}
+          CDN_UPLOAD_SECRET: ${{ secrets.CDN_UPLOAD_SECRET }}
         run: |
           npm install -g npm@8
           npm ci
