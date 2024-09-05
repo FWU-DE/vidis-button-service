@@ -81,6 +81,9 @@ jobs:
           replace: "vidis-cdn"
           include: "**uploadLatest.sh"
       - name: Publish Release
+        env:
+          CDN_UPLOAD_USER: ${{ secrets.CDN_UPLOAD_USER }}
+          CDN_UPLOAD_SECRET: ${{ secrets.CDN_UPLOAD_SECRET }}
         run: |
           echo "Version ${{ steps.tag.outputs.tag }}"
           echo "Getting corresponding release candidate..."
