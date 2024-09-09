@@ -8,7 +8,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create RC Tag
-        uses: butlerlogic/action-autotag@stable
+        uses: butlerlogic/action-autotag@1.1.2
         with:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           tag_suffix: "-rc"
