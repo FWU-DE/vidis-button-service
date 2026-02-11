@@ -25,7 +25,10 @@ export class VidisLoginShadowApp extends HTMLElement {
     super();
     //this.app = createApp(Application);
     this.shadowRoot = this.attachShadow({ mode: "open" });
-    customElements.define("vidis-login-vue-app", VidisLoginApp);
+    // Only define the custom element if it hasn't been defined yet
+    if (!customElements.get("vidis-login-vue-app")) {
+      customElements.define("vidis-login-vue-app", VidisLoginApp);
+    }
     this.shadowApp = document.createElement("vidis-login-vue-app");
     this.shadowApp.setAttribute("id", "vidis-login-vue-app");
   }
