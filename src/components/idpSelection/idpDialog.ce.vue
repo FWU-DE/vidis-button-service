@@ -81,12 +81,13 @@ export default defineComponent({
       receivedIdp: "",
       showButton: false,
       loading: false,
-      teleportTarget: "body",  // Changed from null to "body"
+      teleportTarget: null,  // Changed back to null
       ready: false,
       showScrollbars: true,
     };
   },
   mounted() {
+    this.teleportTarget = this.$el.parentNode.children[0];  // Restore this line
     this.ready = true;
   },
   computed: {
