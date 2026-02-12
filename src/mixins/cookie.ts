@@ -19,7 +19,7 @@ export default {
         document.cookie = `vbtn=${encodeURIComponent(
           // eslint-disable-next-line prettier/prettier
           idp,
-        )};path=/`;
+        )};path=/;SameSite=Strict;${secure}`;
         this.reloadCookie = !this.reloadCookie;
       }
     },
