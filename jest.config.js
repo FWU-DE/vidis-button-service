@@ -3,5 +3,5 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css|scss)$": "identity-obj-proxy",
   },
-  setupFiles: ["<rootDir>/tests/setup.ts"],  // Runs BEFORE test framework
+  setupFiles: ["<rootDir>/tests/setup.js"],  // Changed from .ts to .js
 };
