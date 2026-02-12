@@ -81,13 +81,13 @@ export default defineComponent({
       receivedIdp: "",
       showButton: false,
       loading: false,
-      teleportTarget: null,  // Changed back to null
+      teleportTarget: null, // Changed back to null
       ready: false,
       showScrollbars: true,
     };
   },
   mounted() {
-    this.teleportTarget = this.$el.parentNode.children[0];  // Restore this line
+    this.teleportTarget = this.$el.parentNode.children[0]; // Restore this line
     this.ready = true;
   },
   computed: {
@@ -150,7 +150,8 @@ export default defineComponent({
             "redirectToIdpLogin",
             url,
             this.idpplaceholder,
-            this.receivedIdp.id
+            // eslint-disable-next-line prettier/prettier
+            this.receivedIdp.id,
           );
         } else {
           let hasQuerys = url.includes("?");
