@@ -8,8 +8,11 @@ describe("VidisLogin - SPA Remount Behavior", () => {
   beforeEach(() => {
     // Clean up any existing elements
     document.body.innerHTML = "";
+  
+    // Mock window.location to avoid JSDOM navigation errors
+    delete (window as any).location;
+    (window as any).location = { href: '' };
   });
-
   it("should handle multiple mount/unmount cycles without errors", async () => {
     const createAndMountComponent = () => {
       const element = document.createElement("vidis-login");
