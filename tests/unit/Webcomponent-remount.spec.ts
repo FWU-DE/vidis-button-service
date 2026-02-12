@@ -78,24 +78,39 @@ describe("VidisLogin - SPA Remount Behavior", () => {
   });
 
   it("should create functional components on each mount", async () => {
+    // Mock window.location.href setter to prevent navigation errors
+    const originalLocation = window.location;
+    delete (window as any).location;
+    (window as any).location = { 
+      href: '',
+      ...originalLocation 
+    };
+    Object.defineProperty(window.location, 'href', {
+      writable: true,
+      value: ''
+    });
+
     // First mount cycle
     const first = document.createElement("vidis-login");
     first.setAttribute("loginurl", "https://example.com/auth");
     document.body.appendChild(first);
-    
+  
     await new Promise((resolve) => setTimeout(resolve, 100));
     expect(first.shadowRoot).toBeTruthy();
-    
+  
     first.remove();
 
     // Second mount cycle
     const second = document.createElement("vidis-login");
     second.setAttribute("loginurl", "https://example.com/auth2");
     document.body.appendChild(second);
-    
+  
     await new Promise((resolve) => setTimeout(resolve, 100));
     expect(second.shadowRoot).toBeTruthy();
-    
+  
     second.remove();
+  
+    // Restore original location
+    (window as any).location = originalLocation;
   });
 });
