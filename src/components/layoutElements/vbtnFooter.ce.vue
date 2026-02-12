@@ -148,7 +148,15 @@ export default defineComponent({
     return {
       digitalPakt,
       openArrow,
-      crests: [
+      showHelp: false,
+    };
+  },
+  computed: {
+    opentab() {
+      return this.$store.getters.opentab;
+    },
+    crests() {
+      return [
         { img: BW, alt: this.$t("crests.BW") },
         { img: Bavaria, alt: this.$t("crests.Bavaria") },
         { img: Berlin, alt: this.$t("crests.Berlin") },
@@ -165,13 +173,7 @@ export default defineComponent({
         { img: Saxony, alt: this.$t("crests.Saxony") },
         { img: SH, alt: this.$t("crests.SH") },
         { img: Thuringia, alt: this.$t("crests.Thuringia") },
-      ],
-      showHelp: false,
-    };
-  },
-  computed: {
-    opentab() {
-      return this.$store.getters.opentab;
+      ];
     },
   },
   methods: {
