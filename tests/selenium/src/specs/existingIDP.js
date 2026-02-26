@@ -23,7 +23,7 @@ module.exports = async () => {
     await click_entranceButton(driver);
     await write_searchbox_and_wait_for_droplist(driver, "rlp");
     await isNotEmptyIdps(driver);
-    await droplist_contains(driver, "Schulcampus RLP");
+    await droplist_contains(driver, "Bildungsportal RLP");
     await click_firstResult_droplist(driver);
     await click_secureLogin(driver);
     await check_if_redirected(driver);

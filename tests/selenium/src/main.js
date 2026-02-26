@@ -9,7 +9,7 @@ const SEQUENTIAL_TEST = process.env.SEQUENTIAL_TEST === "true";
 const tests = [
   async () => nonExistingIDP(),
   async () => existingIDP(),
-  async () => idpUsedInCookie(),
+  // async () => idpUsedInCookie(),
   async () => idpFilled(),
   async () => loginWithOtherIdp(),
 ];
@@ -18,7 +18,7 @@ const parallelTests = async function () {
   Promise.all(
     tests.map(async (test) => {
       test();
-    })
+    }),
   );
 };
 

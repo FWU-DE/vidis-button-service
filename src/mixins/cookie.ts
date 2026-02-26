@@ -17,7 +17,8 @@ export default {
     setCookie(idp: string, secure = "Secure"): void {
       if (this.cookie) {
         document.cookie = `vbtn=${encodeURIComponent(
-          idp
+          // eslint-disable-next-line prettier/prettier
+          idp,
         )};path=/;SameSite=Strict;${secure}`;
         this.reloadCookie = !this.reloadCookie;
       }
