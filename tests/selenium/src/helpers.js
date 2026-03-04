@@ -135,10 +135,13 @@ const waitForElementVisible = async (
 };
 
 const navigate_to_website = async function (mydriver) {
+  console.log("> Navigating to website");
   await mydriver.get(originalUrl);
+  console.log("> Waiting for entrance button to be visible");
   await mydriver.wait(
     until.elementIsVisible(await getVBTNRootElement(mydriver), 3000),
   );
+  console.log("> Website loaded");
 };
 
 const click_entranceButton = async function (mydriver) {
