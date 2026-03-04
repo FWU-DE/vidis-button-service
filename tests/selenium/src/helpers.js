@@ -85,10 +85,13 @@ const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 async function getShadowRootManually(mydriver) {
+  console.log("> Getting shadow root manually");
   return await mydriver.findElement(By.id("vidislogin")).getShadowRoot();
 }
 const getVBTNRootElement = async (mydriver) => {
   const shadowElement = await getShadowRootManually(mydriver);
+
+  console.log("> Getting root element of the vidis-button-service");
   return shadowElement.findElement(By.id("vidis-login-vue-app"));
 };
 
