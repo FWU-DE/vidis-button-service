@@ -36,7 +36,11 @@ function setOriginalUrl() {
   } else return "http://localhost:8080/";
 }
 
-console.log("> Running tests on: ", originalUrl);
+// Insert a "+" every 3rd character for display only
+function addPlusEveryThirdChar(str) {
+  return str.replace(/(.{3})/g, "$1+");
+}
+console.log("> Running tests on: ", addPlusEveryThirdChar(originalUrl));
 
 function escapeStringRegexp(string) {
   if (typeof string !== "string") {

@@ -81,7 +81,7 @@ jobs:
     needs: build-and-publish
     runs-on: ubuntu-latest
     env:
-      TEST_CICD: "true"
+      TEST_CICD: true
       ENVIRONMENT: "DEV"
       TESTPAGE_HOST: ${{ secrets.TESTPAGE_HOST }}
       TAKE_SCREENSHOTS: "true"
