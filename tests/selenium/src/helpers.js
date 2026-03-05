@@ -37,12 +37,6 @@ function setOriginalUrl() {
   } else return "http://localhost:8080/";
 }
 
-// Insert a "+" every 3rd character for display only
-function addPlusEveryThirdChar(str) {
-  return str.replace(/(.{3})/g, "$1+");
-}
-console.log("> Running tests on: ", addPlusEveryThirdChar(originalUrl));
-
 function escapeStringRegexp(string) {
   if (typeof string !== "string") {
     throw new TypeError("Expected a string");
@@ -85,20 +79,10 @@ const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 async function getShadowRootManually(mydriver) {
-  console.log("> Getting shadow root manually");
-  const testElement = await mydriver.findElement(By.id("vidislogin"));
-  console.log("> Getting shadow root of the vidis-button-service", testElement);
-  console.log(
-    ">>>>>>>>>>>> Getting shadow root of the vidis-button-service",
-    await testElement.getShadowRoot(),
-  );
-
   return await mydriver.findElement(By.id("vidislogin")).getShadowRoot();
 }
 const getVBTNRootElement = async (mydriver) => {
   const shadowElement = await getShadowRootManually(mydriver);
-
-  console.log("> Getting root element of the vidis-button-service");
   return shadowElement.findElement(By.id("vidis-login-vue-app"));
 };
 
@@ -112,7 +96,6 @@ const elementVisible = async (mydriver, locator) => {
     const element = await getAnyElement(mydriver, locator);
     return element;
   } catch (e) {
-    //console.log(e);
     return false;
   }
 };
@@ -145,13 +128,10 @@ const waitForElementVisible = async (
 };
 
 const navigate_to_website = async function (mydriver) {
-  console.log("> Navigating to website");
   await mydriver.get(originalUrl);
-  console.log("> Waiting for entrance button to be visible");
   await mydriver.wait(
     until.elementIsVisible(await getVBTNRootElement(mydriver), 3000),
   );
-  console.log("> Website loaded");
 };
 
 const click_entranceButton = async function (mydriver) {
