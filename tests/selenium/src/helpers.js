@@ -86,6 +86,13 @@ const sleep = (ms) => {
 };
 async function getShadowRootManually(mydriver) {
   console.log("> Getting shadow root manually");
+  const testElement = await mydriver.findElement(By.id("vidislogin"));
+  console.log("> Getting shadow root of the vidis-button-service", testElement);
+  console.log(
+    ">>>>>>>>>>>> Getting shadow root of the vidis-button-service",
+    await testElement.getShadowRoot(),
+  );
+
   return await mydriver.findElement(By.id("vidislogin")).getShadowRoot();
 }
 const getVBTNRootElement = async (mydriver) => {
