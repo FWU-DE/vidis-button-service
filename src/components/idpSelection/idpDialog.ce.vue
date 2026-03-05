@@ -143,16 +143,8 @@ export default defineComponent({
       this.loading = true;
       try {
         let url = this.loginurl;
-        console.log("idpplaceholder", this.idpplaceholder);
         if (this.idpplaceholder) {
           url = url.replace(this.idpplaceholder, this.receivedIdp.id);
-          console.log(
-            "redirectToIdpLogin",
-            url,
-            this.idpplaceholder,
-            // eslint-disable-next-line prettier/prettier
-            this.receivedIdp.id,
-          );
         } else {
           let hasQuerys = url.includes("?");
           url =

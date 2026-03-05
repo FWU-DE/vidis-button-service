@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const { Builder, until, By, logging } = require("selenium-webdriver");
 const firefox = require("selenium-webdriver/firefox");
 const chrome = require("selenium-webdriver/chrome");
@@ -36,8 +37,6 @@ function setOriginalUrl() {
   } else return "http://localhost:8080/";
 }
 
-console.log("> Running tests on: ", originalUrl);
-
 function escapeStringRegexp(string) {
   if (typeof string !== "string") {
     throw new TypeError("Expected a string");
@@ -52,11 +51,17 @@ const getDriver = async function () {
   const HEADLESS = process.env.HEADLESS === "true";
   const BROWSER = process.env.BROWSER;
 
-  const chromeOptions = new chrome.Options()
+  let chromeOptions = new chrome.Options()
     .windowSize(screen)
     .addArguments("disable-web-security")
     .addArguments("disable-dev-shm-usage");
-  const firefoxOptions = new firefox.Options().windowSize(screen);
+  if (HEADLESS) {
+    chromeOptions = chromeOptions.addArguments("headless");
+  }
+  let firefoxOptions = new firefox.Options().windowSize(screen);
+  if (HEADLESS) {
+    firefoxOptions = firefoxOptions.addArguments("-headless");
+  }
 
   return await new Builder()
     .forBrowser(BROWSER)
@@ -91,7 +96,6 @@ const elementVisible = async (mydriver, locator) => {
     const element = await getAnyElement(mydriver, locator);
     return element;
   } catch (e) {
-    //console.log(e);
     return false;
   }
 };
@@ -100,7 +104,7 @@ const waitForElementVisible = async (
   mydriver,
   locator,
   timer = 3000,
-  intervalls = 1000
+  intervalls = 1000,
 ) => {
   if (timer <= intervalls)
     throw new Error("Timer must be bigger than the intervall");
@@ -126,7 +130,7 @@ const waitForElementVisible = async (
 const navigate_to_website = async function (mydriver) {
   await mydriver.get(originalUrl);
   await mydriver.wait(
-    until.elementIsVisible(await getVBTNRootElement(mydriver), 3000)
+    until.elementIsVisible(await getVBTNRootElement(mydriver), 3000),
   );
 };
 
@@ -161,13 +165,13 @@ const click_secureLogin = async function (mydriver) {
 const write_searchbox_and_wait_for_droplist = async function (mydriver, text) {
   const elem = await getAnyElement(
     mydriver,
-    By.className("p-autocomplete-input p-inputtext p-component")
+    By.className("p-autocomplete-input p-inputtext p-component"),
   );
   elem.sendKeys(text);
   await waitForElementVisible(
     mydriver,
     By.className("p-autocomplete-panel"),
-    5000
+    5000,
   );
 };
 
@@ -178,20 +182,20 @@ const isEmptyIdps = async function (mydriver) {
 const isNotEmptyIdps = async function (mydriver) {
   await waitForElementVisible(
     mydriver,
-    By.css(".p-autocomplete-panel .p-autocomplete-item")
+    By.css(".p-autocomplete-panel .p-autocomplete-item"),
   );
 };
 
 const droplist_contains = async function (mydriver, expectedString) {
   const item = await getAnyElement(
     mydriver,
-    By.css(".p-autocomplete-panel .p-autocomplete-item .idp-item-label")
+    By.css(".p-autocomplete-panel .p-autocomplete-item .idp-item-label"),
   );
   let itemText = await item.getText();
   itemText = itemText.toLowerCase();
   assert(
     itemText.includes(expectedString.toLowerCase()),
-    '"' + itemText + '" does not contain "' + expectedString + '"'
+    '"' + itemText + '" does not contain "' + expectedString + '"',
   );
 };
 
@@ -222,13 +226,13 @@ const write_idp = async function (mydriver, text) {
 
 const check_if_redirected = async function (mydriver) {
   const differentUrl = new RegExp(
-    "^(?!.*(" + escapeStringRegexp(originalUrl) + "))"
+    "^(?!.*(" + escapeStringRegexp(originalUrl) + "))",
   );
   const currentUrl = await mydriver.getCurrentUrl();
   await mydriver.wait(
     until.urlMatches(differentUrl),
     60000,
-    "Page has not redirected! (current url: " + currentUrl + ")"
+    "Page has not redirected! (current url: " + currentUrl + ")",
   );
 };
 
@@ -242,7 +246,7 @@ const take_screenshot = async function (mydriver) {
 const click_log_in_with_another_idp = async function (mydriver) {
   const elem = await waitForElementVisible(
     mydriver,
-    By.css("span.changeIdpButtonLabel")
+    By.css("span.changeIdpButtonLabel"),
   );
   elem.click();
 };
@@ -250,7 +254,7 @@ const click_log_in_with_another_idp = async function (mydriver) {
 const delete_preselected_idp = async function (mydriver) {
   const elem = await waitForElementVisible(
     mydriver,
-    By.css("button.p-button.p-component.resetSelectionIcon")
+    By.css("button.p-button.p-component.resetSelectionIcon"),
   );
   elem.click();
 };

@@ -95,7 +95,6 @@ export class VidisLoginShadowApp extends HTMLElement {
     if (attrName === "requestmethod") newVal = newVal.toUpperCase();
     if (attrName === "startwithidpselection") newVal = JSON.parse(newVal);
     if (attrName === "hideback") newVal = JSON.parse(newVal);
-    console.log(attrName, newVal);
     store.commit(`update_${attrName}`, newVal);
   }
 
