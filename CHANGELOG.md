@@ -1,6 +1,12 @@
 # Changelog Vidis-Button
 
 
+## Version 1.14.2
+
+### Fixed:
+
+- FWUV-305: Button can be reloaded, eg in a react app
+
 ## Version 1.14.1
 
 ### Fixed:
