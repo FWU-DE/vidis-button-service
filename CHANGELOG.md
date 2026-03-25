@@ -1,6 +1,12 @@
 # Changelog Vidis-Button
 
 
+## Version 1.14.3
+
+### Fixed:
+
+- FWUV-310: Result panel is cut off if shown above the input field
+
 ## Version 1.14.2
 
 ### Fixed:

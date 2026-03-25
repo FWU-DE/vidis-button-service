@@ -756,8 +756,45 @@ export default {
       ZIndexUtils.clear(el);
     },
     alignOverlay() {
-      let target = this.$refs.focusInput;
-      DomHandler.relativePosition(this.overlay, target);
+      const target = this.$refs.focusInput;
+      const container = this.$refs.container;
+      const containerRect = container.getBoundingClientRect();
+      const viewport = DomHandler.getViewport();
+      const panelHeight = this.overlay.offsetHeight;
+      const targetHeight = target.offsetHeight;
+
+      if (containerRect.top + targetHeight + panelHeight > viewport.height) {
+        // Not enough space below - use fixed positioning to avoid being clipped
+        // by ancestor overflow containers when the panel appears above the input
+        const top = Math.max(0, containerRect.top - panelHeight);
+        this.overlay.style.position = "fixed";
+        this.overlay.style.setProperty(
+          "left",
+          containerRect.left + "px",
+          "important"
+        );
+        const height = containerRect.top - top;
+        this.overlay.style.height = height + "px";
+        this.overlay.style.top = top + "px";
+        this.overlay.style.width = containerRect.width + "px";
+        this.overlay.style.setProperty(
+          "min-width",
+          containerRect.width + "px",
+          "important"
+        );
+        this.overlay.style.marginTop = "0";
+        this.overlay.style.transformOrigin = "bottom";
+        DomHandler.addClass(this.overlay, "p-autocomplete-panel-above");
+      } else {
+        // Enough space below - use normal relative positioning
+        this.overlay.style.position = "";
+        this.overlay.style.removeProperty("left");
+        this.overlay.style.removeProperty("height");
+        this.overlay.style.removeProperty("min-width");
+        this.overlay.style.marginTop = "";
+        DomHandler.relativePosition(this.overlay, target);
+        DomHandler.removeClass(this.overlay, "p-autocomplete-panel-above");
+      }
     },
     bindOutsideClickListener() {
       if (!this.outsideClickListener) {
