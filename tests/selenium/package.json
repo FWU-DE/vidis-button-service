@@ -21,10 +21,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@axe-core/cli": "^4.4.4",
     "@axe-core/webdriverjs": "^4.4.4",
     "assert": "^2.0.0",
-    "chromedriver": "^150.0.3",
     "selenium-webdriver": "^4.40.0"
   }
 }
