@@ -30,6 +30,6 @@
     "tests/**/*.tsx",
     "tests/unit/components/layoutElements/vbtnHeader.spec.js",
     "tests/unit/mixins/breakpoints.spec.js"
-  ],
+, "tests/setup.js"  ],
   "exclude": ["node_modules"]
 }

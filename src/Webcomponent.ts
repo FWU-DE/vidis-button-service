@@ -63,7 +63,6 @@ export class VidisLoginShadowApp extends HTMLElement {
       this.attachErrorEventHandlers();
       //this.app.config.performance = true;
       if (this.shadowApp.app) {
-        this.shadowApp.app.config.unwrapInjectedRef = true;
         this.shadowApp.app.config.errorHandler = function (err, vm, info) {
           //Handle Vue Errors
           console.error("app.config.errorHandler", err, vm, info);
